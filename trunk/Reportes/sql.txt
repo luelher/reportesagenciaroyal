@@ -1,0 +1,4 @@
+"SELECT SAACXC.CodClie, SACLIE.Descrip, SAACXC.NroUnico, SAACXC.NroRegi, SAACXC.FechaE, SAACXC.FechaV, SAACXC.TipoCxc, SAACXC.Monto, SAACXC.NumeroD, SAACXC.Saldo, SAACXC.SaldoAct " +
+				" FROM SAACXC INNER JOIN SACLIE ON SAACXC.CodClie = SACLIE.CodClie" + 
+				" WHERE SAACXC.CodClie='" + idCliente.Trim() + "' AND SAACXC.TipoCxc='60' " +
+				" ORDER BY SAACXC.NroUnico ASC; ";

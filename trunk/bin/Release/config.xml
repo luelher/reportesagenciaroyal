@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<agenciaroyal version="1.00">
+  <propiedades>
+    <propiedad var="DataSource" valor="SAINT" />
+    <propiedad var="InitialCatalog" valor="enterpriseadmindb" />
+  </propiedades>
+</agenciaroyal>
