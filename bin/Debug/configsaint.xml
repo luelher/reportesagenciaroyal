@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<agenciaroyal version="1.00">
+  <propiedades>
+    <propiedad var="Migrar" valor="True" />
+    <propiedad var="Dominio" valor="True" />
+    <propiedad var="DataSource" valor="serverar" />
+    <propiedad var="InitialCatalog" valor="EnterpriseAdminDB" />
+    <propiedad var="Usuario" valor="sa" />
+    <propiedad var="Contrasena" valor="''" />
+    <propiedad var="CadenaConexion" valor="False" />
+    <propiedad var="Conexion" valor="Provider=sqloledb;Initial Catalog=EnterpriseAdminDB;Data Source=saint;Integrated Security=SSPI;" />
+    <propiedad var="Dominio_Profit" valor="True" />
+    <propiedad var="DataSource_Profit" valor="serverar" />
+    <propiedad var="InitialCatalog_Profit" valor="SAINT" />
+    <propiedad var="Usuario_Profit" valor="sa" />
+    <propiedad var="Contrasena_Profit" valor="''" />
+    <propiedad var="CadenaConexion_Profit" valor="False" />
+    <propiedad var="Conexion_Profit" valor="Provider=sqloledb;Initial Catalog=SAINT;Data Source=saint;Integrated Security=SSPI;" />
+    <propiedad var="Dominio_Profit_1" valor="True" />
+    <propiedad var="DataSource_Profit_1" valor="serverar" />
+    <propiedad var="InitialCatalog_Profit_1" valor="AGA01" />
+    <propiedad var="Usuario_Profit_1" valor="sa" />
+    <propiedad var="Contrasena_Profit_1" valor="''" />
+    <propiedad var="CadenaConexion_Profit_1" valor="False" />
+    <propiedad var="Conexion_Profit_1" valor="Provider=sqloledb;Initial Catalog=AGA01;Data Source=saint;Integrated Security=SSPI;" />
+  </propiedades>
+</agenciaroyal>
