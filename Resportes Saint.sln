@@ -3,10 +3,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resportes Saint", "Resporte
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstaladorReportesSaint", "..\InstaladorReportesSaint\InstaladorReportesSaint.vdproj", "{02858405-41A6-4AF9-8FF0-0C4C2754FD4A}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -17,8 +13,6 @@ Global
 		{7A890B36-4096-4869-885C-05E6C605F09E}.Debug.Build.0 = Debug|.NET
 		{7A890B36-4096-4869-885C-05E6C605F09E}.Release.ActiveCfg = Release|.NET
 		{7A890B36-4096-4869-885C-05E6C605F09E}.Release.Build.0 = Release|.NET
-		{02858405-41A6-4AF9-8FF0-0C4C2754FD4A}.Debug.ActiveCfg = Debug
-		{02858405-41A6-4AF9-8FF0-0C4C2754FD4A}.Release.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

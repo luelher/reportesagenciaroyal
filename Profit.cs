@@ -323,7 +323,7 @@ namespace GrupoEmporium.Profit.Reportes
 					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
 					" WHERE " +
 					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
-					//" AND docum_cc.co_cli='7308142' " + 
+					" AND docum_cc.co_cli='15230594' " + 
 					" ORDER BY " +
 					" CodClie ASC;";
 
@@ -862,7 +862,7 @@ namespace GrupoEmporium.Profit.Reportes
 		private Factura ResumenFactura(string idFactura,string idCliente,DateTime FechaE)
 		{
 			DataTable dtCxC = new DataTable();
-			//DataTable dtGiro = new DataTable();
+			DataTable dtGiro = new DataTable();
 			string str="";
 			Factura Resumen;
 
@@ -909,7 +909,7 @@ namespace GrupoEmporium.Profit.Reportes
 				" WHERE " +
 				" Docum_cc.nro_orig = " + idFactura + " AND docum_cc.tipo_doc = 'GIRO' ";
 
-			//clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dtGiro);
+			clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dtGiro);
 
 
 			Resumen = new Factura("");
@@ -923,6 +923,7 @@ namespace GrupoEmporium.Profit.Reportes
 				double Monto=0.0;
 				string strMonto;
 				string cedula;
+				bool experiencia = false;
 				DateTime fechaVenc;
 				str = dtCxC.Rows[0]["NumeroD"].ToString();
 
@@ -937,11 +938,12 @@ namespace GrupoEmporium.Profit.Reportes
 
 				//if(dtGiro.Rows.Count>0)
 				//{
-					Resumen.PagoMensual = Convert.ToDouble(dtCxC.Rows[0]["Giro"].ToString());
-					Resumen.MontoTotal = Convert.ToDouble(dtCxC.Rows[0]["Total"].ToString());
-					Resumen.Saldo = Convert.ToDouble(dtCxC.Rows[0]["SaldoT"].ToString());
+					Resumen.PagoMensual = Convert.ToDouble(dtGiro.Rows[0]["Giro"].ToString());
+					Resumen.MontoTotal = Convert.ToDouble(dtGiro.Rows[0]["Total"].ToString());
+					Resumen.Saldo = Convert.ToDouble(dtGiro.Rows[0]["Saldo"].ToString());
 					if(Convert.ToDouble(Resumen.Saldo)==0.0)
 						Resumen.Cancelada = true;
+					else Resumen.Cancelada = false;
 				//}
 
 				Total = dtCxC.Rows.Count;
@@ -974,7 +976,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 					Resumen.Dias = Dias;
 
-					if(Monto!=0.0 || Dias == -1)
+					if((Monto!=0.0 || Dias == -1) && !experiencia)
 					{
 						if (Dias == -1)
 							Resumen.Experiencia = 0;
@@ -990,42 +992,44 @@ namespace GrupoEmporium.Profit.Reportes
 							Resumen.Experiencia = 20;
 						else if (Dias < 0 && FE.Month != _LaFecha.Month && FE.Year != _LaFecha.Year)
 							Resumen.Experiencia = 1;
-						break;
+						experiencia=true;
 					}
 					else 
 					{
-						Resumen.Experiencia = 1;
-
-						if(Cuota==Total && Monto == 0.0 )
+						if(!experiencia)
 						{
-							DataTable dtFechaC = new DataTable();
-							string F = "";
+							Resumen.Experiencia = 1;
 
-							DateTime FV = Convert.ToDateTime(dtCxC.Rows[i]["FechaV"].ToString());
+							if(Cuota==Total && Monto == 0.0 )
+							{
+								DataTable dtFechaC = new DataTable();
+								string F = "";
 
-							SQL= " SELECT " +
+								DateTime FV = Convert.ToDateTime(dtCxC.Rows[i]["FechaV"].ToString());
+
+								SQL= " SELECT " +
 									"cobros.fec_cob  " +
-								" FROM " +
+									" FROM " +
 									"reng_cob INNER JOIN cobros ON reng_cob.cob_num = cobros.cob_num " +
-								" WHERE " +
+									" WHERE " +
 									"reng_cob.doc_num = '" + dtCxC.Rows[i]["NroUnico"].ToString() + "' " +
-								"ORDER BY " +
+									"ORDER BY " +
 									"cobros.fec_cob DESC ";
 
-							clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dtFechaC);
+								clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dtFechaC);
 
-							if(dtFechaC.Rows.Count>0)
-							{
-								try
+								if(dtFechaC.Rows.Count>0)
 								{
-									F = dtFechaC.Rows[0][0].ToString();
-									if (F.Trim()!="") Resumen.FechaCancelacion = Convert.ToDateTime(F);
+									try
+									{
+										F = dtFechaC.Rows[0][0].ToString();
+										if (F.Trim()!="") Resumen.FechaCancelacion = Convert.ToDateTime(F);
+									}
+									catch
+									{Mensajes.Mensaje.Error(dtFechaC.Rows[0][0].ToString(),"Saint");}
 								}
-								catch
-								{Mensajes.Mensaje.Error(dtFechaC.Rows[0][0].ToString(),"Saint");}
 							}
 						}
-						//else  Resumen.FechaCancelacion = DateTime.Now;
 					}
 					
 				}
