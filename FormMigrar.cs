@@ -203,11 +203,11 @@ namespace GrupoEmporium.Saint
 			{
 				ThreadStart TS = new ThreadStart(Migrar);
 				
-				//Subp = new Clase_SubProceso(ref TS,false);
+				Subp = new Clase_SubProceso(ref TS,false);
 
-				//Subp.Iniciar();
+				Subp.Iniciar();
 
-				Migrar();
+				//Migrar();
 
 			}
 			else
