@@ -364,7 +364,6 @@ namespace GrupoEmporium.Profit.Reportes
 							hecho = true;
 						}
 						
-
 						if(dt_nro_doc.Rows.Count>0 && hecho)
 						{
 							RFactura = ResumenFactura(dt_nro_doc.Rows[0]["nro_doc"].ToString(),dt.Rows[i]["CodClie"].ToString(),(DateTime)dt.Rows[i]["FechaE"]);
@@ -1080,8 +1079,8 @@ namespace GrupoEmporium.Profit.Reportes
 				" ON (FacturasViejas.Cedula=SACLIE.CodClie) AND ((FacturasViejas.FechaE) = (SAACXC.FechaE))  " +
 				" WHERE " +
 				" FacturasViejas.GNumero<>'0'  AND  " +
-				//" FacturasViejas.MontoV>0 " +
-				" FacturasViejas.MontoV>0  AND (FacturasViejas.Cedula = '10253946') " +
+				" FacturasViejas.MontoV>0 " +
+				//" FacturasViejas.MontoV>0  AND (FacturasViejas.Cedula = '10253946') " +
 				" GROUP BY " +
 				" FacturasViejas.Cedula, " +
 				" FacturasViejas.NFactura, " +
@@ -1115,8 +1114,8 @@ namespace GrupoEmporium.Profit.Reportes
 				" ((SAFACT.CodClie=SACLIE.CodClie) AND DATEDIFF(dd,SAFACT.FechaE,SAACXC.FechaE)=0) " +
 				" WHERE " +
 				" SAFACT.NGiros>0  AND " +
-				" SAFACT.MtoFinanc >0 AND (SAFACT.CodClie = '10253946') " +
-				//" SAFACT.MtoFinanc >0 " +
+				//" SAFACT.MtoFinanc >0 AND (SAFACT.CodClie = '10253946') " +
+				" SAFACT.MtoFinanc >0 " +
 				" GROUP BY " +
 				" SAFACT.CodClie, " +
 				" SAFACT.NumeroD, " +
@@ -1239,6 +1238,7 @@ namespace GrupoEmporium.Profit.Reportes
 			int[] nro_doc_GIRO;
 
 			DataTable dt = new DataTable();
+			DataTable dtCli = new DataTable();
 
 			int max_nro_doc_CFXG=0;
 			int max_nro_doc_GIRO=0;
@@ -1280,61 +1280,69 @@ namespace GrupoEmporium.Profit.Reportes
 
 						// TODO: Verificar que el cliente existe
 
-						SQL = "INSERT INTO " +
-							"CLIENTES( " +
-							"co_cli, " +
-							"tipo, " +
-							"cli_des, " +
-							"direc1, " +
-							"telefonos, " +
-							"fecha_reg, " +
-							"fec_ult_ve, " +
-							"co_zon, " +
-							"co_seg, " +
-							"co_ven, " +
-							"rif, " +
-							"co_ingr, " +
-							"co_us_in, " +
-							"fe_us_in, " +
-							"fe_us_mo, " +
-							"fe_us_el, " +
-							"co_sucu, " +
-							"tipo_adi, " +
-							"co_tab, " +
-							"tipo_per, " +
-							"estado, " +
-							"co_pais, row_id " +
-							") " +
-							"VALUES( " +
-							"'" + doc[i].fact.IDCliente.PadRight(10) + "', " +
-							"'B', " +
-							"'" + doc[i].fact.Cliente + "', " +
-							"'" + doc[i].fact.Direccion + "', " +
-							"'" + doc[i].fact.Telefono + "', " +
-							"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
-							"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
-							"'01', " +
-							"'01', " +
-							"'" + co_ve + "', " +
-							"'V-" + doc[i].fact.IDCliente.PadRight(10) + "', " +
-							"'01', " +
-							"'002', " +
-							"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
-							"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
-							"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
-							"'" + co_su + "', " +
-							"1, " +
-							"0, " +
-							"1, " +
-							"'A', " +
-							"'VE    ', DEFAULT " +
-							");";
+						SQL = "SELECT clientes.co_cli FROM clientes WHERE co_cli='" + doc[i].fact.IDCliente.PadRight(10) + "'";
 
-						if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
+						clsBD.EjecutarQuery(strConexion_Profit,Conexion_Profit,SQL,out dtCli);
+
+						if(dtCli.Rows.Count == 0)
 						{
-							list.Items.Add("Error => INSERT Cliente = " + doc[i].fact.IDCliente + " -> " + clsBD.MensajeError);
-							list.Refresh();
-							list.SendToBack();					
+
+							SQL = "INSERT INTO " +
+								"CLIENTES( " +
+								"co_cli, " +
+								"tipo, " +
+								"cli_des, " +
+								"direc1, " +
+								"telefonos, " +
+								"fecha_reg, " +
+								"fec_ult_ve, " +
+								"co_zon, " +
+								"co_seg, " +
+								"co_ven, " +
+								"rif, " +
+								"co_ingr, " +
+								"co_us_in, " +
+								"fe_us_in, " +
+								"fe_us_mo, " +
+								"fe_us_el, " +
+								"co_sucu, " +
+								"tipo_adi, " +
+								"co_tab, " +
+								"tipo_per, " +
+								"estado, " +
+								"co_pais, row_id " +
+								") " +
+								"VALUES( " +
+								"'" + doc[i].fact.IDCliente.PadRight(10) + "', " +
+								"'B', " +
+								"'" + doc[i].fact.Cliente + "', " +
+								"'" + doc[i].fact.Direccion + "', " +
+								"'" + doc[i].fact.Telefono + "', " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
+								"'01', " +
+								"'01', " +
+								"'" + co_ve + "', " +
+								"'V-" + doc[i].fact.IDCliente.PadRight(10) + "', " +
+								"'01', " +
+								"'002', " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
+								"'" + co_su + "', " +
+								"1, " +
+								"0, " +
+								"1, " +
+								"'A', " +
+								"'VE    ', DEFAULT " +
+								");";
+
+							if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
+							{
+								list.Items.Add("Error => INSERT Cliente = " + doc[i].fact.IDCliente + " -> " + clsBD.MensajeError);
+								list.Refresh();
+								list.SendToBack();					
+							}
 						}
 
 						#endregion
@@ -1489,8 +1497,8 @@ namespace GrupoEmporium.Profit.Reportes
 
 							if(dtArt.Rows.Count == 0){
 								SQL = "INSERT INTO [art] ([co_art], [art_des], [fecha_reg], [manj_ser], [co_lin], [co_cat], [co_subl], [co_color], [item], [ref], [modelo], [procedenci], [comentario], [co_prov], [ubicacion], [uni_venta], [uni_compra], [uni_relac], [relac_aut], [stock_act], [stock_com], [sstock_com], [stock_lle], [sstock_lle], [stock_des], [sstock_des], [suni_venta], [suni_compr], [suni_relac], [sstock_act], [relac_comp], [relac_vent], [pto_pedido], [stock_max], [stock_min], [prec_om], [prec_vta1], [fec_prec_v], [fec_prec_2], [prec_vta2], [fec_prec_3], [prec_vta3], [fec_prec_4], [prec_vta4], [fec_prec_5], [prec_vta5], [prec_agr1], [prec_agr2], [prec_agr3], [prec_agr4], [prec_agr5], [can_agr], [fec_des_p5], [fec_has_p5], [co_imp], [margen_max], [ult_cos_un], [fec_ult_co], [cos_pro_un], [fec_cos_pr], [cos_merc], [fec_cos_me], [cos_prov], [fec_cos_p2], [ult_cos_do], [fec_cos_do], [cos_un_an], [fec_cos_an], [ult_cos_om], [fec_ult_om], [cos_pro_om], [fec_pro_om], [tipo_cos], [mont_comi], [porc_cos], [mont_cos], [porc_gas], [mont_gas], [f_cost], [fisico], [punt_cli], [punt_pro], [dias_repos], [tipo], [alm_prin], [anulado], [tipo_imp], [dis_cen], [mon_ilc], [capacidad], [grado_al], [tipo_licor], [compuesto], [picture], [campo1], [campo2], [campo3], [campo4], [campo5], [campo6], [campo7], [campo8], [co_us_in], [fe_us_in], [co_us_mo], [fe_us_mo], [co_us_el], [fe_us_el], [revisado], [trasnfe], [co_sucu], [tuni_venta], [equi_uni1], [equi_uni2], [equi_uni3], [lote], [serialp], [valido], [atributo1], [vatributo1], [atributo2], [vatributo2], [atributo3], [vatributo3], [atributo4], [vatributo4], [atributo5], [vatributo5], [atributo6], [vatributo6], [garantia], [peso], [pie], [margen1], [margen2], [margen3], [margen4], [margen5], [imagen1], [imagen2], [i_art_des], [uni_emp], [rel_emp], [movil], [row_id]) " +
-									" VALUES " +
-									" ('" + doc[i].detfact[k].CodItem + "', '" + doc[i].detfact[k].Descripcion + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '01', 'SAINT', '01', '01', '', '', 'MODSAINT', '01', '', '01', '', '01', '', 1, 1, -1, 0, 0, 0, 0, 0, 0, '01', '', 0, 0, 0, 0, 0, 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + ", '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, 0, 0, 0, 0, 0, 1, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', 0, 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + " , '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 'ULCO', 0, 0, 0, 0, 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, 0, 0, 0, 'V', '', 0, '1', '', 0, 0, 0, '', 0, NULL, '', '', '', '', '', '', '', '', '" + co_us + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , '" + co_us + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', '', '" + co_su + "', 'UND', 1, 1, 1, 0, '', 0, 0, '', 0, '', 0, '', 0, '', 0, '', 0, '', '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', 1, 0, DEFAULT) ";
+									" VALUES " +                                                                                                                                                                                                                                 //XXXX
+									" ('" + doc[i].detfact[k].CodItem + "', '" + doc[i].detfact[k].Descripcion + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '01', 'SAINT', '01', '01', '', '', 'MODSAINT', '01', '', '01', '', '01', '', 1, 1, -1, 0, 0, 0, 0, 0, 0, 'UND', '', 0, 0, 0, 0, 0, 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + ", '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, 0, 0, 0, 0, 0, 1, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', 0, 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + " , '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 'ULCO', 0, 0, 0, 0, 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, 0, 0, 0, 'V', '', 0, '1', '', 0, 0, 0, '', 0, NULL, '', '', '', '', '', '', '', '', '" + co_us + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , '" + co_us + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', '', '" + co_su + "', 'UND', 1, 1, 1, 0, '', 0, 0, '', 0, '', 0, '', 0, '', 0, '', 0, '', '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', 1, 0, DEFAULT) ";
 
 								if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 								{
@@ -1547,7 +1555,7 @@ namespace GrupoEmporium.Profit.Reportes
 								if(doc[i].cxc[t].NroCuota == j)
 								{
 									Saldo = doc[i].cxc[t].Saldo;
-									Monto_Net = doc[i].fact.Saldo;
+									Monto_Net = doc[i].cxc[t].Monto;
 									Monto_Otr = doc[i].fact.Intereses/doc[i].fact.Giros;
 									descuento = 0.0;
 									porcentaje_descuento = "0";
@@ -1558,7 +1566,7 @@ namespace GrupoEmporium.Profit.Reportes
 								else 
 								{
 									Saldo=0.0;
-									Monto_Net = doc[i].fact.PagoMensual;
+									Monto_Net = doc[i].cxc[t].Monto;
 									descuento = 0;
 									porcentaje_descuento = "0";
 									Monto_Otr = doc[i].fact.Intereses/doc[i].fact.Giros;;

@@ -11,7 +11,7 @@
     <propiedad var="Conexion" valor="Provider=sqloledb;Initial Catalog=EnterpriseAdminDB;Data Source=saint;Integrated Security=SSPI;" />
     <propiedad var="Dominio_Profit" valor="True" />
     <propiedad var="DataSource_Profit" valor="lhernandez" />
-    <propiedad var="InitialCatalog_Profit" valor="SAINT" />
+    <propiedad var="InitialCatalog_Profit" valor="AGRAD" />
     <propiedad var="Usuario_Profit" valor="sa" />
     <propiedad var="Contrasena_Profit" valor="''" />
     <propiedad var="CadenaConexion_Profit" valor="False" />
