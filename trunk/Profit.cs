@@ -323,7 +323,7 @@ namespace GrupoEmporium.Profit.Reportes
 					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
 					" WHERE " +
 					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
-					//" AND docum_cc.co_cli='15230594' " + 
+					//" AND docum_cc.co_cli='7983524' " + 
 					" ORDER BY " +
 					" CodClie ASC;";
 
@@ -400,7 +400,7 @@ namespace GrupoEmporium.Profit.Reportes
 								meses = Math.Abs(RFactura.Dias / 30);
 								if(resto>0) meses++;
 
-								if(RFactura.NroFactura !="" && (RFactura.GirosSinCancelar >=desde && RFactura.GirosSinCancelar <=hasta) && dias_ultimo_pago > 30 )
+								if(RFactura.NroFactura !="" && (RFactura.GirosVencidosSinCancelar >=desde && RFactura.GirosVencidosSinCancelar <=hasta) && dias_ultimo_pago > 30 )
 								{
 									dr = dtReporte.NewRow();
 									dr["cliente"] = RFactura.Cliente;
@@ -956,7 +956,7 @@ namespace GrupoEmporium.Profit.Reportes
 						fechaVenc = Convert.ToDateTime(dtCxC.Rows[i]["FechaV"].ToString());
 						if(fechaVenc<DateTime.Now){
 							Resumen.GirosVencidosSinCancelar++;
-							Resumen.SaldoVencidoSinCancelar = Convert.ToDouble(dtCxC.Rows[i]["Saldo"].ToString());
+							Resumen.SaldoVencidoSinCancelar += Convert.ToDouble(dtCxC.Rows[i]["Saldo"].ToString());
 						}
 
 					}
