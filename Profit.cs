@@ -1080,7 +1080,7 @@ namespace GrupoEmporium.Profit.Reportes
 				" WHERE " +
 				" FacturasViejas.GNumero<>'0'  AND  " +
 				" FacturasViejas.MontoV>0 " +
-				//" FacturasViejas.MontoV>0  AND (FacturasViejas.Cedula = '10253946') " +
+				//" FacturasViejas.MontoV>0  AND (FacturasViejas.Cedula = '10128631') " +
 				" GROUP BY " +
 				" FacturasViejas.Cedula, " +
 				" FacturasViejas.NFactura, " +
@@ -1114,7 +1114,7 @@ namespace GrupoEmporium.Profit.Reportes
 				" ((SAFACT.CodClie=SACLIE.CodClie) AND DATEDIFF(dd,SAFACT.FechaE,SAACXC.FechaE)=0) " +
 				" WHERE " +
 				" SAFACT.NGiros>0  AND " +
-				//" SAFACT.MtoFinanc >0 AND (SAFACT.CodClie = '10253946') " +
+				//" SAFACT.MtoFinanc >0 AND (SAFACT.CodClie = '10128631') " +
 				" SAFACT.MtoFinanc >0 " +
 				" GROUP BY " +
 				" SAFACT.CodClie, " +
@@ -1881,7 +1881,7 @@ namespace GrupoEmporium.Profit.Reportes
 				Total = Convert.ToInt32(str);
 				return true;
 			}
-			else if((Tam==6 || Tam==8) && De)
+			else if((Tam==6 || Tam==7 || Tam==8) && De)
 			{
 				str = Tipo.Substring(0,PosDe);
 				Cuota = Convert.ToInt32(str);
