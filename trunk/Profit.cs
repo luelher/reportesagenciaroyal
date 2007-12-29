@@ -1045,6 +1045,10 @@ namespace GrupoEmporium.Profit.Reportes
 			DataTable dtCxC = new DataTable();
 			DataTable dtDetFact = new DataTable();
 
+			DateTime[] fechascompra = new DateTime[20];
+			int indexfc = 0;
+			string ultimacedula = "";
+
 			list.Items.Add("Obteniendo Datos Saint.....");
 
 			/*
@@ -1145,6 +1149,48 @@ namespace GrupoEmporium.Profit.Reportes
 
 			for(int i=0;i<dtFact.Rows.Count;i++)
 			{
+				/*
+				if(ultimacedula=="") ultimacedula = dtFact.Rows[i]["CodClie"].ToString();
+				if(ultimacedula!=dtFact.Rows[i]["CodClie"].ToString())
+				{
+					FECHA = " AND DATEDIFF(dd,'981104',SAACXC.FechaE)<>0 " +
+
+					fechascompra = new DateTime[20];
+					indexfc=0;
+
+					#region
+					SQL = "SELECT " +
+							" SAACXC.CodClie, " +
+							" SACLIE.Descrip, " +
+							" SAACXC.NroUnico, " +
+							" SAACXC.NroRegi, " +
+							" SAACXC.FechaE, " +
+							" SAACXC.FechaV, " +
+							" SAACXC.TipoCxc, " +
+							" SAACXC.Monto, " +
+							" SAACXC.NumeroD, " +
+							" SAACXC.Saldo, " +
+							" SAACXC.SaldoAct, " +
+							" SAFACT.NumeroD, " +
+							" SAFACT.NroCtrol, " +
+							" SAFACT.FechaE " +
+							" FROM " +
+							" SAFACT RIGHT JOIN (SAACXC INNER JOIN SACLIE ON SAACXC.CodClie = SACLIE.CodClie) " +
+							" ON ((SAFACT.CodClie=SACLIE.CodClie) AND DATEDIFF(dd,SAFACT.FechaE,SAACXC.FechaE)=0) " +
+							" WHERE " +
+							" SAACXC.TipoCxc='60' " +
+							" AND " +
+							" SAACXC.CodClie = '7302399' " + FECHAS +
+							" ORDER BY " +
+							" SAACXC.CodClie ASC ";
+					#endregion
+				
+				}
+				else{
+					fechascompra[indexfc] = dtFact.Rows[i]["FechaE"];
+					indexfc++;
+				}
+				*/
 				#region SQL CxC
 				SQL= "SELECT SAACXC.CodClie, SACLIE.Descrip, SAACXC.NroUnico, SAACXC.NroRegi, SAACXC.FechaE, SAACXC.FechaV, SAACXC.TipoCxc, SAACXC.Monto, SAACXC.NumeroD, SAACXC.Saldo, SAACXC.SaldoAct " +
 					" FROM SAACXC INNER JOIN SACLIE ON SAACXC.CodClie = SACLIE.CodClie" + 
@@ -1314,7 +1360,7 @@ namespace GrupoEmporium.Profit.Reportes
 								") " +
 								"VALUES( " +
 								"'" + doc[i].fact.IDCliente.PadRight(10) + "', " +
-								"'B', " +
+								"'NAT', " +
 								"'" + doc[i].fact.Cliente + "', " +
 								"'" + doc[i].fact.Direccion + "', " +
 								"'" + doc[i].fact.Telefono + "', " +
