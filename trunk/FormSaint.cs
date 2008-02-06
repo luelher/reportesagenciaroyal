@@ -36,6 +36,8 @@ namespace GrupoEmporium.Saint
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox textMesHasta;
 		private System.Windows.Forms.Label labelGenerando;
+		private System.Windows.Forms.RadioButton rbconexion1;
+		private System.Windows.Forms.RadioButton rbconexion2;
 		/// <summary>
 		/// Variable del diseñador requerida.
 		/// </summary>
@@ -102,6 +104,8 @@ namespace GrupoEmporium.Saint
 			this.textMesDesde = new System.Windows.Forms.TextBox();
 			this.BtnMigrar = new System.Windows.Forms.Button();
 			this.BotonExportar = new System.Windows.Forms.Button();
+			this.rbconexion1 = new System.Windows.Forms.RadioButton();
+			this.rbconexion2 = new System.Windows.Forms.RadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.GridResultado)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -179,6 +183,8 @@ namespace GrupoEmporium.Saint
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.rbconexion2);
+			this.panel1.Controls.Add(this.rbconexion1);
 			this.panel1.Controls.Add(this.labelGenerando);
 			this.panel1.Controls.Add(this.label4);
 			this.panel1.Controls.Add(this.textMesHasta);
@@ -260,6 +266,24 @@ namespace GrupoEmporium.Saint
 			this.BotonExportar.Text = "Exportar Reporte";
 			this.BotonExportar.Click += new System.EventHandler(this.BotonExportar_Click);
 			// 
+			// rbconexion1
+			// 
+			this.rbconexion1.Checked = true;
+			this.rbconexion1.Location = new System.Drawing.Point(280, 128);
+			this.rbconexion1.Name = "rbconexion1";
+			this.rbconexion1.Size = new System.Drawing.Size(104, 16);
+			this.rbconexion1.TabIndex = 13;
+			this.rbconexion1.TabStop = true;
+			this.rbconexion1.Text = "Profit Principal";
+			// 
+			// rbconexion2
+			// 
+			this.rbconexion2.Location = new System.Drawing.Point(280, 152);
+			this.rbconexion2.Name = "rbconexion2";
+			this.rbconexion2.Size = new System.Drawing.Size(104, 16);
+			this.rbconexion2.TabIndex = 14;
+			this.rbconexion2.Text = "Profit - Saint";
+			// 
 			// FormSaint
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -336,7 +360,7 @@ namespace GrupoEmporium.Saint
 
 					break;
 				case 3: // Reporte Morosos 2 y 3 meses
-					ObjProfit = new Profit.Reportes.Profit(Fecha.Value);
+					ObjProfit = new Profit.Reportes.Profit(Fecha.Value, rbconexion1.Checked);
 
 					dt = ObjProfit.Reporte_Morosos(2,3);
 
@@ -347,7 +371,7 @@ namespace GrupoEmporium.Saint
 
 					break;
 				case 4: // Reporte Morosos 6 meses
-					ObjProfit = new Profit.Reportes.Profit(Fecha.Value);
+					ObjProfit = new Profit.Reportes.Profit(Fecha.Value, rbconexion1.Checked);
 
 					dt = ObjProfit.Reporte_Morosos(6,6);
 
@@ -360,7 +384,7 @@ namespace GrupoEmporium.Saint
 				case 5: // Reporte Morosos Por Meses
 					if(textMesHasta.Text!="" && textMesDesde.Text!="")
 					{
-						ObjProfit = new Profit.Reportes.Profit(Fecha.Value);
+						ObjProfit = new Profit.Reportes.Profit(Fecha.Value, rbconexion1.Checked);
 
 						dt = ObjProfit.Reporte_Morosos(Convert.ToInt32(textMesDesde.Text),Convert.ToInt32(textMesHasta.Text));
 
@@ -373,7 +397,7 @@ namespace GrupoEmporium.Saint
 				case 6: // Reporte Morosos Por Meses con encuesta
 					if(textMesHasta.Text!="" && textMesDesde.Text!="")
 					{
-						ObjProfit = new Profit.Reportes.Profit(Fecha.Value);
+						ObjProfit = new Profit.Reportes.Profit(Fecha.Value, rbconexion1.Checked);
 
 						dt = ObjProfit.Reporte_Morosos(Convert.ToInt32(textMesDesde.Text),Convert.ToInt32(textMesHasta.Text));
 
@@ -387,7 +411,7 @@ namespace GrupoEmporium.Saint
 				case 7: // Reporte Morosos Por Meses + Ultimo Aviso
 					if(textMesHasta.Text!="" && textMesDesde.Text!="")
 					{
-						ObjProfit = new Profit.Reportes.Profit(Fecha.Value);
+						ObjProfit = new Profit.Reportes.Profit(Fecha.Value, rbconexion1.Checked);
 
 						dt = ObjProfit.Reporte_Morosos(Convert.ToInt32(textMesDesde.Text),Convert.ToInt32(textMesHasta.Text));
 
@@ -400,7 +424,7 @@ namespace GrupoEmporium.Saint
 				case 8: // Reporte Morosos + Carta Legal
 					if(textMesHasta.Text!="" && textMesDesde.Text!="")
 					{
-						ObjProfit = new Profit.Reportes.Profit(Fecha.Value);
+						ObjProfit = new Profit.Reportes.Profit(Fecha.Value, rbconexion1.Checked);
 
 						dt = ObjProfit.Reporte_Morosos(Convert.ToInt32(textMesDesde.Text),Convert.ToInt32(textMesHasta.Text));
 
@@ -414,7 +438,7 @@ namespace GrupoEmporium.Saint
 				case 9: // Reporte Resumen Morosos
 					if(textMesHasta.Text!="" && textMesDesde.Text!="")
 					{
-						ObjProfit = new Profit.Reportes.Profit(Fecha.Value);
+						ObjProfit = new Profit.Reportes.Profit(Fecha.Value, rbconexion1.Checked);
 
 						// Modificar la función Reporte_Morosos para crear un resumen
 						// de los totales de morosos existentes

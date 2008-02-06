@@ -23,5 +23,12 @@
     <propiedad var="Contrasena_Profit_1" valor="''" />
     <propiedad var="CadenaConexion_Profit_1" valor="False" />
     <propiedad var="Conexion_Profit_1" valor="Provider=sqloledb;Initial Catalog=AGA01;Data Source=saint;Integrated Security=SSPI;" />
+    <propiedad var="Dominio_Profit_2" valor="True" />
+    <propiedad var="DataSource_Profit_2" valor="lhernandez" />
+    <propiedad var="InitialCatalog_Profit_2" valor="AGA01" />
+    <propiedad var="Usuario_Profit_2" valor="sa" />
+    <propiedad var="Contrasena_Profit_2" valor="''" />
+    <propiedad var="CadenaConexion_Profit_2" valor="False" />
+    <propiedad var="Conexion_Profit_2" valor="Provider=sqloledb;Initial Catalog=AGA01;Data Source=saint;Integrated Security=SSPI;" />
   </propiedades>
 </agenciaroyal>
