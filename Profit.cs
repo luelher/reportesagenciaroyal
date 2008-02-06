@@ -237,7 +237,7 @@ namespace GrupoEmporium.Profit.Reportes
 		#region Contructor
 		public Profit()
 		{
-			CargarConfig();
+			CargarConfig(true);
 
 			_LaFecha = DateTime.Now;
 
@@ -255,7 +255,7 @@ namespace GrupoEmporium.Profit.Reportes
 		public Profit(DateTime Fecha)
 		{
 
-			CargarConfig();
+			CargarConfig(true);
 
 			_LaFecha = Fecha;
 
@@ -270,6 +270,27 @@ namespace GrupoEmporium.Profit.Reportes
 			}
 
 		}
+
+
+		public Profit(DateTime Fecha, bool conex)
+		{
+
+			CargarConfig(conex);
+
+			_LaFecha = Fecha;
+
+			try
+			{
+				Conexion.Open();
+				Mensajes.Mensaje.Error(Conexion.State.ToString(),"Saint Reportes");
+			}
+			catch(Exception ex)
+			{
+				Mensajes.Mensaje.Error(ex.Message,"Saint Reportes");
+			}
+
+		}		
+		
 		#endregion
 
 		#region Propiedades
@@ -759,7 +780,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 		#region Metodos Privados
 
-		private void CargarConfig()
+		private void CargarConfig(bool conex)
 		{
 			
 			ClaseDocumentosXML MiConfig = new ClaseDocumentosXML(@"configsaint.xml");
@@ -786,12 +807,12 @@ namespace GrupoEmporium.Profit.Reportes
 			Conexion = new OleDbConnection(cadenaconexion);
 			configxml = MiConfig;
 
-			CargarConfigProfit();
+			CargarConfigProfit(conex);
 
 		}
 
 
-		private void CargarConfigProfit()
+		private void CargarConfigProfit(bool conex)
 		{
 			
 			ClaseDocumentosXML MiConfig = new ClaseDocumentosXML(@"configsaint.xml");
@@ -817,31 +838,52 @@ namespace GrupoEmporium.Profit.Reportes
 
 			Conexion_Profit = new OleDbConnection(cadenaconexion_Profit);
 			//configxml = MiConfig;
-			CargarConfigProfit_1();
+			CargarConfigProfit_1(conex);
 
 		}
 
 
-		private void CargarConfigProfit_1()
+		private void CargarConfigProfit_1(bool conex)
 		{
 			
 			ClaseDocumentosXML MiConfig = new ClaseDocumentosXML(@"configsaint.xml");
 			if(MiConfig.Cargado)
 			{
-				if (MiConfig["CadenaConexion_Profit_1"]=="False")
+				if(conex)
 				{
-					if (MiConfig["Dominio_Profit_1"]=="True")
-						strConexion_Profit_1 = new clsBDConexion(MiConfig["DataSource_Profit_1"],MiConfig["InitialCatalog_Profit_1"]);
-					else strConexion_Profit_1 = new clsBDConexion( MiConfig["DataSource_Profit_1"],MiConfig["InitialCatalog_Profit_1"],MiConfig["Usuario_Profit_1"],MiConfig["Contrasena_Profit_1"],false);
+					if (MiConfig["CadenaConexion_Profit_1"]=="False")
+					{
+						if (MiConfig["Dominio_Profit_1"]=="True")
+							strConexion_Profit_1 = new clsBDConexion(MiConfig["DataSource_Profit_1"],MiConfig["InitialCatalog_Profit_1"]);
+						else strConexion_Profit_1 = new clsBDConexion( MiConfig["DataSource_Profit_1"],MiConfig["InitialCatalog_Profit_1"],MiConfig["Usuario_Profit_1"],MiConfig["Contrasena_Profit_1"],false);
 
-					cadenaconexion_Profit_1 = strConexion_Profit_1.StringConexion;
+						cadenaconexion_Profit_1 = strConexion_Profit_1.StringConexion;
+					}
+					else
+					{
+						strConexion_Profit_1 = new clsBDConexion();
+						strConexion_Profit_1.TipoBaseDato = TipoBD.SQL_SERVER;
+						strConexion_Profit_1.StringConexion = cadenaconexion_Profit_1;
+						cadenaconexion_Profit_1 = MiConfig["Conexion_Profit_1"];
+					}
 				}
-				else
-				{
-					strConexion_Profit_1 = new clsBDConexion();
-					strConexion_Profit_1.TipoBaseDato = TipoBD.SQL_SERVER;
-					strConexion_Profit_1.StringConexion = cadenaconexion_Profit_1;
-					cadenaconexion_Profit_1 = MiConfig["Conexion_Profit_1"];
+				else{
+					if (MiConfig["CadenaConexion_Profit_2"]=="False")
+					{
+						if (MiConfig["Dominio_Profit_2"]=="True")
+							strConexion_Profit_1 = new clsBDConexion(MiConfig["DataSource_Profit_2"],MiConfig["InitialCatalog_Profit_2"]);
+						else strConexion_Profit_1 = new clsBDConexion( MiConfig["DataSource_Profit_2"],MiConfig["InitialCatalog_Profit_2"],MiConfig["Usuario_Profit_2"],MiConfig["Contrasena_Profit_2"],false);
+
+						cadenaconexion_Profit_1 = strConexion_Profit_1.StringConexion;
+					}
+					else
+					{
+						strConexion_Profit_1 = new clsBDConexion();
+						strConexion_Profit_1.TipoBaseDato = TipoBD.SQL_SERVER;
+						strConexion_Profit_1.StringConexion = cadenaconexion_Profit_1;
+						cadenaconexion_Profit_1 = MiConfig["Conexion_Profit_2"];
+					}
+
 				}
 
 			}
@@ -1147,8 +1189,10 @@ namespace GrupoEmporium.Profit.Reportes
 			list.Items.Add("Obteniendo " + dtFact.Rows.Count + " Registros de Saint." );
 			list.Refresh();
 
+			
 			for(int i=0;i<dtFact.Rows.Count;i++)
 			{
+				// Nuevo: Para buscar los registros perdidos
 				/*
 				if(ultimacedula=="") ultimacedula = dtFact.Rows[i]["CodClie"].ToString();
 				if(ultimacedula!=dtFact.Rows[i]["CodClie"].ToString())
@@ -1191,6 +1235,7 @@ namespace GrupoEmporium.Profit.Reportes
 					indexfc++;
 				}
 				*/
+
 				#region SQL CxC
 				SQL= "SELECT SAACXC.CodClie, SACLIE.Descrip, SAACXC.NroUnico, SAACXC.NroRegi, SAACXC.FechaE, SAACXC.FechaV, SAACXC.TipoCxc, SAACXC.Monto, SAACXC.NumeroD, SAACXC.Saldo, SAACXC.SaldoAct " +
 					" FROM SAACXC INNER JOIN SACLIE ON SAACXC.CodClie = SACLIE.CodClie" + 
@@ -1835,9 +1880,11 @@ namespace GrupoEmporium.Profit.Reportes
 						}
 
 						#endregion
+						
+						
 
-						list.Items.Add("Factura => " + doc[i].fact.NroFactura + " => Procedada..");
-						list.Items.Add("Procesados => " + i + " de " + doc.Length + " ");
+						list.Items.Add("Cliente > " + doc[i].fact.IDCliente + " > Factura > " + doc[i].fact.NroFactura + " => Procedada..");
+						//list.Items.Add("Procesados => " + i + " de " + doc.Length + " ");
 						list.Refresh();
 						list.SendToBack();		
 					
