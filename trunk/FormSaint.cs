@@ -97,6 +97,8 @@ namespace GrupoEmporium.Saint
 			this.LabelAcerca = new System.Windows.Forms.LinkLabel();
 			this.GridResultado = new System.Windows.Forms.DataGrid();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.rbconexion2 = new System.Windows.Forms.RadioButton();
+			this.rbconexion1 = new System.Windows.Forms.RadioButton();
 			this.labelGenerando = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.textMesHasta = new System.Windows.Forms.TextBox();
@@ -104,8 +106,6 @@ namespace GrupoEmporium.Saint
 			this.textMesDesde = new System.Windows.Forms.TextBox();
 			this.BtnMigrar = new System.Windows.Forms.Button();
 			this.BotonExportar = new System.Windows.Forms.Button();
-			this.rbconexion1 = new System.Windows.Forms.RadioButton();
-			this.rbconexion2 = new System.Windows.Forms.RadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.GridResultado)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -132,7 +132,7 @@ namespace GrupoEmporium.Saint
 															  "Cartas Morosos Por rango de meses con Encuesta(Profit)",
 															  "Cartas Ultimo Aviso (Profit)",
 															  "Carta Legal (Profit)",
-															  "Resumen Montos Morosos"});
+															  "Listado Clientes Morosos"});
 			this.ComboReporte.Location = new System.Drawing.Point(104, 40);
 			this.ComboReporte.Name = "ComboReporte";
 			this.ComboReporte.Size = new System.Drawing.Size(256, 21);
@@ -204,6 +204,24 @@ namespace GrupoEmporium.Saint
 			this.panel1.Size = new System.Drawing.Size(394, 216);
 			this.panel1.TabIndex = 7;
 			// 
+			// rbconexion2
+			// 
+			this.rbconexion2.Location = new System.Drawing.Point(280, 152);
+			this.rbconexion2.Name = "rbconexion2";
+			this.rbconexion2.Size = new System.Drawing.Size(104, 16);
+			this.rbconexion2.TabIndex = 14;
+			this.rbconexion2.Text = "Profit - Saint";
+			// 
+			// rbconexion1
+			// 
+			this.rbconexion1.Checked = true;
+			this.rbconexion1.Location = new System.Drawing.Point(280, 128);
+			this.rbconexion1.Name = "rbconexion1";
+			this.rbconexion1.Size = new System.Drawing.Size(104, 16);
+			this.rbconexion1.TabIndex = 13;
+			this.rbconexion1.TabStop = true;
+			this.rbconexion1.Text = "Profit Principal";
+			// 
 			// labelGenerando
 			// 
 			this.labelGenerando.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
@@ -265,24 +283,6 @@ namespace GrupoEmporium.Saint
 			this.BotonExportar.TabIndex = 6;
 			this.BotonExportar.Text = "Exportar Reporte";
 			this.BotonExportar.Click += new System.EventHandler(this.BotonExportar_Click);
-			// 
-			// rbconexion1
-			// 
-			this.rbconexion1.Checked = true;
-			this.rbconexion1.Location = new System.Drawing.Point(280, 128);
-			this.rbconexion1.Name = "rbconexion1";
-			this.rbconexion1.Size = new System.Drawing.Size(104, 16);
-			this.rbconexion1.TabIndex = 13;
-			this.rbconexion1.TabStop = true;
-			this.rbconexion1.Text = "Profit Principal";
-			// 
-			// rbconexion2
-			// 
-			this.rbconexion2.Location = new System.Drawing.Point(280, 152);
-			this.rbconexion2.Name = "rbconexion2";
-			this.rbconexion2.Size = new System.Drawing.Size(104, 16);
-			this.rbconexion2.TabIndex = 14;
-			this.rbconexion2.Text = "Profit - Saint";
 			// 
 			// FormSaint
 			// 
@@ -435,23 +435,15 @@ namespace GrupoEmporium.Saint
 					}else Mensaje.Error("Debe colocar el nro de los meses desde y hasta para realizar la consulta","Reportes Profit");
 
 					break;
-				case 9: // Reporte Resumen Morosos
-					if(textMesHasta.Text!="" && textMesDesde.Text!="")
-					{
+				case 9: // Reporte Listado Todos Los Morosos
 						ObjProfit = new Profit.Reportes.Profit(Fecha.Value, rbconexion1.Checked);
 
-						// Modificar la función Reporte_Morosos para crear un resumen
-						// de los totales de morosos existentes
-						//dt = ObjProfit.Reporte_Morosos(Convert.ToInt32(textMesDesde.Text),Convert.ToInt32(textMesHasta.Text));
+						dt = ObjProfit.Reporte_Morosos_Todos();
 
+						GridResultado.SetDataBinding(dt,"");
 
-						//GridResultado.SetDataBinding(dt,"");
-
-						//if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-						//else BotonExportar.Enabled=false;					
-					}
-					else Mensaje.Error("Debe colocar el nro de los meses desde y hasta para realizar la consulta","Reportes Profit");
-
+						if(dt.Rows.Count>0) BotonExportar.Enabled = true;
+						else BotonExportar.Enabled=false;					
 					break;
 			}
 			labelGenerando.Visible = false;
@@ -603,6 +595,21 @@ namespace GrupoEmporium.Saint
 							rpt.ExportarReporte(SFD.FileNames[0]);
 
 							//Profit.Reportes.Profit.ExportarCartas(dt,SFD.FileNames[0]);
+							Mensaje.Informar("Reporte Generado",this);
+						}
+						catch(Exception ex)
+						{Mensaje.Error(ex.Message,this);}
+					}
+					break;
+				case 9:
+					//Experiencia
+					
+					SFD.ShowDialog(this);
+					if(SFD.FileNames[0].Trim()!="")
+					{
+						try
+						{
+							Profit.Reportes.Profit.ExportarMorosos(dt,SFD.FileNames[0]);
 							Mensaje.Informar("Reporte Generado",this);
 						}
 						catch(Exception ex)

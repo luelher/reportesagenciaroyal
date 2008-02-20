@@ -306,7 +306,177 @@ namespace GrupoEmporium.Profit.Reportes
 
 		#region Metodos Públicos
 
-		public DataTable Reporte_Morosos(int desde, int hasta)
+		public DataTable Reporte_Morosos_Todos()
+		{
+			int desde = 1; int hasta = 40;
+			Conexion_Profit_1.Open();
+
+			if(Conexion_Profit_1.State == ConnectionState.Open)
+			{
+
+				DataTable dt = new DataTable();
+				DataTable dtReporte = new DataTable();
+				DataTable dt_nro_doc = new DataTable();
+				DataTable dt_fechas_cobros = new DataTable();
+				DataRow dr;
+				string cliente = "";
+				bool hecho = false;
+				int dias_ultimo_pago=0;
+				Decimal meses=0;
+				int resto = 0;
+
+				DateTime fecha_ultimo_cobro;
+			
+				#region SQL Union Facturas
+
+				SQL =	" SELECT " +
+					" docum_cc.co_cli     AS CodClie, " +
+					" clientes.cli_des    AS Descrip, " +
+					" clientes.direc1     AS Direc1, " +
+					" clientes.direc2     AS Direc2, " +
+					" clientes.telefonos  AS Telef, " +
+					" docum_cc.nro_doc    AS NumeroD, " +
+					" condicio.dias_cred  AS NGiros, " +
+					" docum_cc.fec_emis   AS FechaE, " +
+					" docum_cc.fec_venc   AS FechaV, " +
+					" docum_cc.monto_net  AS MtoFinanc " +
+					" FROM " +
+					" ((docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
+					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
+					" WHERE " +
+					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
+					//" AND docum_cc.co_cli='7983524' " + 
+					" ORDER BY " +
+					" CodClie ASC;";
+
+				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
+
+				Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(),"Saint Reportes");
+
+				#endregion
+
+				if(dt.Rows.Count>0)
+				{
+					Factura RFactura;
+
+					dtReporte.Columns.Add("cliente",System.Type.GetType("System.String"));
+					dtReporte.Columns.Add("cedula",System.Type.GetType("System.String"));
+					dtReporte.Columns.Add("direccion",System.Type.GetType("System.String"));
+					dtReporte.Columns.Add("telefono",System.Type.GetType("System.String"));
+
+					dtReporte.Columns.Add("fechae",System.Type.GetType("System.DateTime"));
+					dtReporte.Columns.Add("fechav",System.Type.GetType("System.DateTime"));
+
+					dtReporte.Columns.Add("meses",System.Type.GetType("System.Byte"));
+					dtReporte.Columns.Add("saldo",System.Type.GetType("System.Double"));
+					dtReporte.Columns.Add("ultcobro",System.Type.GetType("System.DateTime"));
+					dtReporte.Columns.Add("dias",System.Type.GetType("System.String"));
+					dtReporte.Columns.Add("pagomensual",System.Type.GetType("System.Double"));
+
+					//dtReporte.Columns.Add("saldovencido",System.Type.GetType("System.Double"));
+					dtReporte.Columns.Add("saldovencidosincancelar",System.Type.GetType("System.Double"));
+					dtReporte.Columns.Add("saldorestante",System.Type.GetType("System.Double"));
+					dtReporte.Columns.Add("girossincancelar",System.Type.GetType("System.Byte"));
+					dtReporte.Columns.Add("girosvencidossincancelar",System.Type.GetType("System.Byte"));
+					//dtReporte.Columns.Add("impuesto",System.Type.GetType("System.Double"));
+					//dtReporte.Columns.Add("intereses",System.Type.GetType("System.Double"));
+					dtReporte.Columns.Add("diasultimopago",System.Type.GetType("System.String"));
+
+					for(int i=0;i<dt.Rows.Count;i++)
+					{
+
+						SQL =	"SELECT " +
+							" docum_cc.nro_doc " +
+							"FROM " +
+							" docum_cc " +
+							"WHERE " +
+							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyMMdd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
+						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
+
+						if(cliente != dt.Rows[i]["CodClie"].ToString())
+						{
+							cliente = dt.Rows[i]["CodClie"].ToString();
+							hecho = true;
+						}
+						
+						if(dt_nro_doc.Rows.Count>0 && hecho)
+						{
+							RFactura = ResumenFactura(dt_nro_doc.Rows[0]["nro_doc"].ToString(),dt.Rows[i]["CodClie"].ToString(),(DateTime)dt.Rows[i]["FechaE"]);
+
+							if(!RFactura.Cancelada)
+							{
+								RFactura.IDCliente = dt.Rows[i]["CodClie"].ToString();
+								int CantGiros = Convert.ToInt32( dt.Rows[i]["NGiros"].ToString() )/30;
+								//if(CantGiros>0) RFactura.PagoMensual  = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString())/CantGiros;
+
+								RFactura.Giros = CantGiros;
+								//RFactura.MontoTotal = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString());
+								RFactura.FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
+								//RFactura.FechaCancelacion = Convert.ToDateTime(dt.Rows[i]["FechaV"].ToString());
+								RFactura.Cliente = dt.Rows[i]["Descrip"].ToString();
+
+								SQL =	" SELECT cobros.fec_cob  " +
+									" FROM " +
+									" docum_cc INNER JOIN (reng_cob INNER JOIN cobros ON reng_cob.cob_num = cobros.cob_num) ON docum_cc.nro_doc = reng_cob.doc_num " +
+									" WHERE " +
+									" docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "' " +
+									" ORDER BY " +
+									" cobros.fec_cob DESC ";
+								clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_fechas_cobros);
+
+								if(dt_fechas_cobros.Rows.Count>0)
+								{
+									fecha_ultimo_cobro=Convert.ToDateTime(dt_fechas_cobros.Rows[0][0].ToString());}
+								else{fecha_ultimo_cobro=DateTime.MinValue;}
+
+								dias_ultimo_pago = Analizar_FechaV(fecha_ultimo_cobro.ToString(),DateTime.Now);;
+
+								resto = RFactura.Dias % 30;
+								meses = Math.Abs(RFactura.Dias / 30);
+								if(resto>0) meses++;
+
+								if(RFactura.NroFactura !="" && (RFactura.GirosVencidosSinCancelar >=desde && RFactura.GirosVencidosSinCancelar <=hasta))
+								{
+									dr = dtReporte.NewRow();
+									dr["cliente"] = RFactura.Cliente;
+									dr["cedula"] = RFactura.IDCliente;
+									dr["direccion"] = dt.Rows[i]["Direc1"].ToString();
+									dr["telefono"] = dt.Rows[i]["Telef"].ToString();
+									dr["fechae"] = dt.Rows[i]["FechaE"].ToString();
+									dr["fechav"] = dt.Rows[i]["FechaV"].ToString();
+
+									dr["meses"] = RFactura.GirosVencidosSinCancelar;
+
+									dr["saldo"] = RFactura.SaldoVencidoSinCancelar;
+									dr["ultcobro"] = fecha_ultimo_cobro;
+									dr["dias"] = dias_ultimo_pago;
+									dr["pagomensual"] = RFactura.PagoMensual.ToString("#########.00");
+
+									//dr["saldovencido"] = RFactura.SaldoVencido;
+									dr["saldovencidosincancelar"] = RFactura.SaldoVencidoSinCancelar;
+									dr["saldorestante"] = RFactura.SaldoRestante;
+									dr["girossincancelar"] = RFactura.GirosSinCancelar;
+									dr["girosvencidossincancelar"] = RFactura.GirosVencidosSinCancelar;
+									//dr["impuesto"] = RFactura.Impuesto;
+									//dr["intereses"] = RFactura.Intereses;
+									dr["diasultimopago"] = dias_ultimo_pago;
+
+									dtReporte.Rows.Add(dr);
+									hecho = false;
+								}
+							}
+						}
+					}
+					dtReporte.AcceptChanges();
+					CerrarConexiones();
+					return dtReporte;
+				}
+				else {CerrarConexiones(); return new DataTable();}
+			}
+			else {CerrarConexiones(); return new DataTable();}
+		}
+
+		public DataTable Reporte_Morosos(int desde, int hasta )
 		{
 			Conexion_Profit_1.Open();
 
@@ -449,6 +619,7 @@ namespace GrupoEmporium.Profit.Reportes
 			}
 			else {CerrarConexiones(); return new DataTable();}
 		}
+
 
 		public DataTable Reporte_Gerencial_Morosos(int desde, int hasta)
 		{
@@ -731,6 +902,71 @@ namespace GrupoEmporium.Profit.Reportes
 					FechaV.ToString("dd/MM/yyyy")+Tab+
 					dt.Rows[i]["Experiencia"].ToString() +Tab;
 
+				TxtFile.WriteLine(Cad);
+
+			}
+
+			TxtFile.Close();
+
+		}
+
+		public static void ExportarMorosos(DataTable dt,string arch)
+		{
+			if (System.IO.File.Exists(arch)){System.IO.File.Delete(arch);}
+			StreamWriter TxtFile = new StreamWriter (arch,true);
+
+			string Cliente;
+			string Cedula;
+			string Direccion;
+			string Telefono;
+			DateTime Fechae;
+			DateTime Fechav;
+			string Meses;
+			double Saldo;
+			DateTime Ultcobro;
+			string Dias;
+			double Pagomensual;
+			//double Saldovencido;
+			double Saldovencidosincancelar;
+			double Saldorestante;
+			string Girossincancelar;
+			string Girosvencidossincancelar;
+			//double Impuesto;
+			//double Intereses;
+			string Diasultimopago;
+
+			for(int i=0;i<dt.Rows.Count;i++)
+			{
+
+				Cliente					=			dt.Rows[i]["cliente"].ToString();
+				Cedula					=			dt.Rows[i]["cedula"].ToString();
+				Direccion				=			dt.Rows[i]["direccion"].ToString();
+				Telefono				=			dt.Rows[i]["telefono"].ToString();
+				Fechae					=			Convert.ToDateTime(dt.Rows[i]["fechae"].ToString());
+				Fechav					=			Convert.ToDateTime(dt.Rows[i]["fechav"].ToString());
+
+				Meses					=			dt.Rows[i]["meses"].ToString();
+
+				Saldo					=			Convert.ToDouble(dt.Rows[i]["saldo"].ToString());
+				Ultcobro				=			Convert.ToDateTime(dt.Rows[i]["ultcobro"].ToString());
+				Dias					=			dt.Rows[i]["dias"].ToString();
+				Pagomensual				=			Convert.ToDouble(dt.Rows[i]["pagomensual"].ToString());
+
+				//Saldovencido			=			Convert.ToDouble(dt.Rows[i]["saldovencido"].ToString());
+				Saldovencidosincancelar	=			Convert.ToDouble(dt.Rows[i]["saldovencidosincancelar"].ToString());
+				Saldorestante			=			Convert.ToDouble(dt.Rows[i]["saldorestante"].ToString());
+				Girossincancelar		=			dt.Rows[i]["girossincancelar"].ToString();
+				Girosvencidossincancelar=			dt.Rows[i]["girosvencidossincancelar"].ToString();
+				//Impuesto				=			Convert.ToDouble(dt.Rows[i]["impuesto"].ToString());
+				//Intereses				=			Convert.ToDouble(dt.Rows[i]["intereses"].ToString());
+				Diasultimopago			=			dt.Rows[i]["diasultimopago"].ToString();
+
+				string Cad = Cliente + Tab + Cedula + Tab + Direccion + Tab + Telefono + Tab + Fechae.ToString("dd/MM/yyyy") + Tab + Fechav.ToString("dd/MM/yyyy") + Tab + Meses + Tab + 
+					Saldo.ToString("#,##0.00;($#,##0.00);0") + Tab + Ultcobro.ToString("dd/MM/yyyy") + Tab + 
+					Dias + Tab + Pagomensual.ToString("#,##0.00;($#,##0.00);0") + Tab + 
+					Saldovencidosincancelar.ToString("#,##0.00;($#,##0.00);0") + Tab + Saldorestante.ToString("#,##0.00;($#,##0.00);0") + Tab + 
+					Girossincancelar + Tab + Girosvencidossincancelar + Tab + Diasultimopago;
+					
 				TxtFile.WriteLine(Cad);
 
 			}
