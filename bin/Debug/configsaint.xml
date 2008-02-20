@@ -25,7 +25,7 @@
     <propiedad var="Contrasena_Profit_1" valor="''" />
     <propiedad var="CadenaConexion_Profit_1" valor="False" />
     <propiedad var="Conexion_Profit_1" valor="Provider=sqloledb;Initial Catalog=RECADMAR;Data Source=serverar;Integrated Security=SSPI;" />
-}
+
     <propiedad var="Dominio_Profit_2" valor="True" />
     <propiedad var="DataSource_Profit_2" valor="serverar" />
     <propiedad var="InitialCatalog_Profit_2" valor="SAIAGREC" />
