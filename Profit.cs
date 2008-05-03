@@ -772,6 +772,7 @@ namespace GrupoEmporium.Profit.Reportes
 		{
 			if(Conexion.State == ConnectionState.Open)
 			{
+				// 641.555   10842309
 
 				DataTable dt = new DataTable();
 				DataTable dtReporte = new DataTable();
@@ -795,7 +796,8 @@ namespace GrupoEmporium.Profit.Reportes
 							" (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
 							" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num " +
 						" WHERE " +
-							" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyMMdd") + "'";
+							" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyMMdd") + "'" +
+							" and clientes.co_cli='10842309'";
 
 				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
 
@@ -1247,7 +1249,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 					DateTime FE = Convert.ToDateTime(dtCxC.Rows[i]["FechaE"].ToString());
 
-					Dias = Analizar_FechaV(dtCxC.Rows[i]["FechaE"].ToString(),DateTime.Now);
+					Dias = Analizar_FechaV(dtCxC.Rows[i]["FechaV"].ToString(),DateTime.Now);
 					strMonto = dtCxC.Rows[i]["Saldo"].ToString();
 					Monto = Convert.ToDouble(strMonto);
 
