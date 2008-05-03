@@ -797,7 +797,8 @@ namespace GrupoEmporium.Profit.Reportes
 							" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num " +
 						" WHERE " +
 							" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyMMdd") + "'" +
-							" and clientes.co_cli='10842309'";
+							//" and clientes.co_cli='10842309'";
+							"";
 
 				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
 
