@@ -391,7 +391,7 @@ namespace GrupoEmporium.Profit.Reportes
 							"FROM " +
 							" docum_cc " +
 							"WHERE " +
-							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyMMdd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
+							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
 						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
 
 						if(cliente != dt.Rows[i]["CodClie"].ToString())
@@ -548,7 +548,7 @@ namespace GrupoEmporium.Profit.Reportes
 							"FROM " +
 							" docum_cc " +
 							"WHERE " +
-							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyMMdd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
+							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
 						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
 
 						if(cliente != dt.Rows[i]["CodClie"].ToString())
@@ -694,7 +694,7 @@ namespace GrupoEmporium.Profit.Reportes
 							"FROM " +
 							" docum_cc " +
 							"WHERE " +
-							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyMMdd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
+							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
 						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
 
 						if(cliente != dt.Rows[i]["CodClie"].ToString())
@@ -807,7 +807,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
 
-                Mensajes.Mensaje.Informar(dt.Rows.Count.ToString() + SQL, "Saint Reportes");
+                Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(), "Saint Reportes");
 
 				#endregion
 
@@ -834,7 +834,7 @@ namespace GrupoEmporium.Profit.Reportes
 								"FROM " +
 									" docum_cc " +
 								"WHERE " +
-									" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyMMdd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
+									" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
 						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
 
 						if(dt_nro_doc.Rows.Count>0)
@@ -1483,7 +1483,7 @@ namespace GrupoEmporium.Profit.Reportes
 				#region SQL CxC
 				SQL= "SELECT SAACXC.CodClie, SACLIE.Descrip, SAACXC.NroUnico, SAACXC.NroRegi, SAACXC.FechaE, SAACXC.FechaV, SAACXC.TipoCxc, SAACXC.Monto, SAACXC.NumeroD, SAACXC.Saldo, SAACXC.SaldoAct " +
 					" FROM SAACXC INNER JOIN SACLIE ON SAACXC.CodClie = SACLIE.CodClie" + 
-					" WHERE SAACXC.TipoCxc='60' AND DATEDIFF(dd,'" + Convert.ToDateTime(dtFact.Rows[i]["FechaE"].ToString()).ToString("yyMMdd") + "',SAACXC.FechaE)=0 AND SAACXC.CodClie = '" + dtFact.Rows[i]["CodClie"].ToString() + "' " +
+					" WHERE SAACXC.TipoCxc='60' AND DATEDIFF(dd,'" + Convert.ToDateTime(dtFact.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "',SAACXC.FechaE)=0 AND SAACXC.CodClie = '" + dtFact.Rows[i]["CodClie"].ToString() + "' " +
 					" ORDER BY SAACXC.NroUnico ASC; ";
 				#endregion
 				clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dtCxC);
@@ -1653,17 +1653,17 @@ namespace GrupoEmporium.Profit.Reportes
 								"'" + doc[i].fact.Cliente + "', " +
 								"'" + doc[i].fact.Direccion + "', " +
 								"'" + doc[i].fact.Telefono + "', " +
-								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
-								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' AS DATETIME), " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' AS DATETIME), " +
 								"'01', " +
 								"'01', " +
 								"'" + co_ve + "', " +
 								"'V-" + doc[i].fact.IDCliente.PadRight(10) + "', " +
 								"'01', " +
 								"'002', " +
-								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
-								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
-								"CAST('" + doc[i].fact.FechaE.ToString("yyMMdd") + "' AS DATETIME), " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' AS DATETIME), " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' AS DATETIME), " +
+								"CAST('" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' AS DATETIME), " +
 								"'" + co_su + "', " +
 								"1, " +
 								"0, " +
@@ -1688,11 +1688,11 @@ namespace GrupoEmporium.Profit.Reportes
 
 						SQL = "INSERT INTO [docum_cc] ([tipo_doc], [nro_doc], [anulado], [movi], [aut], [num_control], [co_cli], [contrib], [fec_emis], [fec_venc], [observa], [doc_orig], [nro_orig], [co_ban], [nro_che], [co_ven], [tipo], [tasa], [moneda], [monto_imp], [monto_gen], [monto_a1], [monto_a2], [monto_bru], [descuentos], [monto_des], [recargo], [monto_rec], [monto_otr], [monto_net], [saldo], [feccom], [numcom], [dis_cen], [comis1], [comis2], [comis3], [comis4], [adicional], [campo1], [campo2], [campo3], [campo4], [campo5], [campo6], [campo7], [campo8], [co_us_in], [fe_us_in], [co_us_mo], [fe_us_mo], [co_us_el], [fe_us_el], [revisado], [trasnfe], [numcon], [co_sucu], [mon_ilc], [otros1], [otros2], [otros3], [reng_si], [comis5], [comis6], [row_id], [aux01], [aux02], [salestax], [origen], [origen_d]) " +
 							"VALUES " +
-							" ('FACT', " + max_fact_num + ", 0, 0, 1, 0, '" + doc[i].fact.IDCliente.PadRight(10) + "', 1, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '" + doc[i].fact.FechaCancelacion.ToString("yyMMdd") + "', '', '', 0, '0', '', '" + co_ve + "', '1', 1, 'BS', " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.Impuesto)) + ", 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto)) + ", '', 0, '', 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto + doc[i].fact.Impuesto)) + ", 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, ' " +
+							" ('FACT', " + max_fact_num + ", 0, 0, 1, 0, '" + doc[i].fact.IDCliente.PadRight(10) + "', 1, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', '" + doc[i].fact.FechaCancelacion.ToString("yyyy-MM-dd") + "', '', '', 0, '0', '', '" + co_ve + "', '1', 1, 'BS', " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.Impuesto)) + ", 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto)) + ", '', 0, '', 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto + doc[i].fact.Impuesto)) + ", 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, ' " +
 							" <IVA> " +
 							" <1>14.000/" + Clase_ValidarDBL.ComaXPunto(doc[i].fact.MontoNeto.ToString("#########.00")) + "/" + Clase_ValidarDBL.ComaXPunto(doc[i].fact.Impuesto.ToString("#########.00")) + "</1> " +
 							" </IVA>' " + 
-							", 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '" + co_us + "', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '" + co_us + "', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '', '', '" + co_su + "', 0, 0, 0, 0, 0, 0, 0, DEFAULT, 0, 'Luelher', '', '', '') ";
+							", 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '" + co_us + "', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + co_us + "', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '', '', '" + co_su + "', 0, 0, 0, 0, 0, 0, 0, DEFAULT, 0, 'Luelher', '', '', '') ";
 
 						if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 						{
@@ -1708,7 +1708,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 						SQL = "INSERT INTO [cobros] ([cob_num], [recibo], [co_cli], [co_ven], [fec_cob], [anulado], [monto], [dppago], [mont_ncr], [ncr], [tcomi_porc], [tcomi_line], [tcomi_art], [tcomi_conc], [feccom], [tasa], [moneda], [numcom], [dis_cen], [campo1], [campo2], [campo3], [campo4], [campo5], [campo6], [campo7], [campo8], [co_us_in], [fe_us_in], [co_us_mo], [fe_us_mo], [co_us_el], [fe_us_el], [recargo], [adel_num], [revisado], [trasnfe], [co_sucu], [descrip], [num_dev], [devdinero], [num_turno], [aux01], [aux02], [origen], [origen_d]) " +
 							"VALUES " +
-							"(" + max_cobro_num.ToString() + ", '', '" + doc[i].fact.IDCliente.PadRight(10) + "', '" + co_ve + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, 0, 0, 0, 0, 0, 0, 0, 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 1, 'BS', 0, '', '', '', '', '', '', '', '', '', '005', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', 0, 0, '', '', '" + co_su + "', '', 0, 0, 0, 0, 'Luelher', '', '') ";
+							"(" + max_cobro_num.ToString() + ", '', '" + doc[i].fact.IDCliente.PadRight(10) + "', '" + co_ve + "', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, 0, 0, 0, 0, 0, 0, 0, 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 1, 'BS', 0, '', '', '', '', '', '', '', '', '', '005', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', 0, 0, '', '', '" + co_su + "', '', 0, 0, 0, 0, 'Luelher', '', '') ";
 
 						if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 						{
@@ -1757,8 +1757,8 @@ namespace GrupoEmporium.Profit.Reportes
 							"" + max_nro_doc_CFXG + ", " +
 							"1, " +
 							"1, " +
-							"'" + doc[i].fact.FechaE.ToString("yyMMdd") + "', " +
-							"'" + doc[i].fact.FechaCancelacion.ToString("yyMMdd") + "', " +
+							"'" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', " +
+							"'" + doc[i].fact.FechaCancelacion.ToString("yyyy-MM-dd") + "', " +
 							"'GIROS " + max_nro_doc_GIRO.ToString() + "-" + Clase_ValidarDBL.ComaXPunto(Convert.ToString(max_nro_doc_GIRO+doc[i].fact.Giros)) + " FACT " + max_fact_num.ToString() + "', " + 
 							"'COBR', " +
 							"" + max_cobro_num.ToString() + ", " +
@@ -1771,10 +1771,10 @@ namespace GrupoEmporium.Profit.Reportes
 							"0, " +
 							"" + Clase_ValidarDBL.ComaXPunto(Convert.ToDouble(doc[i].fact.MontoNeto+doc[i].fact.Impuesto).ToString("#########.00")) + ", " +
 							"0, " +
-							"'" + doc[i].fact.FechaE.ToString("yyMMdd") + "', " +
+							"'" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', " +
 							"'" + co_us + "', " +
-							"'" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', " +
-							"'" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', " +
+							"'" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', " +
+							"'" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', " +
 							"'" + co_su + "', " +
 							"DEFAULT, " +
 							"'Luelher' " +
@@ -1803,11 +1803,11 @@ namespace GrupoEmporium.Profit.Reportes
 							else condicio = Convert.ToString((doc[i].fact.Giros+1));
 						SQL = "INSERT INTO [factura] ([fact_num], [contrib], [nombre], [rif], [nit], [num_control], [status], [comentario], [descrip], [saldo], [fec_emis], [fec_venc], [co_cli], [co_ven], [co_tran], [dir_ent], [forma_pag], [tot_bruto], [tot_neto], [glob_desc], [tot_reca], [porc_gdesc], [porc_reca], [total_uc], [total_cp], [tot_flete], [monto_dev], [totklu], [anulada], [impresa], [iva], [iva_dev], [feccom], [numcom], [tasa], [moneda], [dis_cen], [vuelto], [seriales], [tasag], [tasag10], [tasag20], [campo1], [campo2], [campo3], [campo4], [campo5], [campo6], [campo7], [campo8], [co_us_in], [fe_us_in], [co_us_mo], [fe_us_mo], [co_us_el], [fe_us_el], [revisado], [trasnfe], [numcon], [co_sucu], [mon_ilc], [otros1], [otros2], [otros3], [num_turno], [aux01], [aux02], [ID], [salestax], [origen], [origen_d]) " +
 							"VALUES " +
-							"(" + max_fact_num.ToString() + ", 1, '', '', '', 0, '0', '" + comentario + "', '', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '" + doc[i].fact.FechaCancelacion.ToString("yyMMdd") + "', '" + doc[i].fact.IDCliente.PadRight(10) + "', '" + co_ve + "', '001', '', '" + condicio + "', " + Clase_ValidarDBL.ComaXPunto(doc[i].fact.MontoNeto.ToString()) + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto+doc[i].fact.Impuesto)) + ", 0, 0, '', '', 0, 0, 0, 0, 0, 0, 1, " + Clase_ValidarDBL.ComaXPunto(doc[i].fact.Impuesto.ToString()) + ", 0, '19000101', 0, 1, 'BS', ' " + 
+							"(" + max_fact_num.ToString() + ", 1, '', '', '', 0, '0', '" + comentario + "', '', 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', '" + doc[i].fact.FechaCancelacion.ToString("yyyy-MM-dd") + "', '" + doc[i].fact.IDCliente.PadRight(10) + "', '" + co_ve + "', '001', '', '" + condicio + "', " + Clase_ValidarDBL.ComaXPunto(doc[i].fact.MontoNeto.ToString()) + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto+doc[i].fact.Impuesto)) + ", 0, 0, '', '', 0, 0, 0, 0, 0, 0, 1, " + Clase_ValidarDBL.ComaXPunto(doc[i].fact.Impuesto.ToString()) + ", 0, '19000101', 0, 1, 'BS', ' " + 
 							"<IVA> " + 
 							"<1>14.000/" + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto.ToString("#########.00"))) + "/" + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.Intereses.ToString("#########.00"))) + "</1> " +
 							"</IVA>' " +
-							", 0, 0, 14, 0, 0, '', '', '', '', '', '', '', '', '" + co_us + "', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '', '', '" + co_su + "', 0, 0, 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(doc[i].fact.MontoNeto.ToString("#########.00")) + ", '" + max_cobro_num.ToString() + "', -1, '', '', '') ";
+							", 0, 0, 14, 0, 0, '', '', '', '', '', '', '', '', '" + co_us + "', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '', '', '" + co_su + "', 0, 0, 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(doc[i].fact.MontoNeto.ToString("#########.00")) + ", '" + max_cobro_num.ToString() + "', -1, '', '', '') ";
 
 						if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 						{
@@ -1833,7 +1833,7 @@ namespace GrupoEmporium.Profit.Reportes
 							if(dtArt.Rows.Count == 0){
 								SQL = "INSERT INTO [art] ([co_art], [art_des], [fecha_reg], [manj_ser], [co_lin], [co_cat], [co_subl], [co_color], [item], [ref], [modelo], [procedenci], [comentario], [co_prov], [ubicacion], [uni_venta], [uni_compra], [uni_relac], [relac_aut], [stock_act], [stock_com], [sstock_com], [stock_lle], [sstock_lle], [stock_des], [sstock_des], [suni_venta], [suni_compr], [suni_relac], [sstock_act], [relac_comp], [relac_vent], [pto_pedido], [stock_max], [stock_min], [prec_om], [prec_vta1], [fec_prec_v], [fec_prec_2], [prec_vta2], [fec_prec_3], [prec_vta3], [fec_prec_4], [prec_vta4], [fec_prec_5], [prec_vta5], [prec_agr1], [prec_agr2], [prec_agr3], [prec_agr4], [prec_agr5], [can_agr], [fec_des_p5], [fec_has_p5], [co_imp], [margen_max], [ult_cos_un], [fec_ult_co], [cos_pro_un], [fec_cos_pr], [cos_merc], [fec_cos_me], [cos_prov], [fec_cos_p2], [ult_cos_do], [fec_cos_do], [cos_un_an], [fec_cos_an], [ult_cos_om], [fec_ult_om], [cos_pro_om], [fec_pro_om], [tipo_cos], [mont_comi], [porc_cos], [mont_cos], [porc_gas], [mont_gas], [f_cost], [fisico], [punt_cli], [punt_pro], [dias_repos], [tipo], [alm_prin], [anulado], [tipo_imp], [dis_cen], [mon_ilc], [capacidad], [grado_al], [tipo_licor], [compuesto], [picture], [campo1], [campo2], [campo3], [campo4], [campo5], [campo6], [campo7], [campo8], [co_us_in], [fe_us_in], [co_us_mo], [fe_us_mo], [co_us_el], [fe_us_el], [revisado], [trasnfe], [co_sucu], [tuni_venta], [equi_uni1], [equi_uni2], [equi_uni3], [lote], [serialp], [valido], [atributo1], [vatributo1], [atributo2], [vatributo2], [atributo3], [vatributo3], [atributo4], [vatributo4], [atributo5], [vatributo5], [atributo6], [vatributo6], [garantia], [peso], [pie], [margen1], [margen2], [margen3], [margen4], [margen5], [imagen1], [imagen2], [i_art_des], [uni_emp], [rel_emp], [movil], [row_id]) " +
 									" VALUES " +                                                                                                                                                                                                                                 //01 o UND
-									" ('" + doc[i].detfact[k].CodItem + "', '" + doc[i].detfact[k].Descripcion + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '01', 'SAINT', '01', '01', '', '', 'MODSAINT', '01', '', '01', '', '01', '', 1, 1, -1, 0, 0, 0, 0, 0, 0, '01', '', 0, 0, 0, 0, 0, 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + ", '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, 0, 0, 0, 0, 0, 1, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', 0, 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + " , '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 'ULCO', 0, 0, 0, 0, 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, 0, 0, 0, 'V', '', 0, '1', '', 0, 0, 0, '', 0, NULL, '', '', '', '', '', '', '', '', '" + co_us + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , '" + co_us + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', '', '', '" + co_su + "', 'UND', 1, 1, 1, 0, '', 0, 0, '', 0, '', 0, '', 0, '', 0, '', 0, '', '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', 1, 0, DEFAULT) ";
+									" ('" + doc[i].detfact[k].CodItem + "', '" + doc[i].detfact[k].Descripcion + "', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, '01', 'SAINT', '01', '01', '', '', 'MODSAINT', '01', '', '01', '', '01', '', 1, 1, -1, 0, 0, 0, 0, 0, 0, '01', '', 0, 0, 0, 0, 0, 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + ", '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, 0, 0, 0, 0, 0, 1, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', '', 0, 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + " , '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' , 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' , 'ULCO', 0, 0, 0, 0, 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' , 0, 0, 0, 0, 'V', '', 0, '1', '', 0, 0, 0, '', 0, NULL, '', '', '', '', '', '', '', '', '" + co_us + "', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' , '" + co_us + "', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', '', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', '', '', '" + co_su + "', 'UND', 1, 1, 1, 0, '', 0, 0, '', 0, '', 0, '', 0, '', 0, '', 0, '', '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', 1, 0, DEFAULT) ";
 
 								if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 								{
@@ -1850,7 +1850,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 							SQL = "INSERT INTO [reng_fac] ([fact_num], [reng_num], [dis_cen], [tipo_doc], [reng_doc], [num_doc], [co_art], [co_alma], [total_art], [stotal_art], [pendiente], [uni_venta], [prec_vta], [porc_desc], [tipo_imp], [isv], [reng_neto], [cos_pro_un], [ult_cos_un], [ult_cos_om], [cos_pro_om], [total_dev], [monto_dev], [prec_vta2], [anulado], [des_art], [seleccion], [cant_imp], [comentario], [total_uni], [mon_ilc], [otros], [nro_lote], [fec_lote], [pendiente2], [tipo_doc2], [reng_doc2], [num_doc2], [tipo_prec], [co_alma2], [aux01], [aux02]) " +
 								" VALUES " +
-								" (" + max_fact_num + ", " + (k+1) + ", '', '', 0, 0, '" + doc[i].detfact[k].CodItem + "', '01', 1, 0, 1, 'UND', " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + ", '', '1', 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString((doc[i].fact.MontoNeto/doc[i].detfact.Length)/2)) + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString((doc[i].fact.MontoNeto/doc[i].detfact.Length)/2)) + ", 0, 0, 0, 0, 0, 0, '', 0, 0, '', 1, 0, 0, '', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "' , 0, '', 0, 0, '1', '', 0, '') ";
+								" (" + max_fact_num + ", " + (k+1) + ", '', '', 0, 0, '" + doc[i].detfact[k].CodItem + "', '01', 1, 0, 1, 'UND', " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + ", '', '1', 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto/doc[i].detfact.Length)) + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString((doc[i].fact.MontoNeto/doc[i].detfact.Length)/2)) + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString((doc[i].fact.MontoNeto/doc[i].detfact.Length)/2)) + ", 0, 0, 0, 0, 0, 0, '', 0, 0, '', 1, 0, 0, '', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "' , 0, '', 0, 0, '1', '', 0, '') ";
 
 							if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 							{
@@ -1914,11 +1914,11 @@ namespace GrupoEmporium.Profit.Reportes
 
 							SQL = "INSERT INTO [docum_cc] ([tipo_doc], [nro_doc], [anulado], [movi], [aut], [num_control], [co_cli], [contrib], [fec_emis], [fec_venc], [observa], [doc_orig], [nro_orig], [co_ban], [nro_che], [co_ven], [tipo], [tasa], [moneda], [monto_imp], [monto_gen], [monto_a1], [monto_a2], [monto_bru], [descuentos], [monto_des], [recargo], [monto_rec], [monto_otr], [monto_net], [saldo], [feccom], [numcom], [dis_cen], [comis1], [comis2], [comis3], [comis4], [adicional], [campo1], [campo2], [campo3], [campo4], [campo5], [campo6], [campo7], [campo8], [co_us_in], [fe_us_in], [co_us_mo], [fe_us_mo], [co_us_el], [fe_us_el], [revisado], [trasnfe], [numcon], [co_sucu], [mon_ilc], [otros1], [otros2], [otros3], [reng_si], [comis5], [comis6], [row_id], [aux01], [aux02], [salestax], [origen], [origen_d]) " +
 								"VALUES " +
-								" ('GIRO', " + max_nro_doc_GIRO + ", 0, 0, 1, 0, '" + doc[i].fact.IDCliente.PadRight(10) + "', 1, '" + fechaE.ToString("yyMMdd") + "', '" + fechaV.ToString("yyMMdd") + "', 'GIRO " + j + "/" + doc[i].fact.Giros +" ; FACT " + max_fact_num + "' , 'CFXG', " + max_nro_doc_CFXG + ", '0', '', '" + co_ve + "', '6', 1, 'BS', 0, 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Monto_Bru.ToString()) + ", '" + porcentaje_descuento + "', " + Clase_ValidarDBL.ComaXPunto(descuento.ToString()) + ", '0', 0, " + Clase_ValidarDBL.ComaXPunto(Monto_Otr.ToString()) + ", " + Clase_ValidarDBL.ComaXPunto(Monto_Net.ToString()) + ", " + Clase_ValidarDBL.ComaXPunto(Saldo.ToString()) + ", '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, ' " +
+								" ('GIRO', " + max_nro_doc_GIRO + ", 0, 0, 1, 0, '" + doc[i].fact.IDCliente.PadRight(10) + "', 1, '" + fechaE.ToString("yyyy-MM-dd") + "', '" + fechaV.ToString("yyyy-MM-dd") + "', 'GIRO " + j + "/" + doc[i].fact.Giros +" ; FACT " + max_fact_num + "' , 'CFXG', " + max_nro_doc_CFXG + ", '0', '', '" + co_ve + "', '6', 1, 'BS', 0, 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Monto_Bru.ToString()) + ", '" + porcentaje_descuento + "', " + Clase_ValidarDBL.ComaXPunto(descuento.ToString()) + ", '0', 0, " + Clase_ValidarDBL.ComaXPunto(Monto_Otr.ToString()) + ", " + Clase_ValidarDBL.ComaXPunto(Monto_Net.ToString()) + ", " + Clase_ValidarDBL.ComaXPunto(Saldo.ToString()) + ", '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, ' " +
 								" <IVA> " +
 								" <E>" + Clase_ValidarDBL.ComaXPunto(Monto_Net.ToString("#########.00")) + "</E> " +
 								" </IVA>' " + 
-								", 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '" + co_us + "', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '" + co_us + "', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '', '', '" + co_su + "', 0, 0, 0, 0, 0, 0, 0, DEFAULT, 0, 'Luelher', '', '', '') ";
+								", 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '" + co_us + "', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + co_us + "', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '', '', '" + co_su + "', 0, 0, 0, 0, 0, 0, 0, DEFAULT, 0, 'Luelher', '', '', '') ";
 
 							nro_doc_GIRO[j] = max_nro_doc_GIRO;
 
@@ -1936,11 +1936,11 @@ namespace GrupoEmporium.Profit.Reportes
 
 						//SQL = "INSERT INTO [dbo].[reng_tip] ([cob_num], [reng_num], [tip_cob], [movi], [num_doc], [mont_doc], [mont_tmp], [moneda], [banco], [cod_caja], [des_caja], [fec_cheq], [nombre_ban], [numero], [devuelto], [operador], [clave]) " +
 						//	"VALUES  " +
-						//	"(" + max_cobro_num.ToString() + ", " + max_cobro_num.ToString() + ", 'EFEC', 0, '', 0, 0, 'BS', '', '', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '', 0, '', '') ";
+						//	"(" + max_cobro_num.ToString() + ", " + max_cobro_num.ToString() + ", 'EFEC', 0, '', 0, 0, 'BS', '', '', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '', 0, '', '') ";
 
 						SQL = "INSERT INTO reng_tip " +
 							" (cob_num,reng_num,tip_cob,num_doc,mont_doc,mont_tmp,banco,cod_caja,des_caja,fec_cheq, moneda) VALUES " +
-							" (" + max_cobro_num.ToString() + ", 1, 'EFEC', '                    ', 0, 0, '      ', '01    ', '                    ', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 'BS      ')";
+							" (" + max_cobro_num.ToString() + ", 1, 'EFEC', '                    ', 0, 0, '      ', '01    ', '                    ', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 'BS      ')";
 
 
 						if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
@@ -1956,7 +1956,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 						SQL = "INSERT INTO [reng_cob] ([cob_num], [reng_num], [tp_doc_cob], [doc_num], [neto], [neto_tmp], [dppago], [dppago_tmp], [reng_ncr], [co_ven], [comis1], [comis2], [comis3], [comis4], [sign_aju_c], [porc_aju_c], [por_cob], [comi_cob], [mont_cob], [sino_pago], [sino_reten], [monto_dppago], [monto_reten], [imp_pago], [monto_obj], [isv], [nro_fact], [moneda], [tasa], [numcon], [sustraen], [co_islr], [fec_emis], [fec_venc], [comis5], [comis6], [fact_iva], [ret_iva], [porc_retn], [porc_desc], [aux01], [aux02]) " +
 							"VALUES  " +
-							"(" + max_cobro_num + ", 1, 'FACT', " + max_fact_num + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString((doc[i].fact.MontoNeto + doc[i].fact.Impuesto))) + ", 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto)) + ", 0, 0, 0, 0, 0, 0, 0, '', 'BS', 1, '', 0, '', '', '" + DateTime.Now.ToString("yyMMdd") + "', 0, 0, 0, 0, 0, 0, 0, '') ";
+							"(" + max_cobro_num + ", 1, 'FACT', " + max_fact_num + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString((doc[i].fact.MontoNeto + doc[i].fact.Impuesto))) + ", 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto)) + ", 0, 0, 0, 0, 0, 0, 0, '', 'BS', 1, '', 0, '', '', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', 0, 0, 0, 0, 0, 0, 0, '') ";
 
 						if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 						{
@@ -1967,7 +1967,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 						SQL = "INSERT INTO [reng_cob] ([cob_num], [reng_num], [tp_doc_cob], [doc_num], [neto], [neto_tmp], [dppago], [dppago_tmp], [reng_ncr], [co_ven], [comis1], [comis2], [comis3], [comis4], [sign_aju_c], [porc_aju_c], [por_cob], [comi_cob], [mont_cob], [sino_pago], [sino_reten], [monto_dppago], [monto_reten], [imp_pago], [monto_obj], [isv], [nro_fact], [moneda], [tasa], [numcon], [sustraen], [co_islr], [fec_emis], [fec_venc], [comis5], [comis6], [fact_iva], [ret_iva], [porc_retn], [porc_desc], [aux01], [aux02]) " +
 							"VALUES  " +
-							"(" + max_cobro_num + ", 2, 'CFXG', " + max_nro_doc_CFXG + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString((doc[i].fact.MontoNeto + doc[i].fact.Impuesto))) + ", 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto)) + ", 0, 0, 0, 0, 0, 0, 0, '', 'BS', 1, '', 0, '', '', '" + DateTime.Now.ToString("yyMMdd") + "', 0, 0, 0, 0, 0, 0, 0, '') ";
+							"(" + max_cobro_num + ", 2, 'CFXG', " + max_nro_doc_CFXG + ", " + Clase_ValidarDBL.ComaXPunto(Convert.ToString((doc[i].fact.MontoNeto + doc[i].fact.Impuesto))) + ", 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(Convert.ToString(doc[i].fact.MontoNeto)) + ", 0, 0, 0, 0, 0, 0, 0, '', 'BS', 1, '', 0, '', '', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', 0, 0, 0, 0, 0, 0, 0, '') ";
 
 						if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 						{
@@ -1997,11 +1997,11 @@ namespace GrupoEmporium.Profit.Reportes
 
 							//SQL = "INSERT INTO [cobros] ([cob_num], [recibo], [co_cli], [co_ven], [fec_cob], [anulado], [monto], [dppago], [mont_ncr], [ncr], [tcomi_porc], [tcomi_line], [tcomi_art], [tcomi_conc], [feccom], [tasa], [moneda], [numcom], [dis_cen], [campo1], [campo2], [campo3], [campo4], [campo5], [campo6], [campo7], [campo8], [co_us_in], [fe_us_in], [co_us_mo], [fe_us_mo], [co_us_el], [fe_us_el], [recargo], [adel_num], [revisado], [trasnfe], [co_sucu], [descrip], [num_dev], [devdinero], [num_turno], [aux01], [aux02], [origen], [origen_d]) " +
 							//	"VALUES " +
-							//	"(" + max_cobro_num.ToString() + ", '', '" + doc[i].fact.IDCliente.PadRight(10) + "', '" + co_ve + "', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 0, " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ", 0, 0, 0, 0, 0, 0, 0, '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 1, 'BS', 0, '', '', '', '', '', '', '', '', '', '005', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', 0, 0, '', '', '" + co_su + "', '', 0, 0, 0, 0, 'Luelher', '', '') ";
+							//	"(" + max_cobro_num.ToString() + ", '', '" + doc[i].fact.IDCliente.PadRight(10) + "', '" + co_ve + "', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 0, " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ", 0, 0, 0, 0, 0, 0, 0, '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 1, 'BS', 0, '', '', '', '', '', '', '', '', '', '005', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', 0, 0, '', '', '" + co_su + "', '', 0, 0, 0, 0, 'Luelher', '', '') ";
 						
 							SQL = "INSERT INTO cobros " +
 								" (cob_num,co_cli,co_ven,fec_cob,monto,feccom,tasa,moneda,co_us_in,fe_us_in,co_us_mo,fe_us_mo,co_us_el,fe_us_el,revisado,trasnfe,co_sucu) VALUES " +
-								" (" + max_cobro_num.ToString() + ", '" + doc[i].fact.IDCliente.PadRight(10) + "', '01    ', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ", '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', 1.00000, 'BS    ', '002   ', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '      ', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', '      ', '" + DateTime.Now.ToString("yyMMdd hh:mm:ss") + "', ' ', 'L', '01    ')";
+								" (" + max_cobro_num.ToString() + ", '" + doc[i].fact.IDCliente.PadRight(10) + "', '01    ', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ", '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', 1.00000, 'BS    ', '002   ', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '      ', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', '      ', '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "', ' ', 'L', '01    ')";
 
 							if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 							{
@@ -2013,7 +2013,7 @@ namespace GrupoEmporium.Profit.Reportes
 						
 							SQL = "INSERT INTO reng_tip " +
 								" (cob_num,reng_num,tip_cob,num_doc,mont_doc,mont_tmp,banco,cod_caja,des_caja,fec_cheq) VALUES " +
-								" (" + max_cobro_num.ToString() + ", 1, 'EFEC', '                    ', " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ", " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ", '      ', '01    ', 'Caja Saint          ', '" + doc[i].fact.FechaE.ToString("yyMMdd") + "')";
+								" (" + max_cobro_num.ToString() + ", 1, 'EFEC', '                    ', " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ", " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ", '      ', '01    ', 'Caja Saint          ', '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "')";
 
 							if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 							{
@@ -2039,14 +2039,14 @@ namespace GrupoEmporium.Profit.Reportes
 								{
 									//SQL = "INSERT INTO [reng_cob] ([cob_num], [reng_num], [tp_doc_cob], [doc_num], [neto], [neto_tmp], [dppago], [dppago_tmp], [reng_ncr], [co_ven], [comis1], [comis2], [comis3], [comis4], [sign_aju_c], [porc_aju_c], [por_cob], [comi_cob], [mont_cob], [sino_pago], [sino_reten], [monto_dppago], [monto_reten], [imp_pago], [monto_obj], [isv], [nro_fact], [moneda], [tasa], [numcon], [sustraen], [co_islr], [fec_emis], [fec_venc], [comis5], [comis6], [fact_iva], [ret_iva], [porc_retn], [porc_desc], [aux01], [aux02]) " +
 									//	"VALUES  " +
-									//	"(" + max_cobro_num + ", " + indice +", 'GIRO', " + nro_doc_GIRO[t+1] + ", 0, 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(doc[i].cxc[t].Monto.ToString()) + ", 0, 0, 0, 0, 0, 0, 0, '', 'BS', 1, '', 0, '', '', '" + DateTime.Now.ToString("yyMMdd") + "', 0, 0, 0, 0, 0, 0, 0, '') ";
+									//	"(" + max_cobro_num + ", " + indice +", 'GIRO', " + nro_doc_GIRO[t+1] + ", 0, 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0, 0, 0, " + Clase_ValidarDBL.ComaXPunto(doc[i].cxc[t].Monto.ToString()) + ", 0, 0, 0, 0, 0, 0, 0, '', 'BS', 1, '', 0, '', '', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', 0, 0, 0, 0, 0, 0, 0, '') ";
 									if((!doc[i].cxc[t].Cancelada && doc[i].cxc[t].Saldo < doc[i].cxc[t].Monto)){
 										elmonto = doc[i].cxc[t].Monto - doc[i].cxc[t].Saldo;
 									}else elmonto = doc[i].cxc[t].Monto;
 								
 									SQL = "INSERT INTO reng_cob " +
 										" (cob_num,reng_num,tp_doc_cob,doc_num,neto,neto_tmp,dppago,mont_cob,imp_pago,monto_obj,isv,moneda,tasa,fec_emis,fec_venc) VALUES " +
-										" (" + max_cobro_num + ", " + indice +", 'GIRO', " + nro_doc_GIRO[t+1] + ", " + Clase_ValidarDBL.ComaXPunto(elmonto.ToString()) + ", 0.00, 0.00, " + Clase_ValidarDBL.ComaXPunto(elmonto.ToString()) + ", 0.00, 0.00, 0.00, 'BS        ', 1.00000, '" + DateTime.Now.ToString("yyMMdd") + "', '" + DateTime.Now.ToString("yyMMdd") + "') ";
+										" (" + max_cobro_num + ", " + indice +", 'GIRO', " + nro_doc_GIRO[t+1] + ", " + Clase_ValidarDBL.ComaXPunto(elmonto.ToString()) + ", 0.00, 0.00, " + Clase_ValidarDBL.ComaXPunto(elmonto.ToString()) + ", 0.00, 0.00, 0.00, 'BS        ', 1.00000, '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "') ";
 									if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 									{
 										list.Items.Add("Error => INSERT reng_cob = " + max_cobro_num.ToString() + " -> " + clsBD.MensajeError);
@@ -2065,7 +2065,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 						SQL = "INSERT INTO mov_caj " +
 							" (mov_num,codigo,cta_egre, tasa, moneda, banc_tarj,fe_us_in,fe_us_mo,fe_us_el,fecha,fecha_che,feccom,co_sucu) values " +
-							" (" + max_num_mov_caj + "      ,'01'  ,'01'    ,1.00000,'BS' ,''        ,'" + DateTime.Now.ToString("yyMMdd") + "','" + DateTime.Now.ToString("yyMMdd") + "','" + DateTime.Now.ToString("yyMMdd") + "', '" + DateTime.Now.ToString("yyMMdd") + "', '" + DateTime.Now.ToString("yyMMdd") + "', '" + DateTime.Now.ToString("yyMMdd") + "','01') ";
+							" (" + max_num_mov_caj + "      ,'01'  ,'01'    ,1.00000,'BS' ,''        ,'" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "','01') ";
 					
 						if(clsBD.EjecutarNonQuery(strConexion_Profit,Conexion_Profit,SQL)==-1)
 						{
@@ -2085,18 +2085,18 @@ namespace GrupoEmporium.Profit.Reportes
 							" monto_h = " + Clase_ValidarDBL.ComaXPunto(Monto_Cancelados.ToString()) + ",  " +
 							" tipo_op = 'I',  " +
 							" ori_dep = 1,  " +
-							" fecha = '" + doc[i].fact.FechaE.ToString("yyMMdd") + "', " + 
-							" fecha_che = '" + DateTime.Now.ToString("yyMMdd") + "',  " +
+							" fecha = '" + doc[i].fact.FechaE.ToString("yyyy-MM-dd") + "', " + 
+							" fecha_che = '" + DateTime.Now.ToString("yyyy-MM-dd") + "',  " +
 							" cob_pag = " + max_cobro_num.ToString() + ",  " +
 							" tasa = 1.00000,  " +
 							" moneda = 'BS',  " +
 							" CO_US_IN = '002',  " +
 							" CO_US_MO = '',  " +
 							" CO_US_EL = '',  " +
-							" FE_US_IN = '" + DateTime.Now.ToString("yyMMdd") + "',  " +
-							" FE_US_MO = '" + DateTime.Now.ToString("yyMMdd") + "',  " +
-							" FE_US_EL = '" + DateTime.Now.ToString("yyMMdd") + "' ,  " +
-							" feccom = '" + DateTime.Now.ToString("yyMMdd") + "' ,  " +
+							" FE_US_IN = '" + DateTime.Now.ToString("yyyy-MM-dd") + "',  " +
+							" FE_US_MO = '" + DateTime.Now.ToString("yyyy-MM-dd") + "',  " +
+							" FE_US_EL = '" + DateTime.Now.ToString("yyyy-MM-dd") + "' ,  " +
+							" feccom = '" + DateTime.Now.ToString("yyyy-MM-dd") + "' ,  " +
 							" co_sucu = '01'  " +
 							" WHERE  " +
 							" mov_num = " + max_num_mov_caj + " ";
