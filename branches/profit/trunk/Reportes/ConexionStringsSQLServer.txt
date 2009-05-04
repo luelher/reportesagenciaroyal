@@ -1,0 +1,134 @@
+
+
+    *  Standard Security:
+      "Provider=sqloledb;Data Source=Aron1;Initial Catalog=pubs;User Id=sa;Password=asdasd;"
+
+
+    *  Trusted Connection:
+      "Provider=sqloledb;Data Source=Aron1;Initial Catalog=pubs;Integrated Security=SSPI;"
+
+          (use serverName\instanceName as Data Source to use an specifik SQLServer instance, only SQLServer2000)
+
+    *  Prompt for username and password:
+      oConn.Provider = "sqloledb"
+      oConn.Properties("Prompt") = adPromptAlways
+      oConn.Open "Data Source=Aron1;Initial Catalog=pubs;"
+
+
+    *  Connect via an IP address:
+      "Provider=sqloledb;Data Source=190.190.200.100,1433;Network Library=DBMSSOCN;Initial Catalog=pubs;User ID=sa;Password=asdasd;"
+
+          (DBMSSOCN=TCP/IP instead of Named Pipes, at the end of the Data Source is the port to use (1433 is the default))
+
+
+
+
+
+SELECT SAFACT.CodClie, SACLIE.Descrip, SACLIE.Direc1, SACLIE.Direc2, SACLIE.Telef, SAFACT.NumeroD, SAFACT.NGiros, SAFACT.FechaE, SAFACT.FechaV, SAFACT.MtoFinanc  
+
+
+FROM SAFACT INNER JOIN 
+(SAACXC INNER JOIN SACLIE ON SAACXC.CodClie=SACLIE.CodClie) ON 
+(SAFACT.CodClie=SACLIE.CodClie) AND (datevalue(SAFACT.FechaE) = datevalue(SAACXC.FechaE))  
+
+WHERE 
+	SAFACT.FechaE<DateValue('01/10/05')  AND  
+	SAFACT.NGiros>0  AND  
+	SAFACT.MtoFinanc >0  
+
+GROUP BY 
+	SAFACT.CodClie, 
+	SAFACT.NumeroD, 
+	SAFACT.NGiros, 
+	SAFACT.FechaE, 
+	SAFACT.FechaV, 
+	SAFACT.MtoFinanc, 
+	SACLIE.Descrip, 
+	SACLIE.Direc1, 
+	SACLIE.Direc2, 
+	SACLIE.Telef  
+
+ORDER BY 
+	SAFACT.NumeroD  
+
+UNION  
+
+SELECT FacturasViejas.Cedula AS CodClie, SACLIE.Descrip, SACLIE.Direc1, SACLIE.Direc2, SACLIE.Telef, FacturasViejas.NFactura AS NumeroD, FacturasViejas.GNumero AS NGiros, FacturasViejas.FechaE, FacturasViejas.FechaV, FacturasViejas.MontoV AS MtoFinanc  
+
+FROM FacturasViejas INNER JOIN (SAACXC INNER JOIN SACLIE ON SAACXC.CodClie=SACLIE.CodClie) 
+ON (FacturasViejas.Cedula=SACLIE.CodClie) AND (datevalue(FacturasViejas.FechaE) = datevalue(SAACXC.FechaE))  
+
+
+WHERE 
+
+	FacturasViejas.FechaE<DateValue('01/10/05')  AND  
+	FacturasViejas.GNumero<>'0'  AND  
+	FacturasViejas.MontoV>0  
+
+GROUP BY 
+	FacturasViejas.Cedula, FacturasViejas.NFactura, FacturasViejas.GNumero, FacturasViejas.FechaE, FacturasViejas.FechaV, FacturasViejas.MontoV, SACLIE.Descrip, SACLIE.Direc1, SACLIE.Direc2, SACLIE.Telef;
+
+
+
+
+
+
+
+
+
+
+SELECT SAFACT.CodClie, SACLIE.Descrip, SACLIE.Direc1, SACLIE.Direc2, SACLIE.Telef, SAFACT.NumeroD, SAFACT.NGiros, SAFACT.FechaE, SAFACT.FechaV, SAFACT.MtoFinanc  
+
+
+FROM SAFACT INNER JOIN 
+(SAACXC INNER JOIN SACLIE ON SAACXC.CodClie=SACLIE.CodClie) ON 
+(SAFACT.CodClie=SACLIE.CodClie) AND ((SAFACT.FechaE) = (SAACXC.FechaE))  
+
+WHERE 
+	SAFACT.FechaE<'01/10/05'  AND  
+	SAFACT.NGiros>0  AND  
+	SAFACT.MtoFinanc >0  
+
+GROUP BY 
+	SAFACT.CodClie, 
+	SAFACT.NumeroD, 
+	SAFACT.NGiros, 
+	SAFACT.FechaE, 
+	SAFACT.FechaV, 
+	SAFACT.MtoFinanc, 
+	SACLIE.Descrip, 
+	SACLIE.Direc1, 
+	SACLIE.Direc2, 
+	SACLIE.Telef  
+
+ORDER BY 
+	SAFACT.NumeroD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
