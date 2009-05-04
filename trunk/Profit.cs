@@ -807,7 +807,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
 
-                Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(), "Saint Reportes");
+                Mensajes.Mensaje.Informar(dt.Rows.Count.ToString() + SQL, "Saint Reportes");
 
 				#endregion
 
