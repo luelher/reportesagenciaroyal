@@ -801,13 +801,13 @@ namespace GrupoEmporium.Profit.Reportes
 						" WHERE " +
 							" docum_cc.tipo_doc = 'FACT' " +
                             //" AND condicio.dias_cred > 0 " +
-                            " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyMMdd") + "'" +
+                            " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "'" +
 							//" and clientes.co_cli='10842309'";
 							"";
 
 				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
 
-				Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(),"Saint Reportes");
+                Mensajes.Mensaje.Informar(dt.Rows.Count.ToString() + SQL, "Saint Reportes");
 
 				#endregion
 
