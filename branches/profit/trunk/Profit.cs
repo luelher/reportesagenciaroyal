@@ -344,7 +344,8 @@ namespace GrupoEmporium.Profit.Reportes
 					" ((docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
 					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
 					" WHERE " +
-					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
+					" docum_cc.tipo_doc = 'FACT' " +
+                    //" AND condicio.dias_cred > 0 " +
 					//" AND docum_cc.co_cli='7983524' " + 
 					" ORDER BY " +
 					" CodClie ASC;";
@@ -513,7 +514,8 @@ namespace GrupoEmporium.Profit.Reportes
 					" ((docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
 					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
 					" WHERE " +
-					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
+					" docum_cc.tipo_doc = 'FACT' " +
+                    //" AND condicio.dias_cred > 0 " +
 					//" AND docum_cc.co_cli='7983524' " + 
 					" ORDER BY " +
 					" CodClie ASC;";
@@ -658,7 +660,8 @@ namespace GrupoEmporium.Profit.Reportes
 					" ((docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
 					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
 					" WHERE " +
-					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
+					" docum_cc.tipo_doc = 'FACT' " +
+                    //" AND condicio.dias_cred > 0 " +
 					//" AND docum_cc.co_cli='7308142' " + 
 					" ORDER BY " +
 					" CodClie ASC;";
@@ -796,7 +799,9 @@ namespace GrupoEmporium.Profit.Reportes
 							" (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
 							" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num " +
 						" WHERE " +
-							" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyMMdd") + "'" +
+							" docum_cc.tipo_doc = 'FACT' " +
+                            //" AND condicio.dias_cred > 0 " +
+                            " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyMMdd") + "'" +
 							//" and clientes.co_cli='10842309'";
 							"";
 
