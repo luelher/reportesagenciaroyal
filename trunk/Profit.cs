@@ -244,11 +244,11 @@ namespace GrupoEmporium.Profit.Reportes
 			try
 			{
 				Conexion.Open();
-				Mensajes.Mensaje.Error(Conexion.State.ToString(),"Saint Reportes");
+				Mensajes.Mensaje.Error(Conexion.State.ToString(),"Profit Reportes");
 			}
 			catch(Exception ex)
 			{
-				Mensajes.Mensaje.Error(ex.Message,"Saint Reportes");
+                Mensajes.Mensaje.Error(ex.Message, "Profit Reportes");
 			}
 
 		}
@@ -262,11 +262,11 @@ namespace GrupoEmporium.Profit.Reportes
 			try
 			{
 				Conexion.Open();
-				Mensajes.Mensaje.Error(Conexion.State.ToString(),"Saint Reportes");
+                Mensajes.Mensaje.Error(Conexion.State.ToString(), "Profit Reportes");
 			}
 			catch(Exception ex)
 			{
-				Mensajes.Mensaje.Error(ex.Message,"Saint Reportes");
+                Mensajes.Mensaje.Error(ex.Message, "Profit Reportes");
 			}
 
 		}
@@ -282,11 +282,11 @@ namespace GrupoEmporium.Profit.Reportes
 			try
 			{
 				Conexion.Open();
-				Mensajes.Mensaje.Error(Conexion.State.ToString(),"Saint Reportes");
+                Mensajes.Mensaje.Error(Conexion.State.ToString(), "Profit Reportes");
 			}
 			catch(Exception ex)
 			{
-				Mensajes.Mensaje.Error(ex.Message,"Saint Reportes");
+                Mensajes.Mensaje.Error(ex.Message, "Profit Reportes");
 			}
 
 		}		
@@ -309,9 +309,9 @@ namespace GrupoEmporium.Profit.Reportes
 		public DataTable Reporte_Morosos_Todos()
 		{
 			int desde = 1; int hasta = 40;
-			Conexion_Profit_1.Open();
+			//Conexion_Profit_1.Open();
 
-			if(Conexion_Profit_1.State == ConnectionState.Open)
+			if(Conexion.State == ConnectionState.Open)
 			{
 
 				DataTable dt = new DataTable();
@@ -350,7 +350,7 @@ namespace GrupoEmporium.Profit.Reportes
 					" ORDER BY " +
 					" CodClie ASC;";
 
-				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
+				clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt);
 
 				Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(),"Saint Reportes");
 
@@ -392,7 +392,7 @@ namespace GrupoEmporium.Profit.Reportes
 							" docum_cc " +
 							"WHERE " +
 							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
-						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
+						clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt_nro_doc);
 
 						if(cliente != dt.Rows[i]["CodClie"].ToString())
 						{
@@ -423,7 +423,7 @@ namespace GrupoEmporium.Profit.Reportes
 									" docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "' " +
 									" ORDER BY " +
 									" cobros.fec_cob DESC ";
-								clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_fechas_cobros);
+								clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt_fechas_cobros);
 
 								if(dt_fechas_cobros.Rows.Count>0)
 								{
@@ -479,9 +479,9 @@ namespace GrupoEmporium.Profit.Reportes
 
 		public DataTable Reporte_Morosos(int desde, int hasta )
 		{
-			Conexion_Profit_1.Open();
+			//Conexion.Open();
 
-			if(Conexion_Profit_1.State == ConnectionState.Open)
+			if(Conexion.State == ConnectionState.Open)
 			{
 
 				DataTable dt = new DataTable();
@@ -520,7 +520,7 @@ namespace GrupoEmporium.Profit.Reportes
 					" ORDER BY " +
 					" CodClie ASC;";
 
-				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
+				clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt);
 
 				Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(),"Saint Reportes");
 
@@ -549,7 +549,7 @@ namespace GrupoEmporium.Profit.Reportes
 							" docum_cc " +
 							"WHERE " +
 							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
-						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
+						clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt_nro_doc);
 
 						if(cliente != dt.Rows[i]["CodClie"].ToString())
 						{
@@ -567,7 +567,7 @@ namespace GrupoEmporium.Profit.Reportes
 								int CantGiros = Convert.ToInt32( dt.Rows[i]["NGiros"].ToString() )/30;
 								//if(CantGiros>0) RFactura.PagoMensual  = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString())/CantGiros;
 
-								RFactura.Giros = CantGiros;
+								//RFactura.Giros = CantGiros;
 								//RFactura.MontoTotal = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString());
 								RFactura.FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
 								//RFactura.FechaCancelacion = Convert.ToDateTime(dt.Rows[i]["FechaV"].ToString());
@@ -580,7 +580,7 @@ namespace GrupoEmporium.Profit.Reportes
 									" docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "' " +
 									" ORDER BY " +
 									" cobros.fec_cob DESC ";
-								clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_fechas_cobros);
+								clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt_fechas_cobros);
 
 								if(dt_fechas_cobros.Rows.Count>0)
 								{
@@ -625,9 +625,9 @@ namespace GrupoEmporium.Profit.Reportes
 
 		public DataTable Reporte_Gerencial_Morosos(int desde, int hasta)
 		{
-			Conexion_Profit_1.Open();
+			//Conexion.Open();
 
-			if(Conexion_Profit_1.State == ConnectionState.Open)
+			if(Conexion.State == ConnectionState.Open)
 			{
 
 				DataTable dt = new DataTable();
@@ -666,7 +666,7 @@ namespace GrupoEmporium.Profit.Reportes
 					" ORDER BY " +
 					" CodClie ASC;";
 
-				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
+				clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt);
 
 				Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(),"Saint Reportes");
 
@@ -695,7 +695,7 @@ namespace GrupoEmporium.Profit.Reportes
 							" docum_cc " +
 							"WHERE " +
 							" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
-						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
+						clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt_nro_doc);
 
 						if(cliente != dt.Rows[i]["CodClie"].ToString())
 						{
@@ -714,7 +714,7 @@ namespace GrupoEmporium.Profit.Reportes
 								int CantGiros = Convert.ToInt32( dt.Rows[i]["NGiros"].ToString() )/30;
 								//if(CantGiros>0) RFactura.PagoMensual  = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString())/CantGiros;
 
-								RFactura.Giros = CantGiros;
+								//RFactura.Giros = CantGiros;
 								//RFactura.MontoTotal = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString());
 								RFactura.FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
 								//RFactura.FechaCancelacion = Convert.ToDateTime(dt.Rows[i]["FechaV"].ToString());
@@ -727,7 +727,7 @@ namespace GrupoEmporium.Profit.Reportes
 									" docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "' " +
 									" ORDER BY " +
 									" cobros.fec_cob DESC ";
-								clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_fechas_cobros);
+								clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt_fechas_cobros);
 
 								if(dt_fechas_cobros.Rows.Count>0)
 								{
@@ -805,9 +805,9 @@ namespace GrupoEmporium.Profit.Reportes
 							//" and clientes.co_cli='10842309'";
 							"";
 
-				clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt);
+				clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt);
 
-                Mensajes.Mensaje.Informar(dt.Rows.Count.ToString() + SQL, "Saint Reportes");
+                Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(), "Saint Reportes");
 
 				#endregion
 
@@ -835,14 +835,15 @@ namespace GrupoEmporium.Profit.Reportes
 									" docum_cc " +
 								"WHERE " +
 									" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
-						clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dt_nro_doc);
+						clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt_nro_doc);
 
 						if(dt_nro_doc.Rows.Count>0)
 						{
 							RFactura = ResumenFactura(dt_nro_doc.Rows[0]["nro_doc"].ToString(),dt.Rows[i]["CodClie"].ToString(),(DateTime)dt.Rows[i]["FechaE"]);
 
 							RFactura.IDCliente = dt.Rows[i]["CodClie"].ToString();
-							int CantGiros = Convert.ToInt32( dt.Rows[i]["NGiros"].ToString() )/30;
+							//int CantGiros = Convert.ToInt32( dt.Rows[i]["NGiros"].ToString() )/30;
+                            int CantGiros = RFactura.Giros;
 							//if(CantGiros>0) RFactura.PagoMensual  = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString())/CantGiros;
 
 							RFactura.Giros = CantGiros;
@@ -859,8 +860,11 @@ namespace GrupoEmporium.Profit.Reportes
 								dr["Telefono"] = RFactura.Telefono;
 								dr["Factura"] = RFactura.NroFactura;
 								dr["FechaE"] = RFactura.FechaE;
-								dr["MontoTotal"] = RFactura.MontoTotal.ToString("########.##");
-								dr["PagoMensual"] = RFactura.PagoMensual.ToString("########.##");
+                                try {
+                                    dr["MontoTotal"] = RFactura.MontoTotal.ToString("########.##");
+                                    dr["PagoMensual"] = RFactura.PagoMensual.ToString("########.##");
+                                }
+                                catch(Exception ex){}
 								dr["Giros"] = RFactura.Giros;
 								dr["FechaCancelacion"] = RFactura.FechaCancelacion;
 								dr["Experiencia"] = RFactura.Experiencia;
@@ -1051,97 +1055,97 @@ namespace GrupoEmporium.Profit.Reportes
 			Conexion = new OleDbConnection(cadenaconexion);
 			configxml = MiConfig;
 
-			CargarConfigProfit(conex);
+			//CargarConfigProfit(conex);
 
 		}
 
 
-		private void CargarConfigProfit(bool conex)
-		{
+        //private void CargarConfigProfit(bool conex)
+        //{
 			
-			ClaseDocumentosXML MiConfig = new ClaseDocumentosXML(@"configsaint.xml");
-			if(MiConfig.Cargado)
-			{
-				if (MiConfig["CadenaConexion_Profit"]=="False")
-				{
-					if (MiConfig["Dominio_Profit"]=="True")
-						strConexion_Profit = new clsBDConexion(MiConfig["DataSource_Profit"],MiConfig["InitialCatalog_Profit"]);
-					else strConexion_Profit = new clsBDConexion( MiConfig["DataSource_Profit"],MiConfig["InitialCatalog_Profit"],MiConfig["Usuario_Profit"],MiConfig["Contrasena_Profit"],false);
+        //    ClaseDocumentosXML MiConfig = new ClaseDocumentosXML(@"configsaint.xml");
+        //    if(MiConfig.Cargado)
+        //    {
+        //        if (MiConfig["CadenaConexion_Profit"]=="False")
+        //        {
+        //            if (MiConfig["Dominio_Profit"]=="True")
+        //                strConexion_Profit = new clsBDConexion(MiConfig["DataSource_Profit"],MiConfig["InitialCatalog_Profit"]);
+        //            else strConexion_Profit = new clsBDConexion( MiConfig["DataSource_Profit"],MiConfig["InitialCatalog_Profit"],MiConfig["Usuario_Profit"],MiConfig["Contrasena_Profit"],false);
 
-					cadenaconexion_Profit = strConexion_Profit.StringConexion;
-				}
-				else
-				{
-					strConexion_Profit = new clsBDConexion();
-					strConexion_Profit.TipoBaseDato = TipoBD.SQL_SERVER;
-					strConexion_Profit.StringConexion = cadenaconexion_Profit;
-					cadenaconexion_Profit = MiConfig["Conexion_Profit"];
-				}
+        //            cadenaconexion_Profit = strConexion_Profit.StringConexion;
+        //        }
+        //        else
+        //        {
+        //            strConexion_Profit = new clsBDConexion();
+        //            strConexion_Profit.TipoBaseDato = TipoBD.SQL_SERVER;
+        //            strConexion_Profit.StringConexion = cadenaconexion_Profit;
+        //            cadenaconexion_Profit = MiConfig["Conexion_Profit"];
+        //        }
 
-			}
+        //    }
 
-			Conexion_Profit = new OleDbConnection(cadenaconexion_Profit);
-			//configxml = MiConfig;
-			CargarConfigProfit_1(conex);
+        //    Conexion_Profit = new OleDbConnection(cadenaconexion_Profit);
+        //    //configxml = MiConfig;
+        //    CargarConfigProfit_1(conex);
 
-		}
+        //}
 
 
-		private void CargarConfigProfit_1(bool conex)
-		{
+        //private void CargarConfigProfit_1(bool conex)
+        //{
 			
-			ClaseDocumentosXML MiConfig = new ClaseDocumentosXML(@"configsaint.xml");
-			if(MiConfig.Cargado)
-			{
-				if(conex)
-				{
-					if (MiConfig["CadenaConexion_Profit_1"]=="False")
-					{
-						if (MiConfig["Dominio_Profit_1"]=="True")
-							strConexion_Profit_1 = new clsBDConexion(MiConfig["DataSource_Profit_1"],MiConfig["InitialCatalog_Profit_1"]);
-						else strConexion_Profit_1 = new clsBDConexion( MiConfig["DataSource_Profit_1"],MiConfig["InitialCatalog_Profit_1"],MiConfig["Usuario_Profit_1"],MiConfig["Contrasena_Profit_1"],false);
+        //    ClaseDocumentosXML MiConfig = new ClaseDocumentosXML(@"configsaint.xml");
+        //    if(MiConfig.Cargado)
+        //    {
+        //        if(conex)
+        //        {
+        //            if (MiConfig["CadenaConexion_Profit_1"]=="False")
+        //            {
+        //                if (MiConfig["Dominio_Profit_1"]=="True")
+        //                    strConexion_Profit_1 = new clsBDConexion(MiConfig["DataSource_Profit_1"],MiConfig["InitialCatalog_Profit_1"]);
+        //                else strConexion_Profit_1 = new clsBDConexion( MiConfig["DataSource_Profit_1"],MiConfig["InitialCatalog_Profit_1"],MiConfig["Usuario_Profit_1"],MiConfig["Contrasena_Profit_1"],false);
 
-						cadenaconexion_Profit_1 = strConexion_Profit_1.StringConexion;
-					}
-					else
-					{
-						strConexion_Profit_1 = new clsBDConexion();
-						strConexion_Profit_1.TipoBaseDato = TipoBD.SQL_SERVER;
-						strConexion_Profit_1.StringConexion = cadenaconexion_Profit_1;
-						cadenaconexion_Profit_1 = MiConfig["Conexion_Profit_1"];
-					}
-				}
-				else{
-					if (MiConfig["CadenaConexion_Profit_2"]=="False")
-					{
-						if (MiConfig["Dominio_Profit_2"]=="True")
-							strConexion_Profit_1 = new clsBDConexion(MiConfig["DataSource_Profit_2"],MiConfig["InitialCatalog_Profit_2"]);
-						else strConexion_Profit_1 = new clsBDConexion( MiConfig["DataSource_Profit_2"],MiConfig["InitialCatalog_Profit_2"],MiConfig["Usuario_Profit_2"],MiConfig["Contrasena_Profit_2"],false);
+        //                cadenaconexion_Profit_1 = strConexion_Profit_1.StringConexion;
+        //            }
+        //            else
+        //            {
+        //                strConexion_Profit_1 = new clsBDConexion();
+        //                strConexion_Profit_1.TipoBaseDato = TipoBD.SQL_SERVER;
+        //                strConexion_Profit_1.StringConexion = cadenaconexion_Profit_1;
+        //                cadenaconexion_Profit_1 = MiConfig["Conexion_Profit_1"];
+        //            }
+        //        }
+        //        else{
+        //            if (MiConfig["CadenaConexion_Profit_2"]=="False")
+        //            {
+        //                if (MiConfig["Dominio_Profit_2"]=="True")
+        //                    strConexion_Profit_1 = new clsBDConexion(MiConfig["DataSource_Profit_2"],MiConfig["InitialCatalog_Profit_2"]);
+        //                else strConexion_Profit_1 = new clsBDConexion( MiConfig["DataSource_Profit_2"],MiConfig["InitialCatalog_Profit_2"],MiConfig["Usuario_Profit_2"],MiConfig["Contrasena_Profit_2"],false);
 
-						cadenaconexion_Profit_1 = strConexion_Profit_1.StringConexion;
-					}
-					else
-					{
-						strConexion_Profit_1 = new clsBDConexion();
-						strConexion_Profit_1.TipoBaseDato = TipoBD.SQL_SERVER;
-						strConexion_Profit_1.StringConexion = cadenaconexion_Profit_1;
-						cadenaconexion_Profit_1 = MiConfig["Conexion_Profit_2"];
-					}
+        //                cadenaconexion_Profit_1 = strConexion_Profit_1.StringConexion;
+        //            }
+        //            else
+        //            {
+        //                strConexion_Profit_1 = new clsBDConexion();
+        //                strConexion_Profit_1.TipoBaseDato = TipoBD.SQL_SERVER;
+        //                strConexion_Profit_1.StringConexion = cadenaconexion_Profit_1;
+        //                cadenaconexion_Profit_1 = MiConfig["Conexion_Profit_2"];
+        //            }
 
-				}
+        //        }
 
-			}
+        //    }
 
-			Conexion_Profit_1 = new OleDbConnection(cadenaconexion_Profit_1);
-			//configxml = MiConfig;
+        //    Conexion_Profit_1 = new OleDbConnection(cadenaconexion_Profit_1);
+        //    //configxml = MiConfig;
 
-		}
+        //}
 
 		private void CerrarConexiones()
 		{
 			if(Conexion.State == ConnectionState.Open) Conexion.Close();
-			if(Conexion_Profit.State == ConnectionState.Open) Conexion_Profit.Close();
-			if(Conexion_Profit_1.State == ConnectionState.Open) Conexion_Profit_1.Close();
+			//if(Conexion_Profit.State == ConnectionState.Open) Conexion_Profit.Close();
+			//if(Conexion_Profit_1.State == ConnectionState.Open) Conexion_Profit_1.Close();
 		}
 
 		private Factura ResumenFactura(string idFactura,string idCliente,DateTime FechaE)
@@ -1169,7 +1173,8 @@ namespace GrupoEmporium.Profit.Reportes
 					" FROM " +
 						" Docum_cc INNER JOIN Clientes ON Docum_cc.co_cli = Clientes.co_cli " +
 					" WHERE " +
-						" Docum_cc.nro_orig = " + idFactura + " AND docum_cc.tipo_doc = 'GIRO' " +
+                        " Docum_cc.co_cli = '" + idCliente + "' AND Docum_cc.fec_emis = '" + FechaE.ToString("yyyy-MM-dd")  + "' AND " +
+						" docum_cc.tipo_doc = 'GIRO' " +
 					" GROUP BY " +
 						" Docum_cc.co_cli, " +
 						" Clientes.cli_des, " +
@@ -1185,16 +1190,16 @@ namespace GrupoEmporium.Profit.Reportes
 					" ORDER BY " +
 						" Docum_cc.nro_doc ASC  ";
 
-			clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dtCxC);
+			clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dtCxC);
 
 			SQL=	"SELECT " +
 				" min(Docum_cc.monto_net) AS Giro, SUM(Docum_cc.monto_net) as Total, SUM(Docum_cc.saldo) as Saldo " +
 				" FROM " +
 				" Docum_cc INNER JOIN Clientes ON Docum_cc.co_cli = Clientes.co_cli " +
 				" WHERE " +
-				" Docum_cc.nro_orig = " + idFactura + " AND docum_cc.tipo_doc = 'GIRO' ";
+                " Docum_cc.co_cli = '" + idCliente + "' AND Docum_cc.fec_emis = '" + FechaE.ToString("yyyy-MM-dd") + "' AND docum_cc.tipo_doc = 'GIRO' ";
 
-			clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dtGiro);
+			clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dtGiro);
 
 
 			Resumen = new Factura("");
@@ -1232,6 +1237,7 @@ namespace GrupoEmporium.Profit.Reportes
 				//}
 
 				Total = dtCxC.Rows.Count;
+                Resumen.Giros = dtCxC.Rows.Count;
 				for(int i=0;i<dtCxC.Rows.Count;i++)
 				{
 					if(Convert.ToDouble(dtCxC.Rows[i]["Saldo"].ToString())>0.0)
@@ -1255,7 +1261,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 					DateTime FE = Convert.ToDateTime(dtCxC.Rows[i]["FechaE"].ToString());
 
-					Dias = Analizar_FechaV(dtCxC.Rows[i]["FechaV"].ToString(),DateTime.Now);
+                    Dias = Analizar_FechaV(dtCxC.Rows[i]["FechaV"].ToString(),_LaFecha);
 					strMonto = dtCxC.Rows[i]["Saldo"].ToString();
 					Monto = Convert.ToDouble(strMonto);
 
@@ -1301,7 +1307,7 @@ namespace GrupoEmporium.Profit.Reportes
 									"ORDER BY " +
 									"cobros.fec_cob DESC ";
 
-								clsBD.EjecutarQuery(strConexion_Profit_1,Conexion_Profit_1,SQL,out dtFechaC);
+								clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dtFechaC);
 
 								if(dtFechaC.Rows.Count>0)
 								{

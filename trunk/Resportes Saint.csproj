@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.30729</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7A890B36-4096-4869-885C-05E6C605F09E}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -120,10 +120,7 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FormMigrar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormSaint.cs">
+    <Compile Include="FormReportes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Profit.cs">
@@ -151,11 +148,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Content Include="configsaint.xml" />
-    <EmbeddedResource Include="FormMigrar.resx">
-      <DependentUpon>FormMigrar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormSaint.resx">
-      <DependentUpon>FormSaint.cs</DependentUpon>
+    <EmbeddedResource Include="FormReportes.resx">
+      <DependentUpon>FormReportes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
