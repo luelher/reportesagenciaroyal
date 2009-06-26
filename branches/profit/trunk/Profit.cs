@@ -21,6 +21,7 @@ namespace GrupoEmporium.Profit.Reportes
 		#region Variables
 
 		string SQL="";
+        string SQL2 = "";
 		DateTime _LaFecha;
 
 		GrupoEmporium.Varias.ClaseDocumentosXML configxml;
@@ -773,45 +774,62 @@ namespace GrupoEmporium.Profit.Reportes
 
 		public DataTable Reporte_Experiencia()
 		{
+            string str = "";
 			if(Conexion.State == ConnectionState.Open)
 			{
 				// 641.555   10842309
 
 				DataTable dt = new DataTable();
+                DataTable dt2 = new DataTable();
 				DataTable dtReporte = new DataTable();
 				DataTable dt_nro_doc = new DataTable();
 				DataRow dr;
 			
 				#region SQL Union Facturas
 
-				SQL =	" SELECT " +
-							" docum_cc.co_cli     AS CodClie, " +
-							" clientes.cli_des    AS Descrip, " +
-							" clientes.direc1     AS Direc1, " +
-							" clientes.direc2     AS Direc2, " +
-							" clientes.telefonos  AS Telef, " +
-							" docum_cc.nro_doc    AS NumeroD, " +
-							" condicio.dias_cred  AS NGiros, " +
-							" docum_cc.fec_emis   AS FechaE, " +
-							" docum_cc.fec_venc   AS FechaV, " +
-							" docum_cc.monto_net  AS MtoFinanc " +
-						" FROM " +
-							" (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
-							" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num " +
+                SQL = " SELECT " +
+                            " docum_cc.co_cli     AS CodClie, " +
+                            " clientes.cli_des    AS Descrip, " +
+                            " clientes.direc1     AS Direc1, " +
+                            " clientes.direc2     AS Direc2, " +
+                            " clientes.telefonos  AS Telef, " +
+                            " docum_cc.nro_doc    AS NumeroD, " +
+                            " 0  AS NGiros, " +
+                            " docum_cc.fec_emis   AS FechaE, " +
+                            " docum_cc.fec_venc   AS FechaV, " +
+                            " docum_cc.monto_net  AS MtoFinanc " +
+                        " FROM " +
+                            " (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
+                        " WHERE " +
+                            " (docum_cc.tipo_doc = 'FACT') AND docum_cc.co_sucu<>'ADMINI' " +
+                            " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "'";
+
+                SQL2 = " SELECT " +
+	                        " docum_cc.co_cli     AS CodClie,  " +
+	                        " clientes.cli_des    AS Descrip,  " +
+	                        " ''     AS Direc1,  " +
+	                        " ''     AS Direc2,  " +
+	                        " ''  AS Telef,  " +
+	                        " 0    AS NumeroD,  " +
+	                        " 0  AS NGiros,  " +
+	                        " docum_cc.fec_emis   AS FechaE,  " +
+	                        " '2009-01-01'   AS FechaV,  " +
+	                        " 0   AS MtoFinanc  " +
+                        " FROM  " +
+	                        " (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli)   " +
 						" WHERE " +
-							" docum_cc.tipo_doc = 'FACT' " +
-                            //" AND condicio.dias_cred > 0 " +
-                            " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "'" +
-							//" and clientes.co_cli='10842309'";
-							"";
+                            " (docum_cc.tipo_doc = 'GIRO') AND docum_cc.co_sucu<>'ADMINI' " +
+                            " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "' AND docum_cc.nro_orig=0 " +
+                            " GROUP BY docum_cc.co_cli, clientes.cli_des, docum_cc.fec_emis ";
 
 				clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt);
+                clsBD.EjecutarQuery(strConexion, Conexion, SQL2, out dt2);
 
-                Mensajes.Mensaje.Informar(dt.Rows.Count.ToString(), "Saint Reportes");
+                Mensajes.Mensaje.Informar((dt.Rows.Count + dt2.Rows.Count).ToString(), "Saint Reportes");
 
 				#endregion
 
-				if(dt.Rows.Count>0)
+                if (dt.Rows.Count > 0 || dt2.Rows.Count > 0)
 				{
 					Factura RFactura;
 
@@ -825,53 +843,61 @@ namespace GrupoEmporium.Profit.Reportes
 					dtReporte.Columns.Add("Giros",System.Type.GetType("System.Byte"));
 					dtReporte.Columns.Add("FechaCancelacion",System.Type.GetType("System.DateTime"));
 					dtReporte.Columns.Add("Experiencia",System.Type.GetType("System.Byte"));
-				
-					for(int i=0;i<dt.Rows.Count;i++)
-					{
 
-						SQL =	"SELECT " +
-									" docum_cc.nro_doc " +
-								"FROM " +
-									" docum_cc " +
-								"WHERE " +
-									" docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
-						clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt_nro_doc);
+                    for (int j = 0; j < 2; j++)
+                    {
+                        if (j == 1) dt = dt2;
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
 
-						if(dt_nro_doc.Rows.Count>0)
-						{
-							RFactura = ResumenFactura(dt_nro_doc.Rows[0]["nro_doc"].ToString(),dt.Rows[i]["CodClie"].ToString(),(DateTime)dt.Rows[i]["FechaE"]);
+                            SQL = "SELECT " +
+                                        " docum_cc.origen_d as nro_doc " +
+                                    "FROM " +
+                                        " docum_cc " +
+                                    "WHERE " +
+                                        " docum_cc.tipo_doc = 'CFXG' AND docum_cc.fec_emis = '" + Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString()).ToString("yyyy-MM-dd") + "' AND docum_cc.co_cli = '" + dt.Rows[i]["CodClie"].ToString() + "'";
+                            clsBD.EjecutarQuery(strConexion, Conexion, SQL, out dt_nro_doc);
 
-							RFactura.IDCliente = dt.Rows[i]["CodClie"].ToString();
-							//int CantGiros = Convert.ToInt32( dt.Rows[i]["NGiros"].ToString() )/30;
-                            int CantGiros = RFactura.Giros;
-							//if(CantGiros>0) RFactura.PagoMensual  = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString())/CantGiros;
+                            //if (dt_nro_doc.Rows.Count > 0)
+                            if(true)
+                            {
+                                if (dt_nro_doc.Rows.Count > 0) str = dt_nro_doc.Rows[0]["nro_doc"].ToString().Trim();
+                                else str = "";
+                                RFactura = ResumenFactura(str, dt.Rows[i]["CodClie"].ToString().Trim(), (DateTime)dt.Rows[i]["FechaE"]);
 
-							RFactura.Giros = CantGiros;
-							//RFactura.MontoTotal = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString());
-							RFactura.FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
-							//RFactura.FechaCancelacion = Convert.ToDateTime(dt.Rows[i]["FechaV"].ToString());
-							RFactura.Cliente = dt.Rows[i]["Descrip"].ToString();
+                                RFactura.IDCliente = dt.Rows[i]["CodClie"].ToString();
+                                //int CantGiros = Convert.ToInt32( dt.Rows[i]["NGiros"].ToString() )/30;
+                                int CantGiros = RFactura.Giros;
+                                //if(CantGiros>0) RFactura.PagoMensual  = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString())/CantGiros;
 
-							if(RFactura.NroFactura !="")
-							{
-								dr = dtReporte.NewRow();
-								dr["Cedula"] = RFactura.IDCliente;
-								dr["Nombre"] = RFactura.Cliente;
-								dr["Telefono"] = RFactura.Telefono;
-								dr["Factura"] = RFactura.NroFactura;
-								dr["FechaE"] = RFactura.FechaE;
-                                try {
-                                    dr["MontoTotal"] = RFactura.MontoTotal.ToString("########.##");
-                                    dr["PagoMensual"] = RFactura.PagoMensual.ToString("########.##");
+                                RFactura.Giros = CantGiros;
+                                //RFactura.MontoTotal = Convert.ToDouble(dt.Rows[i]["MtoFinanc"].ToString());
+                                RFactura.FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
+                                //RFactura.FechaCancelacion = Convert.ToDateTime(dt.Rows[i]["FechaV"].ToString());
+                                RFactura.Cliente = dt.Rows[i]["Descrip"].ToString();
+
+                                if (RFactura.NroFactura != "")
+                                {
+                                    dr = dtReporte.NewRow();
+                                    dr["Cedula"] = RFactura.IDCliente;
+                                    dr["Nombre"] = RFactura.Cliente;
+                                    dr["Telefono"] = RFactura.Telefono;
+                                    dr["Factura"] = RFactura.NroFactura;
+                                    dr["FechaE"] = RFactura.FechaE;
+                                    try
+                                    {
+                                        dr["MontoTotal"] = RFactura.MontoTotal.ToString("########.##");
+                                        dr["PagoMensual"] = RFactura.PagoMensual.ToString("########.##");
+                                    }
+                                    catch (Exception ex) { }
+                                    dr["Giros"] = RFactura.Giros;
+                                    dr["FechaCancelacion"] = RFactura.FechaCancelacion;
+                                    dr["Experiencia"] = RFactura.Experiencia;
+                                    dtReporte.Rows.Add(dr);
                                 }
-                                catch(Exception ex){}
-								dr["Giros"] = RFactura.Giros;
-								dr["FechaCancelacion"] = RFactura.FechaCancelacion;
-								dr["Experiencia"] = RFactura.Experiencia;
-								dtReporte.Rows.Add(dr);
-							}
-						}
-					}
+                            }
+                        }
+                    }
 					dtReporte.AcceptChanges();
 					CerrarConexiones();
 					return dtReporte;
@@ -1164,7 +1190,7 @@ namespace GrupoEmporium.Profit.Reportes
 						" Docum_cc.fec_venc   AS FechaV, " +
 						" Docum_cc.doc_orig   AS TipoCxc, " +
 						" Docum_cc.monto_net  AS Monto, " +
-						" Docum_cc.nro_doc    AS NumeroD, " +
+						" Docum_cc.origen_d   AS NumeroD, " +
 						" Docum_cc.saldo      AS Saldo, " +
 						" Docum_cc.saldo      AS SaldoAct, " +
 						" MIN(Docum_cc.monto_net) AS Giro, " + 
@@ -1174,7 +1200,7 @@ namespace GrupoEmporium.Profit.Reportes
 						" Docum_cc INNER JOIN Clientes ON Docum_cc.co_cli = Clientes.co_cli " +
 					" WHERE " +
                         " Docum_cc.co_cli = '" + idCliente + "' AND Docum_cc.fec_emis = '" + FechaE.ToString("yyyy-MM-dd")  + "' AND " +
-						" docum_cc.tipo_doc = 'GIRO' " +
+                        " docum_cc.tipo_doc = 'GIRO' " +
 					" GROUP BY " +
 						" Docum_cc.co_cli, " +
 						" Clientes.cli_des, " +
@@ -1186,7 +1212,8 @@ namespace GrupoEmporium.Profit.Reportes
 						" Docum_cc.monto_net, " +
 						" Docum_cc.nro_doc, " +
 						" Docum_cc.saldo, " +
-						" Docum_cc.saldo " +
+						" Docum_cc.saldo, " +
+                        " origen_d" +
 					" ORDER BY " +
 						" Docum_cc.nro_doc ASC  ";
 
@@ -1201,7 +1228,6 @@ namespace GrupoEmporium.Profit.Reportes
 
 			clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dtGiro);
 
-
 			Resumen = new Factura("");
 			Resumen.Experiencia = 254;
 
@@ -1215,14 +1241,22 @@ namespace GrupoEmporium.Profit.Reportes
 				string cedula;
 				bool experiencia = false;
 				DateTime fechaVenc;
-				str = dtCxC.Rows[0]["NumeroD"].ToString();
+				str = dtCxC.Rows[0]["NumeroD"].ToString().Trim();
 
 				cedula = dtCxC.Rows[0]["CodClie"].ToString();
 
 				//if(cedula == "7420758" || cedula == "12698405" || cedula == "4373147")
 				//	cedula = "xxx";
 
-				Resumen = new Factura(str = idFactura);
+                if (idFactura == "") idFactura = str;
+
+                if (idFactura.Length < 8)
+                {
+                  idFactura = idFactura.PadLeft(7, '0');
+                  idFactura = "A" + idFactura;
+                }
+
+				Resumen = new Factura(idFactura);
 				Resumen.Cliente = dtCxC.Rows[0]["Descrip"].ToString();
 				Resumen.MontoTotal = 0.0;
 
