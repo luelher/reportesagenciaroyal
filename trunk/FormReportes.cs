@@ -34,7 +34,7 @@ namespace GrupoEmporium.Reportes
 		private System.Windows.Forms.TextBox textMesDesde;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox textMesHasta;
-        private System.Windows.Forms.Label labelGenerando;
+        public System.Windows.Forms.Label labelGenerando;
 		/// <summary>
 		/// Variable del diseñador requerida.
 		/// </summary>
@@ -197,11 +197,11 @@ namespace GrupoEmporium.Reportes
             // 
             this.labelGenerando.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelGenerando.ForeColor = System.Drawing.Color.Red;
-            this.labelGenerando.Location = new System.Drawing.Point(280, 184);
+            this.labelGenerando.Location = new System.Drawing.Point(118, 185);
             this.labelGenerando.Name = "labelGenerando";
-            this.labelGenerando.Size = new System.Drawing.Size(112, 16);
+            this.labelGenerando.Size = new System.Drawing.Size(242, 24);
             this.labelGenerando.TabIndex = 12;
-            this.labelGenerando.Text = "Generando...";
+            this.labelGenerando.Text = "Procesando...";
             this.labelGenerando.Visible = false;
             // 
             // label4
@@ -237,7 +237,7 @@ namespace GrupoEmporium.Reportes
             // BotonExportar
             // 
             this.BotonExportar.Enabled = false;
-            this.BotonExportar.Location = new System.Drawing.Point(136, 176);
+            this.BotonExportar.Location = new System.Drawing.Point(136, 158);
             this.BotonExportar.Name = "BotonExportar";
             this.BotonExportar.Size = new System.Drawing.Size(112, 24);
             this.BotonExportar.TabIndex = 6;
@@ -312,7 +312,7 @@ namespace GrupoEmporium.Reportes
 				case 0:  // Experiencia Profit
 					ObjProfit = new Profit.Reportes.Profit(Fecha.Value);
 
-					dt = ObjProfit.Reporte_Experiencia();
+					dt = ObjProfit.Reporte_Experiencia(this);
 
 					GridResultado.SetDataBinding(dt,"");
 
