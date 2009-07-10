@@ -9,6 +9,7 @@ using GrupoEmporium.Reportes.PDF;
 using GrupoEmporium.Datos;
 using GrupoEmporium.Varias;
 using GrupoEmporium.Mensajes;
+using GrupoEmporium.Reportes;
 
 namespace GrupoEmporium.Profit.Reportes
 {
@@ -772,7 +773,7 @@ namespace GrupoEmporium.Profit.Reportes
 		}
 
 
-		public DataTable Reporte_Experiencia()
+		public DataTable Reporte_Experiencia(FormReportes frm)
 		{
             string str = "";
 			if(Conexion.State == ConnectionState.Open)
@@ -801,6 +802,9 @@ namespace GrupoEmporium.Profit.Reportes
                         " FROM " +
                             " (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
                         " WHERE " +
+                            //" docum_cc.tipo_doc = 'XXXX' AND " +
+                            //" docum_cc.co_cli = '7409159' AND " +
+                            " clientes.co_seg != 'EMPRE' AND " +
                             " (docum_cc.tipo_doc = 'FACT') AND docum_cc.co_sucu<>'ADMINI' " +
                             " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "'";
 
@@ -818,6 +822,9 @@ namespace GrupoEmporium.Profit.Reportes
                         " FROM  " +
 	                        " (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli)   " +
 						" WHERE " +
+                            //" docum_cc.co_cli = '11263426' AND " +
+                            //" docum_cc.tipo_doc = 'XXXX' AND " +
+                            " clientes.co_seg != 'EMPRE' AND " +
                             " (docum_cc.tipo_doc = 'GIRO') AND docum_cc.co_sucu<>'ADMINI' " +
                             " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "' AND docum_cc.nro_orig=0 " +
                             " GROUP BY docum_cc.co_cli, clientes.cli_des, docum_cc.fec_emis ";
@@ -826,7 +833,8 @@ namespace GrupoEmporium.Profit.Reportes
                 clsBD.EjecutarQuery(strConexion, Conexion, SQL2, out dt2);
 
                 Mensajes.Mensaje.Informar((dt.Rows.Count + dt2.Rows.Count).ToString(), "Saint Reportes");
-
+                int k = 0;
+                int registros = dt.Rows.Count + dt2.Rows.Count;
 				#endregion
 
                 if (dt.Rows.Count > 0 || dt2.Rows.Count > 0)
@@ -849,6 +857,12 @@ namespace GrupoEmporium.Profit.Reportes
                         if (j == 1) dt = dt2;
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
+                            k++;
+                            if (frm != null)
+                            {
+                                frm.labelGenerando.Text = "Procesando... " + k + " de " + registros;
+                                frm.Refresh();
+                            } 
 
                             SQL = "SELECT " +
                                         " docum_cc.origen_d as nro_doc " +
@@ -917,32 +931,38 @@ namespace GrupoEmporium.Profit.Reportes
 			DateTime FechaE;
 			double MontoT;
 			DateTime FechaV;
+			    for(int i=0;i<dt.Rows.Count;i++)
+			    {
+                    try
+                    {
 
-			for(int i=0;i<dt.Rows.Count;i++)
-			{
+				        FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
+				        MontoT = Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString());
+				        Mensual= Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString());
+				        FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
 
-				FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
-				MontoT = Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString());
-				Mensual= Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString());
-				FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
+				        string Cad = dt.Rows[i]["Cedula"].ToString() + Tab +
+					        dt.Rows[i]["Nombre"].ToString() +Tab+
+					        Tab+
+					        dt.Rows[i]["Telefono"].ToString() +Tab+
+					        Tab+
+					        Tab+
+					        dt.Rows[i]["Factura"].ToString() +Tab+
+					        FechaE.ToString("dd/MM/yyyy")+Tab+
+					        MontoT.ToString("#,##0.00;($#,##0.00);0")+Tab+
+					        Mensual.ToString("#,##0.00;($#,##0.00);0")+Tab+
+					        dt.Rows[i]["Giros"].ToString() +Tab+
+					        FechaV.ToString("dd/MM/yyyy")+Tab+
+					        dt.Rows[i]["Experiencia"].ToString() +Tab;
 
-				string Cad = dt.Rows[i]["Cedula"].ToString() + Tab +
-					dt.Rows[i]["Nombre"].ToString() +Tab+
-					Tab+
-					dt.Rows[i]["Telefono"].ToString() +Tab+
-					Tab+
-					Tab+
-					dt.Rows[i]["Factura"].ToString() +Tab+
-					FechaE.ToString("dd/MM/yyyy")+Tab+
-					MontoT.ToString("#,##0.00;($#,##0.00);0")+Tab+
-					Mensual.ToString("#,##0.00;($#,##0.00);0")+Tab+
-					dt.Rows[i]["Giros"].ToString() +Tab+
-					FechaV.ToString("dd/MM/yyyy")+Tab+
-					dt.Rows[i]["Experiencia"].ToString() +Tab;
+				        TxtFile.WriteLine(Cad);
 
-				TxtFile.WriteLine(Cad);
+                    }catch(Exception ex){
+                        Mensajes.Mensaje.Error(ex.Message + " Cliente: " + dt.Rows[i]["Cedula"].ToString() + " - " + dt.Rows[i]["Nombre"].ToString(), "Profit Reportes");
+                    }
 
-			}
+
+			    }
 
 			TxtFile.Close();
 
@@ -1200,7 +1220,7 @@ namespace GrupoEmporium.Profit.Reportes
 						" Docum_cc INNER JOIN Clientes ON Docum_cc.co_cli = Clientes.co_cli " +
 					" WHERE " +
                         " Docum_cc.co_cli = '" + idCliente + "' AND Docum_cc.fec_emis = '" + FechaE.ToString("yyyy-MM-dd")  + "' AND " +
-                        " docum_cc.tipo_doc = 'GIRO' " +
+                        " docum_cc.tipo_doc = 'GIRO' AND Docum_cc.fec_emis!=Docum_cc.fec_venc " +
 					" GROUP BY " +
 						" Docum_cc.co_cli, " +
 						" Clientes.cli_des, " +
@@ -1215,7 +1235,7 @@ namespace GrupoEmporium.Profit.Reportes
 						" Docum_cc.saldo, " +
                         " origen_d" +
 					" ORDER BY " +
-						" Docum_cc.nro_doc ASC  ";
+                        " Docum_cc.fec_venc ASC  ";
 
 			clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dtCxC);
 
@@ -1305,15 +1325,15 @@ namespace GrupoEmporium.Profit.Reportes
 					{
 						if (Dias == -1)
 							Resumen.Experiencia = 0;
-						else if (Dias>=0 && Dias<30)
+						else if (Dias>=0 && Dias<=30)
+							Resumen.Experiencia = 1;
+						else if (Dias>30 && Dias<=60)
 							Resumen.Experiencia = 2;
-						else if (Dias>=30 && Dias<60)
+						else if (Dias>60 && Dias<=90)
 							Resumen.Experiencia = 3;
-						else if (Dias>=60 && Dias<90)
+						else if (Dias>90 && Dias<=120)
 							Resumen.Experiencia = 4;
-						else if (Dias>=90 && Dias<120)
-							Resumen.Experiencia = 5;
-						else if (Dias>=120)
+						else if (Dias>120)
 							Resumen.Experiencia = 20;
 						else if (Dias < 0 && FE.Month != _LaFecha.Month && FE.Year != _LaFecha.Year)
 							Resumen.Experiencia = 1;
