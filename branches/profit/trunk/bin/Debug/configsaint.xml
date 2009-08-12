@@ -9,29 +9,5 @@
     <propiedad var="Contrasena" valor="creditum" />
     <propiedad var="CadenaConexion" valor="False" />
     <propiedad var="Conexion" valor="Provider=sqloledb;Initial Catalog=LARANA;Data Source=larana;Integrated Security=SSPI;" />
-
-    <propiedad var="Dominio_Profit" valor="True" />
-    <propiedad var="DataSource_Profit" valor="serverar" />
-    <propiedad var="InitialCatalog_Profit" valor="SAINT" />
-    <propiedad var="Usuario_Profit" valor="sa" />
-    <propiedad var="Contrasena_Profit" valor="''" />
-    <propiedad var="CadenaConexion_Profit" valor="False" />
-    <propiedad var="Conexion_Profit" valor="Provider=sqloledb;Initial Catalog=SAINT;Data Source=serverar;Integrated Security=SSPI;" />
-
-    <propiedad var="Dominio_Profit_1" valor="True" />
-    <propiedad var="DataSource_Profit_1" valor="serverar" />
-    <propiedad var="InitialCatalog_Profit_1" valor="RECADMAR" />
-    <propiedad var="Usuario_Profit_1" valor="sa" />
-    <propiedad var="Contrasena_Profit_1" valor="''" />
-    <propiedad var="CadenaConexion_Profit_1" valor="False" />
-    <propiedad var="Conexion_Profit_1" valor="Provider=sqloledb;Initial Catalog=RECADMAR;Data Source=serverar;Integrated Security=SSPI;" />
-
-    <propiedad var="Dominio_Profit_2" valor="True" />
-    <propiedad var="DataSource_Profit_2" valor="serverar" />
-    <propiedad var="InitialCatalog_Profit_2" valor="SAIAGREC" />
-    <propiedad var="Usuario_Profit_2" valor="sa" />
-    <propiedad var="Contrasena_Profit_2" valor="''" />
-    <propiedad var="CadenaConexion_Profit_2" valor="False" />
-    <propiedad var="Conexion_Profit_2" valor="Provider=sqloledb;Initial Catalog=SAIAGREC;Data Source=serverar;Integrated Security=SSPI;" />
   </propiedades>
 </agenciaroyal>

@@ -148,6 +148,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Content Include="configsaint.xml" />
+    <Content Include="TextFile1.txt" />
     <EmbeddedResource Include="FormReportes.resx">
       <DependentUpon>FormReportes.cs</DependentUpon>
     </EmbeddedResource>
