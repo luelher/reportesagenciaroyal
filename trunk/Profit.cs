@@ -43,6 +43,7 @@ namespace GrupoEmporium.Profit.Reportes
 		private static string Tab="	";
 		private static char enter = (char)13;
 		private static char retorno = (char)10;
+        private static char espacio = (char)32;
 
 		public struct ResumenCxC
 		{
@@ -800,13 +801,14 @@ namespace GrupoEmporium.Profit.Reportes
                             " docum_cc.fec_venc   AS FechaV, " +
                             " docum_cc.monto_net  AS MtoFinanc " +
                         " FROM " +
-                            " (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
+                            " ((docum_cc INNER JOIN factura ON docum_cc.nro_doc = factura.fact_num) INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
                         " WHERE " +
                             //" docum_cc.tipo_doc = 'XXXX' AND " +
-                            //" docum_cc.co_cli = '7409159' AND " +
+                            //" docum_cc.co_cli = '17307448' AND " +
                             " clientes.co_seg != 'EMPRE' AND " +
                             " (docum_cc.tipo_doc = 'FACT') AND docum_cc.co_sucu<>'ADMINI' " +
-                            " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "'";
+                            " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "'" +
+                            " AND factura.anulada = 0";
 
                 SQL2 = " SELECT " +
 	                        " docum_cc.co_cli     AS CodClie,  " +
@@ -822,7 +824,7 @@ namespace GrupoEmporium.Profit.Reportes
                         " FROM  " +
 	                        " (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli)   " +
 						" WHERE " +
-                            //" docum_cc.co_cli = '11263426' AND " +
+                            //" docum_cc.co_cli = '17307448' AND " +
                             //" docum_cc.tipo_doc = 'XXXX' AND " +
                             " clientes.co_seg != 'EMPRE' AND " +
                             " (docum_cc.tipo_doc = 'GIRO') AND docum_cc.co_sucu<>'ADMINI' " +
@@ -832,7 +834,7 @@ namespace GrupoEmporium.Profit.Reportes
 				clsBD.EjecutarQuery(strConexion,Conexion,SQL,out dt);
                 clsBD.EjecutarQuery(strConexion, Conexion, SQL2, out dt2);
 
-                Mensajes.Mensaje.Informar((dt.Rows.Count + dt2.Rows.Count).ToString(), "Saint Reportes");
+                Mensajes.Mensaje.Informar((dt.Rows.Count + dt2.Rows.Count).ToString() + " Clientes a Procesar", "Saint Reportes");
                 int k = 0;
                 int registros = dt.Rows.Count + dt2.Rows.Count;
 				#endregion
@@ -937,14 +939,14 @@ namespace GrupoEmporium.Profit.Reportes
                     {
 
 				        FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
-				        MontoT = Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString());
-				        Mensual= Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString());
+				        MontoT = Math.Abs(Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString()));
+				        Mensual= Math.Abs(Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString()));
 				        FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
 
 				        string Cad = dt.Rows[i]["Cedula"].ToString() + Tab +
-					        dt.Rows[i]["Nombre"].ToString() +Tab+
+                            dt.Rows[i]["Nombre"].ToString().Trim().Replace(enter, espacio).Replace(retorno,espacio) + Tab +
 					        Tab+
-					        dt.Rows[i]["Telefono"].ToString() +Tab+
+					        dt.Rows[i]["Telefono"].ToString().Trim() +Tab+
 					        Tab+
 					        Tab+
 					        dt.Rows[i]["Factura"].ToString() +Tab+
