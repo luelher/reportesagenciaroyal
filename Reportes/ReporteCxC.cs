@@ -132,31 +132,34 @@ namespace GrupoEmporium.Saint.Reportes
 
 				while (!TPDF.AllTablePagesCreated)
 				{
-					Pagina++;
-					PdfPage NuevaPaginaPDF=DPDF.NewPage();
-					PdfTablePage NuevaTablaPaginaPDF=TPDF.CreateTablePage(Detalle);
+                    if (true)
+                    {
 
-					if(Inicial) // primera pagina
-					{
-						ConstruirEncabezadoInforme(ref NuevaPaginaPDF);
-						ConstruirEncabezadoPagina(ref NuevaPaginaPDF);
-					}
+                        Pagina++;
+                        PdfPage NuevaPaginaPDF = DPDF.NewPage();
+                        PdfTablePage NuevaTablaPaginaPDF = TPDF.CreateTablePage(Detalle);
 
-					ConstruirDetalle(ref NuevaTablaPaginaPDF,ref NuevaPaginaPDF);
-					ConstruirPieInfome(ref NuevaPaginaPDF);
+                        if (Inicial) // primera pagina
+                        {
+                            ConstruirEncabezadoInforme(ref NuevaPaginaPDF);
+                            ConstruirEncabezadoPagina(ref NuevaPaginaPDF);
+                        }
 
-					if(TPDF.AllTablePagesCreated) ConstruirPiePagina(ref NuevaPaginaPDF);
+                        ConstruirDetalle(ref NuevaTablaPaginaPDF, ref NuevaPaginaPDF);
+                        ConstruirPieInfome(ref NuevaPaginaPDF);
 
-					NuevaPaginaPDF.SaveToDocument();
+                        if (TPDF.AllTablePagesCreated) ConstruirPiePagina(ref NuevaPaginaPDF);
 
-					if(Inicial)
-					{
-						CambiarPorcentajeAreas(1,1,TamDetalle+TamEncabezadoInfome+TamEncabezadoPagina-2,TamPieInfome,TamPiePagina);
-						GenerarPorcentajeAreas(ref DPDF);
-						GenerarAreasBasicas(ref DPDF);
-						Inicial=false;
-					}
+                        NuevaPaginaPDF.SaveToDocument();
 
+                        if (Inicial)
+                        {
+                            CambiarPorcentajeAreas(1, 1, TamDetalle + TamEncabezadoInfome + TamEncabezadoPagina - 2, TamPieInfome, TamPiePagina);
+                            GenerarPorcentajeAreas(ref DPDF);
+                            GenerarAreasBasicas(ref DPDF);
+                            Inicial = false;
+                        }
+                    }
 				}
 				return true;
 			}
