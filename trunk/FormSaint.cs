@@ -38,6 +38,7 @@ namespace GrupoEmporium.Saint
 		private System.Windows.Forms.Label labelGenerando;
 		private System.Windows.Forms.RadioButton rbconexion1;
 		private System.Windows.Forms.RadioButton rbconexion2;
+        private Button BotonExcel;
 		/// <summary>
 		/// Variable del diseñador requerida.
 		/// </summary>
@@ -88,215 +89,227 @@ namespace GrupoEmporium.Saint
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(FormSaint));
-			this.BotonCrearReporte = new System.Windows.Forms.Button();
-			this.ComboReporte = new System.Windows.Forms.ComboBox();
-			this.Fecha = new System.Windows.Forms.DateTimePicker();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.LabelAcerca = new System.Windows.Forms.LinkLabel();
-			this.GridResultado = new System.Windows.Forms.DataGrid();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.rbconexion2 = new System.Windows.Forms.RadioButton();
-			this.rbconexion1 = new System.Windows.Forms.RadioButton();
-			this.labelGenerando = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.textMesHasta = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.textMesDesde = new System.Windows.Forms.TextBox();
-			this.BtnMigrar = new System.Windows.Forms.Button();
-			this.BotonExportar = new System.Windows.Forms.Button();
-			((System.ComponentModel.ISupportInitialize)(this.GridResultado)).BeginInit();
-			this.panel1.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// BotonCrearReporte
-			// 
-			this.BotonCrearReporte.Location = new System.Drawing.Point(136, 128);
-			this.BotonCrearReporte.Name = "BotonCrearReporte";
-			this.BotonCrearReporte.Size = new System.Drawing.Size(112, 24);
-			this.BotonCrearReporte.TabIndex = 0;
-			this.BotonCrearReporte.Text = "Generar Reporte";
-			this.BotonCrearReporte.Click += new System.EventHandler(this.BotonCrearReporte_Click);
-			// 
-			// ComboReporte
-			// 
-			this.ComboReporte.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ComboReporte.Items.AddRange(new object[] {
-															  "Cuentas Por Cobrar (Saint)",
-															  "Experiencia (Saint)",
-															  "Experiencia (Profit)",
-															  "Cartas Morosos 2 y 3 meses (Profit)",
-															  "Cartas Morosos 6 o mas  meses (Profit)",
-															  "Cartas Morosos Por rango de meses (Profit)",
-															  "Cartas Morosos Por rango de meses con Encuesta(Profit)",
-															  "Cartas Ultimo Aviso (Profit)",
-															  "Carta Legal (Profit)",
-															  "Listado Clientes Morosos"});
-			this.ComboReporte.Location = new System.Drawing.Point(104, 40);
-			this.ComboReporte.Name = "ComboReporte";
-			this.ComboReporte.Size = new System.Drawing.Size(256, 21);
-			this.ComboReporte.TabIndex = 1;
-			// 
-			// Fecha
-			// 
-			this.Fecha.Location = new System.Drawing.Point(104, 80);
-			this.Fecha.Name = "Fecha";
-			this.Fecha.Size = new System.Drawing.Size(216, 20);
-			this.Fecha.TabIndex = 2;
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(32, 40);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(56, 16);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "Reporte";
-			// 
-			// label2
-			// 
-			this.label2.Location = new System.Drawing.Point(32, 80);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(56, 16);
-			this.label2.TabIndex = 4;
-			this.label2.Text = "Fecha";
-			// 
-			// LabelAcerca
-			// 
-			this.LabelAcerca.Location = new System.Drawing.Point(280, 0);
-			this.LabelAcerca.Name = "LabelAcerca";
-			this.LabelAcerca.Size = new System.Drawing.Size(64, 16);
-			this.LabelAcerca.TabIndex = 5;
-			this.LabelAcerca.TabStop = true;
-			this.LabelAcerca.Text = "Acerca de...";
-			this.LabelAcerca.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LabelAcerca_LinkClicked);
-			// 
-			// GridResultado
-			// 
-			this.GridResultado.DataMember = "";
-			this.GridResultado.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.GridResultado.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-			this.GridResultado.Location = new System.Drawing.Point(0, 216);
-			this.GridResultado.Name = "GridResultado";
-			this.GridResultado.Size = new System.Drawing.Size(394, 168);
-			this.GridResultado.TabIndex = 6;
-			// 
-			// panel1
-			// 
-			this.panel1.Controls.Add(this.rbconexion2);
-			this.panel1.Controls.Add(this.rbconexion1);
-			this.panel1.Controls.Add(this.labelGenerando);
-			this.panel1.Controls.Add(this.label4);
-			this.panel1.Controls.Add(this.textMesHasta);
-			this.panel1.Controls.Add(this.label3);
-			this.panel1.Controls.Add(this.textMesDesde);
-			this.panel1.Controls.Add(this.BtnMigrar);
-			this.panel1.Controls.Add(this.BotonExportar);
-			this.panel1.Controls.Add(this.LabelAcerca);
-			this.panel1.Controls.Add(this.BotonCrearReporte);
-			this.panel1.Controls.Add(this.ComboReporte);
-			this.panel1.Controls.Add(this.Fecha);
-			this.panel1.Controls.Add(this.label1);
-			this.panel1.Controls.Add(this.label2);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(394, 216);
-			this.panel1.TabIndex = 7;
-			// 
-			// rbconexion2
-			// 
-			this.rbconexion2.Location = new System.Drawing.Point(280, 152);
-			this.rbconexion2.Name = "rbconexion2";
-			this.rbconexion2.Size = new System.Drawing.Size(104, 16);
-			this.rbconexion2.TabIndex = 14;
-			this.rbconexion2.Text = "Profit - Saint";
-			// 
-			// rbconexion1
-			// 
-			this.rbconexion1.Checked = true;
-			this.rbconexion1.Location = new System.Drawing.Point(280, 128);
-			this.rbconexion1.Name = "rbconexion1";
-			this.rbconexion1.Size = new System.Drawing.Size(104, 16);
-			this.rbconexion1.TabIndex = 13;
-			this.rbconexion1.TabStop = true;
-			this.rbconexion1.Text = "Profit Principal";
-			// 
-			// labelGenerando
-			// 
-			this.labelGenerando.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
-			this.labelGenerando.ForeColor = System.Drawing.Color.Red;
-			this.labelGenerando.Location = new System.Drawing.Point(280, 184);
-			this.labelGenerando.Name = "labelGenerando";
-			this.labelGenerando.Size = new System.Drawing.Size(112, 16);
-			this.labelGenerando.TabIndex = 12;
-			this.labelGenerando.Text = "Generando...";
-			this.labelGenerando.Visible = false;
-			// 
-			// label4
-			// 
-			this.label4.Location = new System.Drawing.Point(192, 104);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(64, 16);
-			this.label4.TabIndex = 11;
-			this.label4.Text = "Mes Hasta";
-			// 
-			// textMesHasta
-			// 
-			this.textMesHasta.Location = new System.Drawing.Point(264, 104);
-			this.textMesHasta.Name = "textMesHasta";
-			this.textMesHasta.Size = new System.Drawing.Size(48, 20);
-			this.textMesHasta.TabIndex = 10;
-			this.textMesHasta.Text = "";
-			// 
-			// label3
-			// 
-			this.label3.Location = new System.Drawing.Point(32, 104);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(64, 16);
-			this.label3.TabIndex = 9;
-			this.label3.Text = "Mes Desde";
-			// 
-			// textMesDesde
-			// 
-			this.textMesDesde.Location = new System.Drawing.Point(104, 104);
-			this.textMesDesde.Name = "textMesDesde";
-			this.textMesDesde.Size = new System.Drawing.Size(48, 20);
-			this.textMesDesde.TabIndex = 8;
-			this.textMesDesde.Text = "";
-			// 
-			// BtnMigrar
-			// 
-			this.BtnMigrar.Location = new System.Drawing.Point(16, 144);
-			this.BtnMigrar.Name = "BtnMigrar";
-			this.BtnMigrar.Size = new System.Drawing.Size(80, 32);
-			this.BtnMigrar.TabIndex = 7;
-			this.BtnMigrar.Text = "Migrar a Profit";
-			this.BtnMigrar.Click += new System.EventHandler(this.BtnMigrar_Click);
-			// 
-			// BotonExportar
-			// 
-			this.BotonExportar.Enabled = false;
-			this.BotonExportar.Location = new System.Drawing.Point(136, 176);
-			this.BotonExportar.Name = "BotonExportar";
-			this.BotonExportar.Size = new System.Drawing.Size(112, 24);
-			this.BotonExportar.TabIndex = 6;
-			this.BotonExportar.Text = "Exportar Reporte";
-			this.BotonExportar.Click += new System.EventHandler(this.BotonExportar_Click);
-			// 
-			// FormSaint
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(394, 384);
-			this.Controls.Add(this.GridResultado);
-			this.Controls.Add(this.panel1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Name = "FormSaint";
-			this.Text = "Reportes Saint";
-			((System.ComponentModel.ISupportInitialize)(this.GridResultado)).EndInit();
-			this.panel1.ResumeLayout(false);
-			this.ResumeLayout(false);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSaint));
+            this.BotonCrearReporte = new System.Windows.Forms.Button();
+            this.ComboReporte = new System.Windows.Forms.ComboBox();
+            this.Fecha = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.LabelAcerca = new System.Windows.Forms.LinkLabel();
+            this.GridResultado = new System.Windows.Forms.DataGrid();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rbconexion2 = new System.Windows.Forms.RadioButton();
+            this.rbconexion1 = new System.Windows.Forms.RadioButton();
+            this.labelGenerando = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textMesHasta = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textMesDesde = new System.Windows.Forms.TextBox();
+            this.BtnMigrar = new System.Windows.Forms.Button();
+            this.BotonExportar = new System.Windows.Forms.Button();
+            this.BotonExcel = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.GridResultado)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // BotonCrearReporte
+            // 
+            this.BotonCrearReporte.Location = new System.Drawing.Point(136, 128);
+            this.BotonCrearReporte.Name = "BotonCrearReporte";
+            this.BotonCrearReporte.Size = new System.Drawing.Size(112, 24);
+            this.BotonCrearReporte.TabIndex = 0;
+            this.BotonCrearReporte.Text = "Generar Reporte";
+            this.BotonCrearReporte.Click += new System.EventHandler(this.BotonCrearReporte_Click);
+            // 
+            // ComboReporte
+            // 
+            this.ComboReporte.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboReporte.Items.AddRange(new object[] {
+            "Cuentas Por Cobrar (Saint)",
+            "Experiencia (Saint)",
+            "Experiencia (Profit)",
+            "Cartas Morosos 2 y 3 meses (Profit)",
+            "Cartas Morosos 6 o mas  meses (Profit)",
+            "Cartas Morosos Por rango de meses (Profit)",
+            "Cartas Morosos Por rango de meses con Encuesta(Profit)",
+            "Cartas Ultimo Aviso (Profit)",
+            "Carta Legal (Profit)",
+            "Listado Clientes Morosos"});
+            this.ComboReporte.Location = new System.Drawing.Point(104, 40);
+            this.ComboReporte.Name = "ComboReporte";
+            this.ComboReporte.Size = new System.Drawing.Size(256, 21);
+            this.ComboReporte.TabIndex = 1;
+            // 
+            // Fecha
+            // 
+            this.Fecha.Location = new System.Drawing.Point(104, 80);
+            this.Fecha.Name = "Fecha";
+            this.Fecha.Size = new System.Drawing.Size(216, 20);
+            this.Fecha.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(32, 40);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 16);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Reporte";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(32, 80);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Fecha";
+            // 
+            // LabelAcerca
+            // 
+            this.LabelAcerca.Location = new System.Drawing.Point(280, 0);
+            this.LabelAcerca.Name = "LabelAcerca";
+            this.LabelAcerca.Size = new System.Drawing.Size(64, 16);
+            this.LabelAcerca.TabIndex = 5;
+            this.LabelAcerca.TabStop = true;
+            this.LabelAcerca.Text = "Acerca de...";
+            this.LabelAcerca.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LabelAcerca_LinkClicked);
+            // 
+            // GridResultado
+            // 
+            this.GridResultado.DataMember = "";
+            this.GridResultado.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GridResultado.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+            this.GridResultado.Location = new System.Drawing.Point(0, 216);
+            this.GridResultado.Name = "GridResultado";
+            this.GridResultado.Size = new System.Drawing.Size(394, 168);
+            this.GridResultado.TabIndex = 6;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.BotonExcel);
+            this.panel1.Controls.Add(this.rbconexion2);
+            this.panel1.Controls.Add(this.rbconexion1);
+            this.panel1.Controls.Add(this.labelGenerando);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.textMesHasta);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.textMesDesde);
+            this.panel1.Controls.Add(this.BtnMigrar);
+            this.panel1.Controls.Add(this.BotonExportar);
+            this.panel1.Controls.Add(this.LabelAcerca);
+            this.panel1.Controls.Add(this.BotonCrearReporte);
+            this.panel1.Controls.Add(this.ComboReporte);
+            this.panel1.Controls.Add(this.Fecha);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(394, 216);
+            this.panel1.TabIndex = 7;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // rbconexion2
+            // 
+            this.rbconexion2.Location = new System.Drawing.Point(280, 152);
+            this.rbconexion2.Name = "rbconexion2";
+            this.rbconexion2.Size = new System.Drawing.Size(104, 16);
+            this.rbconexion2.TabIndex = 14;
+            this.rbconexion2.Text = "Profit - Saint";
+            // 
+            // rbconexion1
+            // 
+            this.rbconexion1.Checked = true;
+            this.rbconexion1.Location = new System.Drawing.Point(280, 128);
+            this.rbconexion1.Name = "rbconexion1";
+            this.rbconexion1.Size = new System.Drawing.Size(104, 16);
+            this.rbconexion1.TabIndex = 13;
+            this.rbconexion1.TabStop = true;
+            this.rbconexion1.Text = "Profit Principal";
+            // 
+            // labelGenerando
+            // 
+            this.labelGenerando.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelGenerando.ForeColor = System.Drawing.Color.Red;
+            this.labelGenerando.Location = new System.Drawing.Point(136, 163);
+            this.labelGenerando.Name = "labelGenerando";
+            this.labelGenerando.Size = new System.Drawing.Size(112, 16);
+            this.labelGenerando.TabIndex = 12;
+            this.labelGenerando.Text = "Generando...";
+            this.labelGenerando.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(192, 104);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 16);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Mes Hasta";
+            // 
+            // textMesHasta
+            // 
+            this.textMesHasta.Location = new System.Drawing.Point(264, 104);
+            this.textMesHasta.Name = "textMesHasta";
+            this.textMesHasta.Size = new System.Drawing.Size(48, 20);
+            this.textMesHasta.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(32, 104);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 16);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Mes Desde";
+            // 
+            // textMesDesde
+            // 
+            this.textMesDesde.Location = new System.Drawing.Point(104, 104);
+            this.textMesDesde.Name = "textMesDesde";
+            this.textMesDesde.Size = new System.Drawing.Size(48, 20);
+            this.textMesDesde.TabIndex = 8;
+            // 
+            // BtnMigrar
+            // 
+            this.BtnMigrar.Location = new System.Drawing.Point(16, 144);
+            this.BtnMigrar.Name = "BtnMigrar";
+            this.BtnMigrar.Size = new System.Drawing.Size(80, 32);
+            this.BtnMigrar.TabIndex = 7;
+            this.BtnMigrar.Text = "Migrar a Profit";
+            this.BtnMigrar.Click += new System.EventHandler(this.BtnMigrar_Click);
+            // 
+            // BotonExportar
+            // 
+            this.BotonExportar.Enabled = false;
+            this.BotonExportar.Location = new System.Drawing.Point(90, 182);
+            this.BotonExportar.Name = "BotonExportar";
+            this.BotonExportar.Size = new System.Drawing.Size(112, 24);
+            this.BotonExportar.TabIndex = 6;
+            this.BotonExportar.Text = "Exportar Reporte";
+            this.BotonExportar.Click += new System.EventHandler(this.BotonExportar_Click);
+            // 
+            // BotonExcel
+            // 
+            this.BotonExcel.Enabled = false;
+            this.BotonExcel.Location = new System.Drawing.Point(208, 182);
+            this.BotonExcel.Name = "BotonExcel";
+            this.BotonExcel.Size = new System.Drawing.Size(112, 24);
+            this.BotonExcel.TabIndex = 15;
+            this.BotonExcel.Text = "Generar Excel";
+            this.BotonExcel.Click += new System.EventHandler(this.BotonExcel_Click);
+            // 
+            // FormSaint
+            // 
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.ClientSize = new System.Drawing.Size(394, 384);
+            this.Controls.Add(this.GridResultado);
+            this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "FormSaint";
+            this.Text = "Reportes Saint";
+            ((System.ComponentModel.ISupportInitialize)(this.GridResultado)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.ResumeLayout(false);
 
 		}
 		#endregion
@@ -333,8 +346,15 @@ namespace GrupoEmporium.Saint
 
 					GridResultado.SetDataBinding(ds,"");
 
-					if(ds.Tables[0].Rows.Count>0) BotonExportar.Enabled = true;
-					else BotonExportar.Enabled=false;
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        BotonExportar.Enabled = true;
+                        BotonExcel.Enabled = true;
+                    }
+                    else {
+                        BotonExportar.Enabled = false;
+                        BotonExcel.Enabled = false;
+                    } 
 
 					break;
 				case 1: // Experiencia Saint
@@ -344,8 +364,17 @@ namespace GrupoEmporium.Saint
 
 					GridResultado.SetDataBinding(dt,"");
 
-					if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-					else BotonExportar.Enabled=false;
+                    if (dt.Rows.Count > 0)
+                    {
+                        BotonExportar.Enabled = true;
+                        BotonExcel.Enabled = true;
+                    }
+                    else
+                    {
+                        BotonExportar.Enabled = false;
+                        BotonExcel.Enabled = false;
+                    } 
+
 
 					break;
 				case 2:  // Experiencia Profit
@@ -355,8 +384,17 @@ namespace GrupoEmporium.Saint
 
 					GridResultado.SetDataBinding(dt,"");
 
-					if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-					else BotonExportar.Enabled=false;
+                    if (dt.Rows.Count > 0)
+                    {
+                        BotonExportar.Enabled = true;
+                        BotonExcel.Enabled = true;
+                    }
+                    else
+                    {
+                        BotonExportar.Enabled = false;
+                        BotonExcel.Enabled = false;
+                    } 
+
 
 					break;
 				case 3: // Reporte Morosos 2 y 3 meses
@@ -366,8 +404,17 @@ namespace GrupoEmporium.Saint
 
 					GridResultado.SetDataBinding(dt,"");
 
-					if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-					else BotonExportar.Enabled=false;
+                    if (dt.Rows.Count > 0)
+                    {
+                        BotonExportar.Enabled = true;
+                        BotonExcel.Enabled = true;
+                    }
+                    else
+                    {
+                        BotonExportar.Enabled = false;
+                        BotonExcel.Enabled = false;
+                    } 
+
 
 					break;
 				case 4: // Reporte Morosos 6 meses
@@ -377,8 +424,17 @@ namespace GrupoEmporium.Saint
 
 					GridResultado.SetDataBinding(dt,"");
 
-					if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-					else BotonExportar.Enabled=false;
+                    if (dt.Rows.Count > 0)
+                    {
+                        BotonExportar.Enabled = true;
+                        BotonExcel.Enabled = true;
+                    }
+                    else
+                    {
+                        BotonExportar.Enabled = false;
+                        BotonExcel.Enabled = false;
+                    } 
+
 
 					break;
 				case 5: // Reporte Morosos Por Meses
@@ -390,8 +446,17 @@ namespace GrupoEmporium.Saint
 
 						GridResultado.SetDataBinding(dt,"");
 
-						if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-						else BotonExportar.Enabled=false;
+                        if (dt.Rows.Count > 0)
+                        {
+                            BotonExportar.Enabled = true;
+                            BotonExcel.Enabled = true;
+                        }
+                        else
+                        {
+                            BotonExportar.Enabled = false;
+                            BotonExcel.Enabled = false;
+                        } 
+
 					}else Mensaje.Error("Debe colocar el nro de los meses desde y hasta para realizar la consulta","Reportes Profit");
 					break;
 				case 6: // Reporte Morosos Por Meses con encuesta
@@ -403,8 +468,17 @@ namespace GrupoEmporium.Saint
 
 						GridResultado.SetDataBinding(dt,"");
 
-						if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-						else BotonExportar.Enabled=false;
+                        if (dt.Rows.Count > 0)
+                        {
+                            BotonExportar.Enabled = true;
+                            BotonExcel.Enabled = true;
+                        }
+                        else
+                        {
+                            BotonExportar.Enabled = false;
+                            BotonExcel.Enabled = false;
+                        } 
+
 					}
 					else Mensaje.Error("Debe colocar el nro de los meses desde y hasta para realizar la consulta","Reportes Profit");
 					break;
@@ -417,8 +491,17 @@ namespace GrupoEmporium.Saint
 
 						GridResultado.SetDataBinding(dt,"");
 
-						if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-						else BotonExportar.Enabled=false;
+                        if (dt.Rows.Count > 0)
+                        {
+                            BotonExportar.Enabled = true;
+                            BotonExcel.Enabled = true;
+                        }
+                        else
+                        {
+                            BotonExportar.Enabled = false;
+                            BotonExcel.Enabled = false;
+                        } 
+
 					}else Mensaje.Error("Debe colocar el nro de los meses desde y hasta para realizar la consulta","Reportes Profit");
 					break;
 				case 8: // Reporte Morosos + Carta Legal
@@ -430,8 +513,17 @@ namespace GrupoEmporium.Saint
 
 						GridResultado.SetDataBinding(dt,"");
 
-						if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-						else BotonExportar.Enabled=false;					
+                        if (dt.Rows.Count > 0)
+                        {
+                            BotonExportar.Enabled = true;
+                            BotonExcel.Enabled = true;
+                        }
+                        else
+                        {
+                            BotonExportar.Enabled = false;
+                            BotonExcel.Enabled = false;
+                        } 
+				
 					}else Mensaje.Error("Debe colocar el nro de los meses desde y hasta para realizar la consulta","Reportes Profit");
 
 					break;
@@ -442,8 +534,17 @@ namespace GrupoEmporium.Saint
 
 						GridResultado.SetDataBinding(dt,"");
 
-						if(dt.Rows.Count>0) BotonExportar.Enabled = true;
-						else BotonExportar.Enabled=false;					
+                        if (dt.Rows.Count > 0)
+                        {
+                            BotonExportar.Enabled = true;
+                            BotonExcel.Enabled = true;
+                        }
+                        else
+                        {
+                            BotonExportar.Enabled = false;
+                            BotonExcel.Enabled = false;
+                        } 
+				
 					break;
 			}
 			labelGenerando.Visible = false;
@@ -452,6 +553,9 @@ namespace GrupoEmporium.Saint
 		private void BotonExportar_Click(object sender, System.EventArgs e)
 		{
 			SaveFileDialog SFD = new SaveFileDialog();
+            SFD.Filter = "Archivo Text (*.txt)|*.txt|Todos los Archivos (*.*)|*.*";
+            SFD.FilterIndex = 1;
+
 			switch(ComboReporte.SelectedIndex)
 			{
 				case 0:
@@ -629,5 +733,68 @@ namespace GrupoEmporium.Saint
 			Fmigrar.ShowDialog(this);
 
 		}
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void BotonExcel_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog SFD = new SaveFileDialog();
+            SFD.Filter = "Archivos Excel (*.xls)|*.xls|Todos los Archivos (*.*)|*.*";
+            SFD.FilterIndex = 1;
+
+            switch (ComboReporte.SelectedIndex)
+            {
+                case 2:
+                    //Experiencia
+                    SFD.ShowDialog(this);
+                    if (SFD.FileNames[0].Trim() != "")
+                    {
+                        try
+                        {
+                            Profit.Reportes.Profit.ExportarExperienciaExcel(dt, SFD.FileNames[0]);
+                            Mensaje.Informar("Reporte Generado", this);
+                        }
+                        catch (Exception ex)
+                        { Mensaje.Error(ex.Message, this); }
+                    }
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    //Cartas
+                    SFD.ShowDialog(this);
+                    if (SFD.FileNames[0].Trim() != "")
+                    {
+                        try
+                        {
+                            Profit.Reportes.Profit.ExportarCartasExcel(dt, SFD.FileNames[0]);
+                            Mensaje.Informar("Reporte Generado", this);
+                        }
+                        catch (Exception ex)
+                        { Mensaje.Error(ex.Message, this); }
+                    }
+                    break;
+                case 9:
+                    //Listado Morosos
+                    SFD.ShowDialog(this);
+                    if (SFD.FileNames[0].Trim() != "")
+                    {
+                        try
+                        {
+                            Profit.Reportes.Profit.ExportarMorososExcel(dt, SFD.FileNames[0]);
+                            Mensaje.Informar("Reporte Generado", this);
+                        }
+                        catch (Exception ex)
+                        { Mensaje.Error(ex.Message, this); }
+                    }
+                    break;
+            }
+        }
 	}
 }

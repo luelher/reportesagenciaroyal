@@ -1,0 +1,8 @@
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\bin\Release\Resportes Saint.exe
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\bin\Release\GrupoEmporium.Encriptamiento.dll
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\obj\Release\GrupoEmporium.Saint.FormMigrar.resources
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\obj\Release\GrupoEmporium.Saint.FormSaint.resources
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\obj\Release\Resportes AR.csproj.GenerateResource.Cache
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\obj\Release\Resportes Saint.exe

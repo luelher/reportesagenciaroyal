@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Resportes Saint">
+</Property><Property Name="Archivo de la solución" Value="C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\Resportes Saint.sln">
+</Property><Property Name="Date" Value="Sábado, 10 de Octubre de 2009">
+</Property><Property Name="Time" Value="09:24 a.m.">
+</Property></Properties><Event ErrorLevel="0" Project="Resportes Saint" Source="Resportes Saint.csproj" Description="Proyecto convertido correctamente">
+</Event><Event ErrorLevel="3" Project="Resportes Saint" Source="Resportes Saint.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="Resportes Saint.sln" Description="La solución se convirtió correctamente">
+</Event><Event ErrorLevel="3" Project="" Source="Resportes Saint.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Resportes Saint" Source="Resportes Saint.csproj" Description="Examen completo: no es necesario actualizar los archivos de proyecto.">
+</Event></UpgradeLog>

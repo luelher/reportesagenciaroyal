@@ -498,7 +498,7 @@ namespace GrupoEmporium.Profit.Reportes
 			
 				#region SQL Union Facturas
 
-				SQL =	" SELECT " +
+                SQL = " SELECT " +
 					" docum_cc.co_cli     AS CodClie, " +
 					" clientes.cli_des    AS Descrip, " +
 					" clientes.direc1     AS Direc1, " +
@@ -913,6 +913,47 @@ namespace GrupoEmporium.Profit.Reportes
 
 		}
 
+        public static void ExportarExperienciaExcel(DataTable dt, string arch)
+        {
+            if (System.IO.File.Exists(arch)) { System.IO.File.Delete(arch); }
+            StreamWriter TxtFile = new StreamWriter(arch, true);
+
+            double Mensual;
+            DateTime FechaE;
+            double MontoT;
+            DateTime FechaV;
+
+            string Cad = "<table><tr> <th>Cedula</th> <th>Nombre</th> <th>Telefono</th> <th>Factura</th> <th>Fecha Emision</th> <th>Monto</th> <th>Pago Mensual</th> <th>Giros</th> <th>Fecha Vencimiento</th> <th>Experiencia</th> </tr>";
+            TxtFile.WriteLine(Cad);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+
+                FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
+                MontoT = Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString());
+                Mensual = Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString());
+                FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
+
+                Cad = "<tr> <th>" + dt.Rows[i]["Cedula"].ToString() + "</th><th>" +
+                    dt.Rows[i]["Nombre"].ToString() + "</th><th>" +
+                    dt.Rows[i]["Telefono"].ToString() + "</th><th>" +
+                    dt.Rows[i]["Factura"].ToString() + "</th><th>" +
+                    FechaE.ToString("dd/MM/yyyy") + "</th><th>" +
+                    MontoT.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
+                    Mensual.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
+                    dt.Rows[i]["Giros"].ToString() + "</th><th>" +
+                    FechaV.ToString("dd/MM/yyyy") + "</th><th>" +
+                    dt.Rows[i]["Experiencia"].ToString() + "</th> </tr>";
+
+                TxtFile.WriteLine(Cad);
+
+            }
+            Cad = "</table>";
+            TxtFile.WriteLine(Cad);
+
+            TxtFile.Close();
+
+        }
+
 		public static void ExportarMorosos(DataTable dt,string arch)
 		{
 			if (System.IO.File.Exists(arch)){System.IO.File.Delete(arch);}
@@ -1014,6 +1055,124 @@ namespace GrupoEmporium.Profit.Reportes
 
 		}
 
+
+        public static void ExportarMorososExcel(DataTable dt, string arch)
+        {
+            if (System.IO.File.Exists(arch)) { System.IO.File.Delete(arch); }
+            StreamWriter TxtFile = new StreamWriter(arch, true);
+
+            string Cliente;
+            string Cedula;
+            string Direccion;
+            string Telefono;
+            DateTime Fechae;
+            DateTime Fechav;
+            string Meses;
+            double Saldo;
+            DateTime Ultcobro;
+            string Dias;
+            double Pagomensual;
+            //double Saldovencido;
+            double Saldovencidosincancelar;
+            double Saldorestante;
+            string Girossincancelar;
+            string Girosvencidossincancelar;
+            //double Impuesto;
+            //double Intereses;
+            string Diasultimopago;
+
+            string Cad = "<table><tr> <th>Cliente</th> <th>Cedula</th> <th>Direccion</th> <th>telefono</th> <th>Fecha Emision</th> <th>Fecha Vencimiento</th> <th>Meses</th> <th>Saldo</th> <th>Ultimo Cobro</th> <th>Dias</th> <th>Pago Mensual</th> <th>Saldo Vencido</th> <th>Saldo Restante</th> <th>Giros sin Cancelar</th> <th>Giros vencidos sin cancelar</th> <th>Dias Ultimo pago</th>   </tr>";
+            TxtFile.WriteLine(Cad);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+
+                Cliente = dt.Rows[i]["cliente"].ToString();
+                Cedula = dt.Rows[i]["cedula"].ToString();
+                Direccion = dt.Rows[i]["direccion"].ToString();
+                Telefono = dt.Rows[i]["telefono"].ToString();
+                Fechae = Convert.ToDateTime(dt.Rows[i]["fechae"].ToString());
+                Fechav = Convert.ToDateTime(dt.Rows[i]["fechav"].ToString());
+
+                Meses = dt.Rows[i]["meses"].ToString();
+
+                Saldo = Convert.ToDouble(dt.Rows[i]["saldo"].ToString());
+                Ultcobro = Convert.ToDateTime(dt.Rows[i]["ultcobro"].ToString());
+                Dias = dt.Rows[i]["dias"].ToString();
+                Pagomensual = Convert.ToDouble(dt.Rows[i]["pagomensual"].ToString());
+
+                //Saldovencido			=			Convert.ToDouble(dt.Rows[i]["saldovencido"].ToString());
+                Saldovencidosincancelar = Convert.ToDouble(dt.Rows[i]["saldovencidosincancelar"].ToString());
+                Saldorestante = Convert.ToDouble(dt.Rows[i]["saldorestante"].ToString());
+                Girossincancelar = dt.Rows[i]["girossincancelar"].ToString();
+                Girosvencidossincancelar = dt.Rows[i]["girosvencidossincancelar"].ToString();
+                //Impuesto				=			Convert.ToDouble(dt.Rows[i]["impuesto"].ToString());
+                //Intereses				=			Convert.ToDouble(dt.Rows[i]["intereses"].ToString());
+                Diasultimopago = dt.Rows[i]["diasultimopago"].ToString();
+
+/*                
+<TR>
+<TH>Col1</TH>
+<TH>Col2</TH>
+<TH>Total</TH>
+</TR>
+*/
+
+                    Cad += "<tr>" + "<th>" + Cliente + "</th><th>" + Cedula + "</th><th>" + Direccion + "</th><th>" + Telefono + "</th><th>" + Fechae.ToString("dd/MM/yyyy") + "</th><th>" + Fechav.ToString("dd/MM/yyyy") + "</th><th>" + Meses + "</th><th>" +
+                    Saldo.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" + Ultcobro.ToString("dd/MM/yyyy") + "</th><th>" +
+                    Dias + "</th><th>" + Pagomensual.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
+                    Saldovencidosincancelar.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" + Saldorestante.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
+                    Girossincancelar + "</th><th>" + Girosvencidossincancelar + "</th><th>" + Diasultimopago + "</th></tr>";
+
+                TxtFile.WriteLine(Cad);
+
+            }
+            Cad = "</table>";
+
+            TxtFile.WriteLine(Cad);
+
+
+            TxtFile.Close();
+
+        }
+
+
+        public static void ExportarCartasExcel(DataTable dt, string arch)
+        {
+            if (System.IO.File.Exists(arch)) { System.IO.File.Delete(arch); }
+            StreamWriter TxtFile = new StreamWriter(arch, true);
+
+            string Cad = " <table> <tr> <th> Nombre" + "</th><th>" +
+                    "Cedula" + "</th><th>" +
+                    "Direccion" + "</th><th>" +
+                    "Telefono" + "</th><th>" +
+                    "Meses" + "</th><th>" +
+                    "Saldo" + "</th><th>" +
+                    "Fecha_Ultimo_Cobro" + "</th><th>" +
+                    "Dias_Ultimo_Cobro" + "</th> </tr>";
+            TxtFile.WriteLine(Cad);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+
+                Cad = "<tr> <th>" + dt.Rows[i][0].ToString() + "</th><th>" +
+                    dt.Rows[i][1].ToString() + "</th><th>" +
+                    dt.Rows[i][2].ToString().Replace(enter.ToString(), "").Replace(retorno.ToString(), " ") + "</th><th>" +
+                    dt.Rows[i][3].ToString() + "</th><th>" +
+                    dt.Rows[i][4].ToString() + "</th><th>" +
+                    dt.Rows[i][5].ToString() + "</th><th>" +
+                    Convert.ToDateTime(dt.Rows[i][6].ToString()).ToString("dd/MM/yyyy") + "</th><th>" +
+                    dt.Rows[i][7].ToString() + "</th> </tr>";
+
+                TxtFile.WriteLine(Cad);
+
+            }
+            Cad = "</table>";
+            TxtFile.WriteLine(Cad);
+
+            TxtFile.Close();
+
+        }
 
 		#endregion
 

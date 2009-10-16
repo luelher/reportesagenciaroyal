@@ -1,0 +1,2 @@
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\obj\Debug\Resportes Saint.exe
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\reportes_ar\obj\Debug\Resportes Saint.pdb
