@@ -358,7 +358,8 @@ namespace GrupoEmporium.Profit.Reportes
 				if(dt.Rows.Count>0)
 				{
 					Factura RFactura;
-
+                    
+                    dtReporte.Columns.Add("seleccion", System.Type.GetType("System.Boolean"));
 					dtReporte.Columns.Add("cliente",System.Type.GetType("System.String"));
 					dtReporte.Columns.Add("cedula",System.Type.GetType("System.String"));
 					dtReporte.Columns.Add("direccion",System.Type.GetType("System.String"));
@@ -438,6 +439,7 @@ namespace GrupoEmporium.Profit.Reportes
 								if(RFactura.NroFactura !="" && (RFactura.GirosVencidosSinCancelar >=desde && RFactura.GirosVencidosSinCancelar <=hasta))
 								{
 									dr = dtReporte.NewRow();
+                                    dr["seleccion"] = true;
 									dr["cliente"] = RFactura.Cliente;
 									dr["cedula"] = RFactura.IDCliente;
 									dr["direccion"] = dt.Rows[i]["Direc1"].ToString();
@@ -508,9 +510,10 @@ namespace GrupoEmporium.Profit.Reportes
 					" condicio.dias_cred  AS NGiros, " +
 					" docum_cc.fec_emis   AS FechaE, " +
 					" docum_cc.fec_venc   AS FechaV, " +
-					" docum_cc.monto_net  AS MtoFinanc " +
+					" docum_cc.monto_net  AS MtoFinanc, " +
+                    " zona.zon_des " +
 					" FROM " +
-					" ((docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
+                    " ((docum_cc INNER JOIN (clientes INNER JOIN zona ON clientes.co_zon=zona.co_zon ) ON docum_cc.co_cli = clientes.co_cli) " +
 					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
 					" WHERE " +
 					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
@@ -528,6 +531,7 @@ namespace GrupoEmporium.Profit.Reportes
 				{
 					Factura RFactura;
 
+                    dtReporte.Columns.Add("seleccion", System.Type.GetType("System.Boolean"));
 					dtReporte.Columns.Add("cliente",System.Type.GetType("System.String"));
 					dtReporte.Columns.Add("cedula",System.Type.GetType("System.String"));
 					dtReporte.Columns.Add("direccion",System.Type.GetType("System.String"));
@@ -594,6 +598,7 @@ namespace GrupoEmporium.Profit.Reportes
 								if(RFactura.NroFactura !="" && (RFactura.GirosVencidosSinCancelar >=desde && RFactura.GirosVencidosSinCancelar <=hasta) && dias_ultimo_pago > 30 )
 								{
 									dr = dtReporte.NewRow();
+                                    dr["seleccion"] = true;
 									dr["cliente"] = RFactura.Cliente;
 									dr["cedula"] = RFactura.IDCliente;
 									dr["direccion"] = dt.Rows[i]["Direc1"].ToString();
@@ -673,6 +678,7 @@ namespace GrupoEmporium.Profit.Reportes
 				{
 					Factura RFactura;
 
+                    dtReporte.Columns.Add("seleccion", System.Type.GetType("System.Boolean"));
 					dtReporte.Columns.Add("cliente",System.Type.GetType("System.String"));
 					dtReporte.Columns.Add("cedula",System.Type.GetType("System.String"));
 					dtReporte.Columns.Add("direccion",System.Type.GetType("System.String"));
@@ -740,6 +746,7 @@ namespace GrupoEmporium.Profit.Reportes
 								if(RFactura.NroFactura !="" && (RFactura.GirosSinCancelar >=desde && RFactura.GirosSinCancelar <=hasta) && dias_ultimo_pago > 30 )
 								{
 									dr = dtReporte.NewRow();
+                                    dr["seleccion"] = true;
 									dr["cliente"] = RFactura.Cliente;
 									dr["cedula"] = RFactura.IDCliente;
 									dr["direccion"] = dt.Rows[i]["Direc1"].ToString();
@@ -810,6 +817,7 @@ namespace GrupoEmporium.Profit.Reportes
 				{
 					Factura RFactura;
 
+                    dtReporte.Columns.Add("seleccion", System.Type.GetType("System.Boolean"));
 					dtReporte.Columns.Add("Cedula",System.Type.GetType("System.String"));
 					dtReporte.Columns.Add("Nombre",System.Type.GetType("System.String"));
 					dtReporte.Columns.Add("Telefono",System.Type.GetType("System.String"));
@@ -849,6 +857,7 @@ namespace GrupoEmporium.Profit.Reportes
 							if(RFactura.NroFactura !="")
 							{
 								dr = dtReporte.NewRow();
+                                dr["seleccion"] = true;
 								dr["Cedula"] = RFactura.IDCliente;
 								dr["Nombre"] = RFactura.Cliente;
 								dr["Telefono"] = RFactura.Telefono;
@@ -885,28 +894,30 @@ namespace GrupoEmporium.Profit.Reportes
 
 			for(int i=0;i<dt.Rows.Count;i++)
 			{
+                if (dt.Rows[i]["seleccion"].ToString() == "True")
+                {
 
-				FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
-				MontoT = Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString());
-				Mensual= Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString());
-				FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
+                    FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
+                    MontoT = Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString());
+                    Mensual = Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString());
+                    FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
 
-				string Cad = dt.Rows[i]["Cedula"].ToString() + Tab +
-					dt.Rows[i]["Nombre"].ToString() +Tab+
-					Tab+
-					dt.Rows[i]["Telefono"].ToString() +Tab+
-					Tab+
-					Tab+
-					dt.Rows[i]["Factura"].ToString() +Tab+
-					FechaE.ToString("dd/MM/yyyy")+Tab+
-					MontoT.ToString("#,##0.00;($#,##0.00);0")+Tab+
-					Mensual.ToString("#,##0.00;($#,##0.00);0")+Tab+
-					dt.Rows[i]["Giros"].ToString() +Tab+
-					FechaV.ToString("dd/MM/yyyy")+Tab+
-					dt.Rows[i]["Experiencia"].ToString() +Tab;
+                    string Cad = dt.Rows[i]["Cedula"].ToString() + Tab +
+                        dt.Rows[i]["Nombre"].ToString() + Tab +
+                        Tab +
+                        dt.Rows[i]["Telefono"].ToString() + Tab +
+                        Tab +
+                        Tab +
+                        dt.Rows[i]["Factura"].ToString() + Tab +
+                        FechaE.ToString("dd/MM/yyyy") + Tab +
+                        MontoT.ToString("#,##0.00;($#,##0.00);0") + Tab +
+                        Mensual.ToString("#,##0.00;($#,##0.00);0") + Tab +
+                        dt.Rows[i]["Giros"].ToString() + Tab +
+                        FechaV.ToString("dd/MM/yyyy") + Tab +
+                        dt.Rows[i]["Experiencia"].ToString() + Tab;
 
-				TxtFile.WriteLine(Cad);
-
+                    TxtFile.WriteLine(Cad);
+                }
 			}
 
 			TxtFile.Close();
@@ -927,25 +938,27 @@ namespace GrupoEmporium.Profit.Reportes
             TxtFile.WriteLine(Cad);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+                if (dt.Rows[i]["seleccion"].ToString() == "True")
+                {
 
-                FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
-                MontoT = Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString());
-                Mensual = Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString());
-                FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
+                    FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
+                    MontoT = Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString());
+                    Mensual = Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString());
+                    FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
 
-                Cad = "<tr> <th>" + dt.Rows[i]["Cedula"].ToString() + "</th><th>" +
-                    dt.Rows[i]["Nombre"].ToString() + "</th><th>" +
-                    dt.Rows[i]["Telefono"].ToString() + "</th><th>" +
-                    dt.Rows[i]["Factura"].ToString() + "</th><th>" +
-                    FechaE.ToString("dd/MM/yyyy") + "</th><th>" +
-                    MontoT.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
-                    Mensual.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
-                    dt.Rows[i]["Giros"].ToString() + "</th><th>" +
-                    FechaV.ToString("dd/MM/yyyy") + "</th><th>" +
-                    dt.Rows[i]["Experiencia"].ToString() + "</th> </tr>";
+                    Cad = "<tr> <th>" + dt.Rows[i]["Cedula"].ToString() + "</th><th>" +
+                        dt.Rows[i]["Nombre"].ToString() + "</th><th>" +
+                        dt.Rows[i]["Telefono"].ToString() + "</th><th>" +
+                        dt.Rows[i]["Factura"].ToString() + "</th><th>" +
+                        FechaE.ToString("dd/MM/yyyy") + "</th><th>" +
+                        MontoT.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
+                        Mensual.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
+                        dt.Rows[i]["Giros"].ToString() + "</th><th>" +
+                        FechaV.ToString("dd/MM/yyyy") + "</th><th>" +
+                        dt.Rows[i]["Experiencia"].ToString() + "</th> </tr>";
 
-                TxtFile.WriteLine(Cad);
-
+                    TxtFile.WriteLine(Cad);
+                }
             }
             Cad = "</table>";
             TxtFile.WriteLine(Cad);
@@ -981,38 +994,40 @@ namespace GrupoEmporium.Profit.Reportes
 
 			for(int i=0;i<dt.Rows.Count;i++)
 			{
+                if (dt.Rows[i]["seleccion"].ToString() == "True")
+                {
 
-				Cliente					=			dt.Rows[i]["cliente"].ToString();
-				Cedula					=			dt.Rows[i]["cedula"].ToString();
-				Direccion				=			dt.Rows[i]["direccion"].ToString();
-				Telefono				=			dt.Rows[i]["telefono"].ToString();
-				Fechae					=			Convert.ToDateTime(dt.Rows[i]["fechae"].ToString());
-				Fechav					=			Convert.ToDateTime(dt.Rows[i]["fechav"].ToString());
+                    Cliente = dt.Rows[i]["cliente"].ToString();
+                    Cedula = dt.Rows[i]["cedula"].ToString();
+                    Direccion = dt.Rows[i]["direccion"].ToString();
+                    Telefono = dt.Rows[i]["telefono"].ToString();
+                    Fechae = Convert.ToDateTime(dt.Rows[i]["fechae"].ToString());
+                    Fechav = Convert.ToDateTime(dt.Rows[i]["fechav"].ToString());
 
-				Meses					=			dt.Rows[i]["meses"].ToString();
+                    Meses = dt.Rows[i]["meses"].ToString();
 
-				Saldo					=			Convert.ToDouble(dt.Rows[i]["saldo"].ToString());
-				Ultcobro				=			Convert.ToDateTime(dt.Rows[i]["ultcobro"].ToString());
-				Dias					=			dt.Rows[i]["dias"].ToString();
-				Pagomensual				=			Convert.ToDouble(dt.Rows[i]["pagomensual"].ToString());
+                    Saldo = Convert.ToDouble(dt.Rows[i]["saldo"].ToString());
+                    Ultcobro = Convert.ToDateTime(dt.Rows[i]["ultcobro"].ToString());
+                    Dias = dt.Rows[i]["dias"].ToString();
+                    Pagomensual = Convert.ToDouble(dt.Rows[i]["pagomensual"].ToString());
 
-				//Saldovencido			=			Convert.ToDouble(dt.Rows[i]["saldovencido"].ToString());
-				Saldovencidosincancelar	=			Convert.ToDouble(dt.Rows[i]["saldovencidosincancelar"].ToString());
-				Saldorestante			=			Convert.ToDouble(dt.Rows[i]["saldorestante"].ToString());
-				Girossincancelar		=			dt.Rows[i]["girossincancelar"].ToString();
-				Girosvencidossincancelar=			dt.Rows[i]["girosvencidossincancelar"].ToString();
-				//Impuesto				=			Convert.ToDouble(dt.Rows[i]["impuesto"].ToString());
-				//Intereses				=			Convert.ToDouble(dt.Rows[i]["intereses"].ToString());
-				Diasultimopago			=			dt.Rows[i]["diasultimopago"].ToString();
+                    //Saldovencido			=			Convert.ToDouble(dt.Rows[i]["saldovencido"].ToString());
+                    Saldovencidosincancelar = Convert.ToDouble(dt.Rows[i]["saldovencidosincancelar"].ToString());
+                    Saldorestante = Convert.ToDouble(dt.Rows[i]["saldorestante"].ToString());
+                    Girossincancelar = dt.Rows[i]["girossincancelar"].ToString();
+                    Girosvencidossincancelar = dt.Rows[i]["girosvencidossincancelar"].ToString();
+                    //Impuesto				=			Convert.ToDouble(dt.Rows[i]["impuesto"].ToString());
+                    //Intereses				=			Convert.ToDouble(dt.Rows[i]["intereses"].ToString());
+                    Diasultimopago = dt.Rows[i]["diasultimopago"].ToString();
 
-				string Cad = Cliente + Tab + Cedula + Tab + Direccion + Tab + Telefono + Tab + Fechae.ToString("dd/MM/yyyy") + Tab + Fechav.ToString("dd/MM/yyyy") + Tab + Meses + Tab + 
-					Saldo.ToString("#,##0.00;($#,##0.00);0") + Tab + Ultcobro.ToString("dd/MM/yyyy") + Tab + 
-					Dias + Tab + Pagomensual.ToString("#,##0.00;($#,##0.00);0") + Tab + 
-					Saldovencidosincancelar.ToString("#,##0.00;($#,##0.00);0") + Tab + Saldorestante.ToString("#,##0.00;($#,##0.00);0") + Tab + 
-					Girossincancelar + Tab + Girosvencidossincancelar + Tab + Diasultimopago;
-					
-				TxtFile.WriteLine(Cad);
+                    string Cad = Cliente + Tab + Cedula + Tab + Direccion + Tab + Telefono + Tab + Fechae.ToString("dd/MM/yyyy") + Tab + Fechav.ToString("dd/MM/yyyy") + Tab + Meses + Tab +
+                        Saldo.ToString("#,##0.00;($#,##0.00);0") + Tab + Ultcobro.ToString("dd/MM/yyyy") + Tab +
+                        Dias + Tab + Pagomensual.ToString("#,##0.00;($#,##0.00);0") + Tab +
+                        Saldovencidosincancelar.ToString("#,##0.00;($#,##0.00);0") + Tab + Saldorestante.ToString("#,##0.00;($#,##0.00);0") + Tab +
+                        Girossincancelar + Tab + Girosvencidossincancelar + Tab + Diasultimopago;
 
+                    TxtFile.WriteLine(Cad);
+                }
 			}
 
 			TxtFile.Close();
@@ -1037,17 +1052,20 @@ namespace GrupoEmporium.Profit.Reportes
 
 			for(int i=0;i<dt.Rows.Count;i++)
 			{
+                if (dt.Rows[i]["seleccion"].ToString() == "True")
+                {
 
-				Cad = dt.Rows[i][0].ToString() + Tab +
-					dt.Rows[i][1].ToString() + Tab + 
-					dt.Rows[i][2].ToString().Replace(enter.ToString(),"").Replace(retorno.ToString()," ") + Tab +
-					dt.Rows[i][3].ToString() + Tab +
-					dt.Rows[i][4].ToString() + Tab +
-					dt.Rows[i][5].ToString() + Tab +
-					Convert.ToDateTime(dt.Rows[i][6].ToString()).ToString("dd/MM/yyyy") + Tab +
-					dt.Rows[i][7].ToString() + Tab;
+                    Cad = dt.Rows[i][0].ToString() + Tab +
+                        dt.Rows[i][1].ToString() + Tab +
+                        dt.Rows[i][2].ToString().Replace(enter.ToString(), "").Replace(retorno.ToString(), " ") + Tab +
+                        dt.Rows[i][3].ToString() + Tab +
+                        dt.Rows[i][4].ToString() + Tab +
+                        dt.Rows[i][5].ToString() + Tab +
+                        Convert.ToDateTime(dt.Rows[i][6].ToString()).ToString("dd/MM/yyyy") + Tab +
+                        dt.Rows[i][7].ToString() + Tab;
 
-				TxtFile.WriteLine(Cad);
+                    TxtFile.WriteLine(Cad);
+                }
 
 			}
 
@@ -1086,37 +1104,39 @@ namespace GrupoEmporium.Profit.Reportes
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+                if (dt.Rows[i]["seleccion"].ToString() == "True")
+                {
 
-                Cliente = dt.Rows[i]["cliente"].ToString();
-                Cedula = dt.Rows[i]["cedula"].ToString();
-                Direccion = dt.Rows[i]["direccion"].ToString();
-                Telefono = dt.Rows[i]["telefono"].ToString();
-                Fechae = Convert.ToDateTime(dt.Rows[i]["fechae"].ToString());
-                Fechav = Convert.ToDateTime(dt.Rows[i]["fechav"].ToString());
+                    Cliente = dt.Rows[i]["cliente"].ToString();
+                    Cedula = dt.Rows[i]["cedula"].ToString();
+                    Direccion = dt.Rows[i]["direccion"].ToString();
+                    Telefono = dt.Rows[i]["telefono"].ToString();
+                    Fechae = Convert.ToDateTime(dt.Rows[i]["fechae"].ToString());
+                    Fechav = Convert.ToDateTime(dt.Rows[i]["fechav"].ToString());
 
-                Meses = dt.Rows[i]["meses"].ToString();
+                    Meses = dt.Rows[i]["meses"].ToString();
 
-                Saldo = Convert.ToDouble(dt.Rows[i]["saldo"].ToString());
-                Ultcobro = Convert.ToDateTime(dt.Rows[i]["ultcobro"].ToString());
-                Dias = dt.Rows[i]["dias"].ToString();
-                Pagomensual = Convert.ToDouble(dt.Rows[i]["pagomensual"].ToString());
+                    Saldo = Convert.ToDouble(dt.Rows[i]["saldo"].ToString());
+                    Ultcobro = Convert.ToDateTime(dt.Rows[i]["ultcobro"].ToString());
+                    Dias = dt.Rows[i]["dias"].ToString();
+                    Pagomensual = Convert.ToDouble(dt.Rows[i]["pagomensual"].ToString());
 
-                //Saldovencido			=			Convert.ToDouble(dt.Rows[i]["saldovencido"].ToString());
-                Saldovencidosincancelar = Convert.ToDouble(dt.Rows[i]["saldovencidosincancelar"].ToString());
-                Saldorestante = Convert.ToDouble(dt.Rows[i]["saldorestante"].ToString());
-                Girossincancelar = dt.Rows[i]["girossincancelar"].ToString();
-                Girosvencidossincancelar = dt.Rows[i]["girosvencidossincancelar"].ToString();
-                //Impuesto				=			Convert.ToDouble(dt.Rows[i]["impuesto"].ToString());
-                //Intereses				=			Convert.ToDouble(dt.Rows[i]["intereses"].ToString());
-                Diasultimopago = dt.Rows[i]["diasultimopago"].ToString();
+                    //Saldovencido			=			Convert.ToDouble(dt.Rows[i]["saldovencido"].ToString());
+                    Saldovencidosincancelar = Convert.ToDouble(dt.Rows[i]["saldovencidosincancelar"].ToString());
+                    Saldorestante = Convert.ToDouble(dt.Rows[i]["saldorestante"].ToString());
+                    Girossincancelar = dt.Rows[i]["girossincancelar"].ToString();
+                    Girosvencidossincancelar = dt.Rows[i]["girosvencidossincancelar"].ToString();
+                    //Impuesto				=			Convert.ToDouble(dt.Rows[i]["impuesto"].ToString());
+                    //Intereses				=			Convert.ToDouble(dt.Rows[i]["intereses"].ToString());
+                    Diasultimopago = dt.Rows[i]["diasultimopago"].ToString();
 
-/*                
-<TR>
-<TH>Col1</TH>
-<TH>Col2</TH>
-<TH>Total</TH>
-</TR>
-*/
+                    /*                
+                    <TR>
+                    <TH>Col1</TH>
+                    <TH>Col2</TH>
+                    <TH>Total</TH>
+                    </TR>
+                    */
 
                     Cad += "<tr>" + "<th>" + Cliente + "</th><th>" + Cedula + "</th><th>" + Direccion + "</th><th>" + Telefono + "</th><th>" + Fechae.ToString("dd/MM/yyyy") + "</th><th>" + Fechav.ToString("dd/MM/yyyy") + "</th><th>" + Meses + "</th><th>" +
                     Saldo.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" + Ultcobro.ToString("dd/MM/yyyy") + "</th><th>" +
@@ -1124,8 +1144,8 @@ namespace GrupoEmporium.Profit.Reportes
                     Saldovencidosincancelar.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" + Saldorestante.ToString("#,##0.00;($#,##0.00);0") + "</th><th>" +
                     Girossincancelar + "</th><th>" + Girosvencidossincancelar + "</th><th>" + Diasultimopago + "</th></tr>";
 
-                TxtFile.WriteLine(Cad);
-
+                    TxtFile.WriteLine(Cad);
+                }
             }
             Cad = "</table>";
 
@@ -1154,18 +1174,20 @@ namespace GrupoEmporium.Profit.Reportes
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+                if (dt.Rows[i]["seleccion"].ToString() == "True")
+                {
 
-                Cad = "<tr> <th>" + dt.Rows[i][0].ToString() + "</th><th>" +
-                    dt.Rows[i][1].ToString() + "</th><th>" +
-                    dt.Rows[i][2].ToString().Replace(enter.ToString(), "").Replace(retorno.ToString(), " ") + "</th><th>" +
-                    dt.Rows[i][3].ToString() + "</th><th>" +
-                    dt.Rows[i][4].ToString() + "</th><th>" +
-                    dt.Rows[i][5].ToString() + "</th><th>" +
-                    Convert.ToDateTime(dt.Rows[i][6].ToString()).ToString("dd/MM/yyyy") + "</th><th>" +
-                    dt.Rows[i][7].ToString() + "</th> </tr>";
+                    Cad = "<tr> <th>" + dt.Rows[i][0].ToString() + "</th><th>" +
+                        dt.Rows[i][1].ToString() + "</th><th>" +
+                        dt.Rows[i][2].ToString().Replace(enter.ToString(), "").Replace(retorno.ToString(), " ") + "</th><th>" +
+                        dt.Rows[i][3].ToString() + "</th><th>" +
+                        dt.Rows[i][4].ToString() + "</th><th>" +
+                        dt.Rows[i][5].ToString() + "</th><th>" +
+                        Convert.ToDateTime(dt.Rows[i][6].ToString()).ToString("dd/MM/yyyy") + "</th><th>" +
+                        dt.Rows[i][7].ToString() + "</th> </tr>";
 
-                TxtFile.WriteLine(Cad);
-
+                    TxtFile.WriteLine(Cad);
+                }
             }
             Cad = "</table>";
             TxtFile.WriteLine(Cad);
