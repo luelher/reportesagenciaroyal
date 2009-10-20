@@ -339,9 +339,10 @@ namespace GrupoEmporium.Profit.Reportes
 					" condicio.dias_cred  AS NGiros, " +
 					" docum_cc.fec_emis   AS FechaE, " +
 					" docum_cc.fec_venc   AS FechaV, " +
-					" docum_cc.monto_net  AS MtoFinanc " +
+					" docum_cc.monto_net  AS MtoFinanc, " +
+                    " zona.zon_des " +
 					" FROM " +
-					" ((docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
+					" ((docum_cc INNER JOIN (clientes INNER JOIN zona ON clientes.co_zon=zona.co_zon ) ON docum_cc.co_cli = clientes.co_cli) " +
 					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
 					" WHERE " +
 					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
@@ -382,6 +383,7 @@ namespace GrupoEmporium.Profit.Reportes
 					//dtReporte.Columns.Add("impuesto",System.Type.GetType("System.Double"));
 					//dtReporte.Columns.Add("intereses",System.Type.GetType("System.Double"));
 					dtReporte.Columns.Add("diasultimopago",System.Type.GetType("System.String"));
+                    dtReporte.Columns.Add("zona", System.Type.GetType("System.String"));
 
 					for(int i=0;i<dt.Rows.Count;i++)
 					{
@@ -462,6 +464,7 @@ namespace GrupoEmporium.Profit.Reportes
 									//dr["impuesto"] = RFactura.Impuesto;
 									//dr["intereses"] = RFactura.Intereses;
 									dr["diasultimopago"] = dias_ultimo_pago;
+                                    dr["zona"] = dt.Rows[i]["zon_des"].ToString();
 
 									dtReporte.Rows.Add(dr);
 									hecho = false;
@@ -500,7 +503,7 @@ namespace GrupoEmporium.Profit.Reportes
 			
 				#region SQL Union Facturas
 
-                SQL = " SELECT " +
+                SQL = " SELECT top 200 " +
 					" docum_cc.co_cli     AS CodClie, " +
 					" clientes.cli_des    AS Descrip, " +
 					" clientes.direc1     AS Direc1, " +
@@ -541,6 +544,7 @@ namespace GrupoEmporium.Profit.Reportes
 					dtReporte.Columns.Add("ultcobro",System.Type.GetType("System.DateTime"));
 					dtReporte.Columns.Add("dias",System.Type.GetType("System.Double"));
 					dtReporte.Columns.Add("pagomensual",System.Type.GetType("System.String"));
+                    dtReporte.Columns.Add("zona", System.Type.GetType("System.String"));
 
 					for(int i=0;i<dt.Rows.Count;i++)
 					{
@@ -611,6 +615,8 @@ namespace GrupoEmporium.Profit.Reportes
 									dr["dias"] = dias_ultimo_pago;
 									dr["pagomensual"] = RFactura.PagoMensual.ToString("#########.00");
 
+                                    dr["zona"] = dt.Rows[i]["zon_des"].ToString();
+
 									dtReporte.Rows.Add(dr);
 									hecho = false;
 								}
@@ -658,9 +664,10 @@ namespace GrupoEmporium.Profit.Reportes
 					" condicio.dias_cred  AS NGiros, " +
 					" docum_cc.fec_emis   AS FechaE, " +
 					" docum_cc.fec_venc   AS FechaV, " +
-					" docum_cc.monto_net  AS MtoFinanc " +
+					" docum_cc.monto_net  AS MtoFinanc, " +
+                    " zona.zon_des " +
 					" FROM " +
-					" ((docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
+                    " ((docum_cc INNER JOIN (clientes INNER JOIN zona ON clientes.co_zon=zona.co_zon ) ON docum_cc.co_cli = clientes.co_cli) " +
 					" INNER JOIN (factura INNER JOIN condicio ON factura.forma_pag = condicio.co_cond) ON docum_cc.nro_doc = factura.fact_num) " +
 					" WHERE " +
 					" docum_cc.tipo_doc = 'FACT' AND condicio.dias_cred > 0 " +
@@ -688,6 +695,7 @@ namespace GrupoEmporium.Profit.Reportes
 					dtReporte.Columns.Add("ultcobro",System.Type.GetType("System.DateTime"));
 					dtReporte.Columns.Add("dias",System.Type.GetType("System.Double"));
 					dtReporte.Columns.Add("pagomensual",System.Type.GetType("System.String"));
+                    dtReporte.Columns.Add("zona", System.Type.GetType("System.String"));
 
 					for(int i=0;i<dt.Rows.Count;i++)
 					{
@@ -758,6 +766,7 @@ namespace GrupoEmporium.Profit.Reportes
 									dr["ultcobro"] = fecha_ultimo_cobro;
 									dr["dias"] = dias_ultimo_pago;
 									dr["pagomensual"] = RFactura.PagoMensual.ToString("#########.00");
+                                    dr["zona"] = dt.Rows[i]["zon_des"].ToString();
 
 									dtReporte.Rows.Add(dr);
 									hecho = false;
@@ -1055,14 +1064,14 @@ namespace GrupoEmporium.Profit.Reportes
                 if (dt.Rows[i]["seleccion"].ToString() == "True")
                 {
 
-                    Cad = dt.Rows[i][0].ToString() + Tab +
-                        dt.Rows[i][1].ToString() + Tab +
-                        dt.Rows[i][2].ToString().Replace(enter.ToString(), "").Replace(retorno.ToString(), " ") + Tab +
-                        dt.Rows[i][3].ToString() + Tab +
+                    Cad = dt.Rows[i][1].ToString() + Tab +
+                        dt.Rows[i][2].ToString() + Tab +
+                        dt.Rows[i][3].ToString().Replace(enter.ToString(), "").Replace(retorno.ToString(), " ") + Tab +
                         dt.Rows[i][4].ToString() + Tab +
                         dt.Rows[i][5].ToString() + Tab +
-                        Convert.ToDateTime(dt.Rows[i][6].ToString()).ToString("dd/MM/yyyy") + Tab +
-                        dt.Rows[i][7].ToString() + Tab;
+                        dt.Rows[i][6].ToString() + Tab +
+                        Convert.ToDateTime(dt.Rows[i][7].ToString()).ToString("dd/MM/yyyy") + Tab +
+                        dt.Rows[i][8].ToString() + Tab;
 
                     TxtFile.WriteLine(Cad);
                 }
@@ -1177,14 +1186,14 @@ namespace GrupoEmporium.Profit.Reportes
                 if (dt.Rows[i]["seleccion"].ToString() == "True")
                 {
 
-                    Cad = "<tr> <th>" + dt.Rows[i][0].ToString() + "</th><th>" +
-                        dt.Rows[i][1].ToString() + "</th><th>" +
-                        dt.Rows[i][2].ToString().Replace(enter.ToString(), "").Replace(retorno.ToString(), " ") + "</th><th>" +
-                        dt.Rows[i][3].ToString() + "</th><th>" +
+                    Cad = "<tr> <th>" + dt.Rows[i][1].ToString() + "</th><th>" +
+                        dt.Rows[i][2].ToString() + "</th><th>" +
+                        dt.Rows[i][3].ToString().Replace(enter.ToString(), "").Replace(retorno.ToString(), " ") + "</th><th>" +
                         dt.Rows[i][4].ToString() + "</th><th>" +
                         dt.Rows[i][5].ToString() + "</th><th>" +
-                        Convert.ToDateTime(dt.Rows[i][6].ToString()).ToString("dd/MM/yyyy") + "</th><th>" +
-                        dt.Rows[i][7].ToString() + "</th> </tr>";
+                        dt.Rows[i][6].ToString() + "</th><th>" +
+                        Convert.ToDateTime(dt.Rows[i][7].ToString()).ToString("dd/MM/yyyy") + "</th><th>" +
+                        dt.Rows[i][8].ToString() + "</th> </tr>";
 
                     TxtFile.WriteLine(Cad);
                 }

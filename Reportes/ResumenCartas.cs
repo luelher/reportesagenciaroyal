@@ -197,6 +197,7 @@ namespace GrupoEmporium.Profit.Reportes
 			PdfArea AreatextPDF_D = EncabezadoPagina.InnerAreaP(5,45);
 			PdfArea AreatextPDF_F = EncabezadoPagina.InnerAreaP(5,60);
 			PdfArea AreatextPDF_E = EncabezadoPagina.InnerAreaP(5,75);
+            PdfArea AreatextPDF_G = EncabezadoPagina.InnerAreaP(5, 90);
 
 			//
 			PdfTextArea textPDF_A = new PdfTextArea(F_TituloB,AreatextPDF_A,
@@ -211,11 +212,14 @@ namespace GrupoEmporium.Profit.Reportes
 			PdfTextArea textPDF_D = new PdfTextArea(F_TituloB,AreatextPDF_D,
 				"C.I.: " + DSCxC.Tables[0].Rows[i]["cedula"].ToString(),ContentAlignment.TopLeft);
 
-			PdfTextArea textPDF_E = new PdfTextArea(F_TituloB,AreatextPDF_E,
+			PdfTextArea textPDF_E = new PdfTextArea(F_TituloB,AreatextPDF_G,
 				"DIRECCIÓN: " + DSCxC.Tables[0].Rows[i]["direccion"].ToString(),ContentAlignment.TopLeft);
 
 			PdfTextArea textPDF_F = new PdfTextArea(F_TituloB,AreatextPDF_F,
 				"TELEFONO: " + DSCxC.Tables[0].Rows[i]["telefono"].ToString(),ContentAlignment.TopLeft);
+
+            PdfTextArea textPDF_G = new PdfTextArea(F_TituloB, AreatextPDF_E,
+                "COBRADOR: " + DSCxC.Tables[0].Rows[i]["zona"].ToString(), ContentAlignment.TopLeft);
 
 			//
 			//PPDF.Add(MiImagenPDF,EncabezadoInfome,200);
@@ -225,6 +229,7 @@ namespace GrupoEmporium.Profit.Reportes
 			PPDF.Add(textPDF_D);
 			PPDF.Add(textPDF_E);
 			PPDF.Add(textPDF_F);
+            PPDF.Add(textPDF_G);
 			#endregion
 		}
 
@@ -314,6 +319,7 @@ namespace GrupoEmporium.Profit.Reportes
 			PdfArea AreatextPDF_D = PieInfome.InnerAreaP(5,45);
 			PdfArea AreatextPDF_F = PieInfome.InnerAreaP(5,60);
 			PdfArea AreatextPDF_E = PieInfome.InnerAreaP(5,75);
+            PdfArea AreatextPDF_G = PieInfome.InnerAreaP(5, 90);
 
 			//
 			PdfTextArea textPDF_A = new PdfTextArea(F_TituloB,AreatextPDF_A,
@@ -328,11 +334,14 @@ namespace GrupoEmporium.Profit.Reportes
 			PdfTextArea textPDF_D = new PdfTextArea(F_TituloB,AreatextPDF_D,
 				"C.I.: " + DSCxC.Tables[0].Rows[i]["cedula"].ToString(),ContentAlignment.TopLeft);
 
-			PdfTextArea textPDF_E = new PdfTextArea(F_TituloB,AreatextPDF_E,
+			PdfTextArea textPDF_E = new PdfTextArea(F_TituloB,AreatextPDF_G,
 				"DIRECCIÓN: " + DSCxC.Tables[0].Rows[i]["direccion"].ToString(),ContentAlignment.TopLeft);
 
 			PdfTextArea textPDF_F = new PdfTextArea(F_TituloB,AreatextPDF_F,
 				"TELEFONO: " + DSCxC.Tables[0].Rows[i]["telefono"].ToString(),ContentAlignment.TopLeft);
+
+            PdfTextArea textPDF_G = new PdfTextArea(F_TituloB, AreatextPDF_E,
+                "COBRADOR: " + DSCxC.Tables[0].Rows[i]["zona"].ToString(), ContentAlignment.TopLeft);
 
 			//
 			//PPDF.Add(MiImagenPDF,EncabezadoInfome,200);
@@ -342,6 +351,7 @@ namespace GrupoEmporium.Profit.Reportes
 			PPDF.Add(textPDF_D);
 			PPDF.Add(textPDF_E);
 			PPDF.Add(textPDF_F);
+            PPDF.Add(textPDF_G);
 			#endregion
 		}
 
