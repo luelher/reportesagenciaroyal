@@ -503,7 +503,7 @@ namespace GrupoEmporium.Profit.Reportes
 			
 				#region SQL Union Facturas
 
-                SQL = " SELECT top 200 " +
+                SQL = " SELECT " +
 					" docum_cc.co_cli     AS CodClie, " +
 					" clientes.cli_des    AS Descrip, " +
 					" clientes.direc1     AS Direc1, " +
