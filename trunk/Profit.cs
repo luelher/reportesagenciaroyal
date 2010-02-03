@@ -804,7 +804,7 @@ namespace GrupoEmporium.Profit.Reportes
                             " ((docum_cc INNER JOIN factura ON docum_cc.nro_doc = factura.fact_num) INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli) " +
                         " WHERE " +
                             //" docum_cc.tipo_doc = 'XXXX' AND " +
-                            //" docum_cc.co_cli = '17307448' AND " +
+                            //" docum_cc.co_cli = '10963299' AND " +
                             " clientes.co_seg != 'EMPRE' AND " +
                             " (docum_cc.tipo_doc = 'FACT') AND docum_cc.co_sucu<>'ADMINI' " +
                             " AND docum_cc.fec_emis < '" + _LaFecha.ToString("yyyy-MM-dd") + "'" +
@@ -824,7 +824,7 @@ namespace GrupoEmporium.Profit.Reportes
                         " FROM  " +
 	                        " (docum_cc INNER JOIN clientes ON docum_cc.co_cli = clientes.co_cli)   " +
 						" WHERE " +
-                            //" docum_cc.co_cli = '17307448' AND " +
+                            //" docum_cc.co_cli = '10963299' AND " +
                             //" docum_cc.tipo_doc = 'XXXX' AND " +
                             " clientes.co_seg != 'EMPRE' AND " +
                             " (docum_cc.tipo_doc = 'GIRO') AND docum_cc.co_sucu<>'ADMINI' " +
@@ -1200,6 +1200,7 @@ namespace GrupoEmporium.Profit.Reportes
 		{
 			DataTable dtCxC = new DataTable();
 			DataTable dtGiro = new DataTable();
+            DataTable dtIncob = new DataTable();
 			string str="";
 			Factura Resumen;
 
@@ -1262,13 +1263,11 @@ namespace GrupoEmporium.Profit.Reportes
 				string strMonto;
 				string cedula;
 				bool experiencia = false;
+                bool incobrable = false;
 				DateTime fechaVenc;
 				str = dtCxC.Rows[0]["NumeroD"].ToString().Trim();
 
 				cedula = dtCxC.Rows[0]["CodClie"].ToString();
-
-				//if(cedula == "7420758" || cedula == "12698405" || cedula == "4373147")
-				//	cedula = "xxx";
 
                 if (idFactura == "") idFactura = str;
 
@@ -1282,15 +1281,12 @@ namespace GrupoEmporium.Profit.Reportes
 				Resumen.Cliente = dtCxC.Rows[0]["Descrip"].ToString();
 				Resumen.MontoTotal = 0.0;
 
-				//if(dtGiro.Rows.Count>0)
-				//{
-					Resumen.PagoMensual = Convert.ToDouble(dtGiro.Rows[0]["Giro"].ToString());
-					Resumen.MontoTotal = Convert.ToDouble(dtGiro.Rows[0]["Total"].ToString());
-					Resumen.Saldo = Convert.ToDouble(dtGiro.Rows[0]["Saldo"].ToString());
-					if(Convert.ToDouble(Resumen.Saldo)==0.0)
-						Resumen.Cancelada = true;
-					else Resumen.Cancelada = false;
-				//}
+				Resumen.PagoMensual = Convert.ToDouble(dtGiro.Rows[0]["Giro"].ToString());
+				Resumen.MontoTotal = Convert.ToDouble(dtGiro.Rows[0]["Total"].ToString());
+				Resumen.Saldo = Convert.ToDouble(dtGiro.Rows[0]["Saldo"].ToString());
+				if(Convert.ToDouble(Resumen.Saldo)==0.0)
+					Resumen.Cancelada = true;
+				else Resumen.Cancelada = false;
 
 				Total = dtCxC.Rows.Count;
                 Resumen.Giros = dtCxC.Rows.Count;
@@ -1309,11 +1305,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 					}
 
-					//str = dtCxC.Rows[i]["NumeroD"].ToString();
-					//Analizar_TipoCxc(str,ref Cuota,ref Total);
 					Cuota = i+1;
-
-					
 
 					DateTime FE = Convert.ToDateTime(dtCxC.Rows[i]["FechaE"].ToString());
 
@@ -1321,9 +1313,19 @@ namespace GrupoEmporium.Profit.Reportes
 					strMonto = dtCxC.Rows[i]["Saldo"].ToString();
 					Monto = Convert.ToDouble(strMonto);
 
-					Resumen.Dias = Dias;
+                    SQL = "select * from docum_cc where tipo_doc='AJNM' and nro_orig='' and observa like '%incobrable%' and co_cli='" + cedula + "'";
+                    clsBD.EjecutarQuery(strConexion, Conexion, SQL, out dtIncob);
 
-					if((Monto!=0.0 || Dias == -1) && !experiencia)
+                    if (dtIncob.Rows.Count > 0) {
+                        Dias = 121;
+                        incobrable = true;
+                    } 
+
+					Resumen.Dias = Dias;
+                    if (incobrable) {
+                        Resumen.Experiencia = 20;
+                    }
+					else if((Monto!=0.0 || Dias == -1) && !experiencia)
 					{
 						if (Dias == -1)
 							Resumen.Experiencia = 0;
