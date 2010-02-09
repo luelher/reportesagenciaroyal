@@ -1458,8 +1458,10 @@ namespace GrupoEmporium.Profit.Reportes
 							Resumen.Experiencia = 4;
 						else if (Dias>=90 && Dias<120)
 							Resumen.Experiencia = 5;
-						else if (Dias>=120)
+						else if (Dias>=120 && Dias<=365)
 							Resumen.Experiencia = 20;
+                        else if (Dias>365)
+                            Resumen.Experiencia = 21;
 						else if (Dias < 0 && FE.Month != _LaFecha.Month && FE.Year != _LaFecha.Year)
 							Resumen.Experiencia = 1;
 						experiencia=true;
