@@ -1323,7 +1323,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 					Resumen.Dias = Dias;
                     if (incobrable) {
-                        Resumen.Experiencia = 20;
+                        Resumen.Experiencia = 21;
                     }
 					else if((Monto!=0.0 || Dias == -1) && !experiencia)
 					{
