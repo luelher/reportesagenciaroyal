@@ -247,7 +247,7 @@ namespace GrupoEmporium.Profit.Reportes
 			try
 			{
 				Conexion.Open();
-				Mensajes.Mensaje.Error(Conexion.State.ToString(),"Profit Reportes");
+				//Mensajes.Mensaje.Error(Conexion.State.ToString(),"Profit Reportes");
 			}
 			catch(Exception ex)
 			{
@@ -265,7 +265,7 @@ namespace GrupoEmporium.Profit.Reportes
 			try
 			{
 				Conexion.Open();
-                Mensajes.Mensaje.Error(Conexion.State.ToString(), "Profit Reportes");
+                //Mensajes.Mensaje.Error(Conexion.State.ToString(), "Profit Reportes");
 			}
 			catch(Exception ex)
 			{
@@ -285,7 +285,7 @@ namespace GrupoEmporium.Profit.Reportes
 			try
 			{
 				Conexion.Open();
-                Mensajes.Mensaje.Error(Conexion.State.ToString(), "Profit Reportes");
+                //Mensajes.Mensaje.Error(Conexion.State.ToString(), "Profit Reportes");
 			}
 			catch(Exception ex)
 			{
@@ -939,8 +939,10 @@ namespace GrupoEmporium.Profit.Reportes
                     {
 
 				        FechaE = Convert.ToDateTime(dt.Rows[i]["FechaE"].ToString());
-				        MontoT = Math.Abs(Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString()));
-				        Mensual= Math.Abs(Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString()));
+                        if (dt.Rows[i]["MontoTotal"] is System.DBNull) MontoT = 0;
+                        else MontoT = Math.Abs(Convert.ToDouble(dt.Rows[i]["MontoTotal"].ToString()));
+                        if (dt.Rows[i]["PagoMensual"] is System.DBNull) Mensual = 0;
+				        else Mensual= Math.Abs(Convert.ToDouble(dt.Rows[i]["PagoMensual"].ToString()));
 				        FechaV = Convert.ToDateTime(dt.Rows[i]["FechaCancelacion"].ToString());
 
 				        string Cad = dt.Rows[i]["Cedula"].ToString() + Tab +
