@@ -1008,7 +1008,7 @@ namespace GrupoEmporium.Profit.Reportes
 
                     Cliente = dt.Rows[i]["cliente"].ToString();
                     Cedula = dt.Rows[i]["cedula"].ToString();
-                    Direccion = dt.Rows[i]["direccion"].ToString();
+                    Direccion = dt.Rows[i]["direccion"].ToString().Replace("\n", "").Replace("\r", "");
                     Telefono = dt.Rows[i]["telefono"].ToString();
                     Fechae = Convert.ToDateTime(dt.Rows[i]["fechae"].ToString());
                     Fechav = Convert.ToDateTime(dt.Rows[i]["fechav"].ToString());
