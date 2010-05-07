@@ -39,6 +39,8 @@ namespace GrupoEmporium.Saint
 		private System.Windows.Forms.RadioButton rbconexion1;
 		private System.Windows.Forms.RadioButton rbconexion2;
         private Button BotonExcel;
+        private Button button2;
+        private Button button1;
 		/// <summary>
 		/// Variable del diseñador requerida.
 		/// </summary>
@@ -98,6 +100,7 @@ namespace GrupoEmporium.Saint
             this.LabelAcerca = new System.Windows.Forms.LinkLabel();
             this.GridResultado = new System.Windows.Forms.DataGrid();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.BotonExcel = new System.Windows.Forms.Button();
             this.rbconexion2 = new System.Windows.Forms.RadioButton();
             this.rbconexion1 = new System.Windows.Forms.RadioButton();
             this.labelGenerando = new System.Windows.Forms.Label();
@@ -107,7 +110,8 @@ namespace GrupoEmporium.Saint
             this.textMesDesde = new System.Windows.Forms.TextBox();
             this.BtnMigrar = new System.Windows.Forms.Button();
             this.BotonExportar = new System.Windows.Forms.Button();
-            this.BotonExcel = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.GridResultado)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -178,13 +182,15 @@ namespace GrupoEmporium.Saint
             this.GridResultado.DataMember = "";
             this.GridResultado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridResultado.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-            this.GridResultado.Location = new System.Drawing.Point(0, 216);
+            this.GridResultado.Location = new System.Drawing.Point(0, 233);
             this.GridResultado.Name = "GridResultado";
-            this.GridResultado.Size = new System.Drawing.Size(394, 168);
+            this.GridResultado.Size = new System.Drawing.Size(390, 205);
             this.GridResultado.TabIndex = 6;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.BotonExcel);
             this.panel1.Controls.Add(this.rbconexion2);
             this.panel1.Controls.Add(this.rbconexion1);
@@ -204,9 +210,19 @@ namespace GrupoEmporium.Saint
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(394, 216);
+            this.panel1.Size = new System.Drawing.Size(390, 233);
             this.panel1.TabIndex = 7;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // BotonExcel
+            // 
+            this.BotonExcel.Enabled = false;
+            this.BotonExcel.Location = new System.Drawing.Point(208, 182);
+            this.BotonExcel.Name = "BotonExcel";
+            this.BotonExcel.Size = new System.Drawing.Size(112, 24);
+            this.BotonExcel.TabIndex = 15;
+            this.BotonExcel.Text = "Generar Excel";
+            this.BotonExcel.Click += new System.EventHandler(this.BotonExcel_Click);
             // 
             // rbconexion2
             // 
@@ -279,27 +295,37 @@ namespace GrupoEmporium.Saint
             // BotonExportar
             // 
             this.BotonExportar.Enabled = false;
-            this.BotonExportar.Location = new System.Drawing.Point(90, 182);
+            this.BotonExportar.Location = new System.Drawing.Point(74, 182);
             this.BotonExportar.Name = "BotonExportar";
             this.BotonExportar.Size = new System.Drawing.Size(112, 24);
             this.BotonExportar.TabIndex = 6;
             this.BotonExportar.Text = "Exportar Reporte";
             this.BotonExportar.Click += new System.EventHandler(this.BotonExportar_Click);
             // 
-            // BotonExcel
+            // button1
             // 
-            this.BotonExcel.Enabled = false;
-            this.BotonExcel.Location = new System.Drawing.Point(208, 182);
-            this.BotonExcel.Name = "BotonExcel";
-            this.BotonExcel.Size = new System.Drawing.Size(112, 24);
-            this.BotonExcel.TabIndex = 15;
-            this.BotonExcel.Text = "Generar Excel";
-            this.BotonExcel.Click += new System.EventHandler(this.BotonExcel_Click);
+            this.button1.Location = new System.Drawing.Point(0, 209);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(96, 21);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "Check Todos";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(296, 209);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(91, 21);
+            this.button2.TabIndex = 17;
+            this.button2.Text = "Check Ninguno";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // FormSaint
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(394, 384);
+            this.ClientSize = new System.Drawing.Size(390, 438);
             this.Controls.Add(this.GridResultado);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -795,6 +821,23 @@ namespace GrupoEmporium.Saint
                     }
                     break;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                dt.Rows[i]["seleccion"] = true;
+            }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                dt.Rows[i]["seleccion"] = false;
+            }            
         }
 	}
 }
