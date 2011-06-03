@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resportes Saint", "Resportes Saint.csproj", "{7A890B36-4096-4869-885C-05E6C605F09E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResportesLaRana", "ResportesLaRana.csproj", "{7A890B36-4096-4869-885C-05E6C605F09E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

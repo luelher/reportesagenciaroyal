@@ -2,10 +2,10 @@
 <agenciaroyal version="1.00">
   <propiedades>
     <propiedad var="Dominio" valor="True" />
-    <propiedad var="DataSource" valor="SERVERAR" />
-    <propiedad var="InitialCatalog" valor="EnterpriseAdminDB" />
-    <propiedad var="Usuario" valor="sa" />
-    <propiedad var="Contrasena" valor="''" />
+    <propiedad var="DataSource" valor="172.18.10.2" />
+    <propiedad var="InitialCatalog" valor="LARANA" />
+    <propiedad var="Usuario" valor="profit" />
+    <propiedad var="Contrasena" valor="profit" />
     <propiedad var="CadenaConexion" valor="False" />
     <propiedad var="Conexion" valor="Provider=sqloledb;Initial Catalog=EnterpriseAdminDB;Data Source=saint;Integrated Security=SSPI;" />
   </propiedades>
