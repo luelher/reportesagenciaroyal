@@ -1,0 +1,16 @@
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\Resportes Saint.exe
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\Resportes Saint.pdb
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\GrupoEmporium.Encriptamiento.dll
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\GrupoEmporium.Reportes.pdb
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\GrupoEmporium.Formularios.Presentacion.pdb
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\GrupoEmporium.Varias.pdb
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\GrupoEmporium.Datos.pdb
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\GrupoEmporium.Reportes.PDF.pdb
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\GrupoEmporium.Mensajes.pdb
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Debug\GrupoEmporium.Encriptamiento.pdb
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Debug\GrupoEmporium.Reportes.FormReportes.resources
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Debug\ResportesLaRana.csproj.GenerateResource.Cache
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Debug\Resportes Saint.exe
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Debug\Resportes Saint.pdb
