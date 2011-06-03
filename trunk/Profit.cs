@@ -247,6 +247,8 @@ namespace GrupoEmporium.Profit.Reportes
 			try
 			{
 				Conexion.Open();
+                SQL = "SET DATEFORMAT ymd";
+                clsBD.EjecutarNonQuery(strConexion, Conexion, SQL);
 				//Mensajes.Mensaje.Error(Conexion.State.ToString(),"Profit Reportes");
 			}
 			catch(Exception ex)
@@ -265,6 +267,8 @@ namespace GrupoEmporium.Profit.Reportes
 			try
 			{
 				Conexion.Open();
+                SQL = "SET DATEFORMAT ymd";
+                clsBD.EjecutarNonQuery(strConexion, Conexion, SQL);
                 //Mensajes.Mensaje.Error(Conexion.State.ToString(), "Profit Reportes");
 			}
 			catch(Exception ex)
@@ -1080,6 +1084,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 		private void CargarConfig(bool conex)
 		{
+            string SQL;
 			
 			ClaseDocumentosXML MiConfig = new ClaseDocumentosXML(@"configsaint.xml");
 			if(MiConfig.Cargado)
