@@ -1,7 +1,7 @@
-C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Release\Resportes Saint.exe
 C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Release\ICSharpCode.SharpZipLib.dll
 C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Release\GrupoEmporium.Encriptamiento.dll
 C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Release\ResolveAssemblyReference.cache
 C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Release\GrupoEmporium.Reportes.FormReportes.resources
 C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Release\ResportesLaRana.csproj.GenerateResource.Cache
-C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Release\Resportes Saint.exe
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\bin\Release\ResportesLaRana.exe
+C:\Documents and Settings\cramirez\Mis documentos\Visual Studio 2008\Projects\laranareportes\obj\Release\ResportesLaRana.exe
