@@ -1233,6 +1233,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 			}
 
+            Mensajes.Mensaje.Error(cadenaconexion.ToString(), "Cadena de Conexión");
 			Conexion = new OleDbConnection(cadenaconexion);
 			configxml = MiConfig;
 
@@ -1265,6 +1266,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 			}
 
+            Mensajes.Mensaje.Error(cadenaconexion.ToString(), "Cadena de Conexión");
 			Conexion_Profit = new OleDbConnection(cadenaconexion_Profit);
 			//configxml = MiConfig;
 			CargarConfigProfit_1(conex);
@@ -1317,6 +1319,7 @@ namespace GrupoEmporium.Profit.Reportes
 
 			}
 
+            Mensajes.Mensaje.Error(cadenaconexion.ToString(), "Cadena de Conexión");
 			Conexion_Profit_1 = new OleDbConnection(cadenaconexion_Profit_1);
 			//configxml = MiConfig;
 
